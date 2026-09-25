@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Esportivo Interclasse - Completo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-hover: #047857;
+            --primary-light: #ecfdf5;
+            --bg-main: #f0fdf4;
+            --card-bg: #ffffff;
+            --text-main: #064e3b;
+            --text-muted: #475569;
+            --border: #d1fae5;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-blue: #3b82f6;
+            --shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.08);
+            --radius-lg: 16px;
+            --radius-md: 10px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+        
+        header {
+            background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #059669 100%);
+            color: white; padding: 1.8rem 2rem; box-shadow: var(--shadow);
+        }
+
+        .header-container {
+            max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+        }
+
+        .header-brand { display: flex; align-items: center; gap: 20px; }
+        .header-logo { height: 65px; width: auto; border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.15); padding: 6px; display: none; }
+        .header-titles h1 { font-size: 1.7rem; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+        .header-titles p { font-size: 0.95rem; opacity: 0.9; margin-top: 4px; }
+        .header-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.2); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-top: 6px; }
+
+        .btn {
+            padding: 10px 20px; border-radius: var(--radius-md); border: none; font-weight: 600; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s ease;
+        }
+        .btn-light { background-color: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .btn-light:hover { background-color: rgba(255, 255, 255, 0.25); }
+        .btn-primary { background-color: var(--primary); color: white; }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+        .btn-danger { background-color: var(--accent-rose); color: white; }
+        .btn-warning { background-color: var(--accent-amber); color: white; }
+        .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
+
+        .config-drawer { display: none; background: rgba(6, 78, 59, 0.96); padding: 25px; margin-top: 20px; border-radius: var(--radius-lg); color: white; }
+        .config-drawer.open { display: block; }
+
+        nav { background-color: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; overflow-x: auto; white-space: nowrap; }
+        .nav-tab { padding: 18px 24px; font-weight: 600; font-size: 0.9rem; color: var(--text-muted); border: none; background: none; cursor: pointer; border-bottom: 3px solid transparent; display: flex; align-items: center; gap: 10px; }
+        .nav-tab.active { color: var(--primary); border-bottom-color: var(--primary); background-color: var(--primary-light); }
+
+        main { max-width: 1400px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; width: 100%; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .card { background: var(--card-bg); border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 1.8rem; margin-bottom: 1.8rem; border: 1px solid var(--border); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .card-title { font-size: 1.25rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 12px; }
+
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 18px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-group label { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+        .form-control { padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: var(--radius-md); font-size: 0.95rem; outline: none; background: #f8fafc; }
+        .form-control:focus { border-color: var(--primary); background: white; }
+
+        .teams-selection-box {
+            background: #f8fafc; border: 1px solid #cbd5e1; border-radius: var(--radius-md); padding: 12px; max-height: 160px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 5px;
+        }
+        .team-checkbox-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); cursor: pointer; }
+        .team-checkbox-item input { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
+
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.92rem; text-align: left; }
+        th, td { padding: 14px 18px; border-bottom: 1px solid var(--border); }
+        th { background-color: var(--primary-light); color: var(--text-main); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; }
+
+        .match-box { background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px; margin-bottom: 12px; position: relative; }
+        .match-box.winner-box { border-color: var(--accent-green); background-color: var(--primary-light); }
+        .match-box.bye-box { border-color: var(--accent-blue); background-color: #eff6ff; }
+        .match-header { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .match-row { display: flex; justify-content: space-between; align-items: center; margin: 4px 0; gap: 10px; font-weight: 600; font-size: 0.9rem; }
+        .score-input { width: 65px; text-align: center; padding: 6px; border: 1px solid #cbd5e1; border-radius: var(--radius-md); font-weight: 700; }
+
+        .modality-grid-container { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
+        .round-title { font-size: 1.05rem; font-weight: 800; color: var(--primary-hover); margin: 20px 0 10px 0; border-bottom: 2px solid var(--border); padding-bottom: 6px; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
+
+        .print-header { display: none; text-align: center; padding-bottom: 15px; margin-bottom: 20px; border-bottom: 2px solid var(--primary); }
+        .print-header img { max-height: 80px; width: auto; margin-bottom: 10px; }
+        .print-header h2 { font-size: 1.6rem; color: #064e3b; font-weight: 800; text-transform: uppercase; }
+        .print-header p { font-size: 0.95rem; color: #475569; font-weight: 600; margin-top: 4px; }
+
+        .delete-match-btn { background: transparent; border: none; color: var(--accent-rose); cursor: pointer; font-size: 0.9rem; padding: 2px 6px; border-radius: 4px; transition: background 0.2s; }
+        .delete-match-btn:hover { background: #ffe4e6; }
+        .bye-badge { background: var(--accent-blue); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; }
+
+        @page { margin: 1cm; size: A4 portrait; }
+        @media print {
+            body { background: white !important; color: black !important; padding: 0 !important; }
+            header, nav, footer, .btn, .no-print, .config-drawer, .delete-match-btn { display: none !important; }
+            .print-header { display: block !important; }
+            .card { box-shadow: none !important; border: 1px solid #ccc !important; padding: 1rem !important; margin-bottom: 1rem !important; }
+            .hide-podio-print #card-podio-modalidade { display: none !important; }
+            .hide-podio-print .modality-grid-container { grid-template-columns: 1fr !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+
+        @media (max-width: 900px) { .modality-grid-container { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="print-header">
+        <img id="print-header-logo" src="" alt="Logo" style="display:none;">
+        <h2 id="print-header-title">CAMPEONATO INTERCLASSE</h2>
+        <p id="print-header-info">Ano: 2026 | Campeonato Principal</p>
+    </div>
+
+    <header>
+        <div class="header-container">
+            <div class="header-brand">
+                <img id="header-logo-img" src="" alt="Logo" class="header-logo">
+                <div class="header-titles">
+                    <h1 id="header-title-text"><i class="fa-solid fa-trophy" style="color: #f59e0b;"></i> CAMPEONATO INTERCLASSE</h1>
+                    <p id="header-subtitle-text">Escola Verde — Gestão Esportiva e Cultural</p>
+                    <div class="header-badge" id="header-active-info">
+                        <i class="fa-solid fa-calendar"></i> <span id="hdr-year-name">2026</span> | <i class="fa-solid fa-flag"></i> <span id="hdr-champ-name">Campeonato Principal</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-light" onclick="toggleConfigDrawer()"><i class="fa-solid fa-pen-to-square"></i> Personalizar Header</button>
+                <button class="btn btn-danger" onclick="resetWholeSystem()"><i class="fa-solid fa-rotate-left"></i> Zerar Banco de Dados</button>
+                <button class="btn btn-light" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir Página</button>
+            </div>
+        </div>
+
+        <div id="config-drawer" class="config-drawer no-print">
+            <h4 style="margin-bottom: 15px;"><i class="fa-solid fa-sliders"></i> Personalizar Sistema</h4>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label style="color:white;">Nome do Torneio</label>
+                    <input type="text" id="cfg-title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label style="color:white;">Subtítulo / Escola</label>
+                    <input type="text" id="cfg-subtitle" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label style="color:white;">Logo da Escola</label>
+                    <input type="file" id="cfg-logo-file" class="form-control" accept="image/*" onchange="uploadLogoDirect(event)">
+                </div>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn btn-primary" onclick="saveHeaderConfig()"><i class="fa-solid fa-check"></i> Salvar Alterações</button>
+                <button class="btn btn-danger" onclick="removeLogo()"><i class="fa-solid fa-trash"></i> Remover Logo</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="no-print">
+        <div class="nav-container">
+            <button class="nav-tab active" onclick="switchTab('anos-campeonatos', this)"><i class="fa-solid fa-calendar-days"></i> Anos & Campeonatos</button>
+            <button class="nav-tab" onclick="switchTab('equipes', this)"><i class="fa-solid fa-users"></i> Equipes</button>
+            <button class="nav-tab" onclick="switchTab('modalidades', this)"><i class="fa-solid fa-volleyball"></i> Coletivos</button>
+            <button class="nav-tab" onclick="switchTab('arrecadacao', this)"><i class="fa-solid fa-box-archive"></i> Arrecadação</button>
+            <button class="nav-tab" onclick="switchTab('cultural', this)"><i class="fa-solid fa-masks-theater"></i> Cultural</button>
+            <button class="nav-tab" onclick="switchTab('cronograma', this)"><i class="fa-solid fa-clock"></i> Cronograma & Tempos</button>
+            <button class="nav-tab" onclick="switchTab('geral', this)"><i class="fa-solid fa-chart-line"></i> Classificação Geral</button>
+            <button class="nav-tab" onclick="switchTab('boletim', this)"><i class="fa-solid fa-file-invoice"></i> Boletim</button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ABA ANOS E CAMPEONATOS -->
+        <div id="tab-anos-campeonatos" class="tab-content active">
+            <div class="card">
+                <div class="card-header"><span class="card-title"><i class="fa-solid fa-diagram-project"></i> Selecionar Ano e Campeonato</span></div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Ano Letivo Ativo</label>
+                        <select id="select-active-year" class="form-control" onchange="changeActiveYear(this.value)"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Campeonato Ativo</label>
+                        <select id="select-active-champ" class="form-control" onchange="changeActiveChamp(this.value)"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="card">
+                    <div class="card-header"><span class="card-title"><i class="fa-solid fa-calendar-plus"></i> Gerenciar Anos</span></div>
+                    <form onsubmit="addNewYear(event)" style="margin-bottom:20px;">
+                        <div class="form-group" style="margin-bottom:10px;">
+                            <label>Novo Ano</label>
+                            <input type="number" id="new-year-input" class="form-control" placeholder="Ex: 2026" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Criar Ano</button>
+                    </form>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Ano Letivo</th><th style="text-align:right;">Ação</th></tr></thead>
+                            <tbody id="years-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><span class="card-title"><i class="fa-solid fa-trophy"></i> Campeonatos do Ano</span></div>
+                    <form onsubmit="addNewChamp(event)" style="margin-bottom:20px;">
+                        <div class="form-group" style="margin-bottom:10px;">
+                            <label>Novo Campeonato</label>
+                            <input type="text" id="new-champ-input" class="form-control" placeholder="Ex: Interclasse 1º Semestre" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Criar Campeonato</button>
+                    </form>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Nome do Campeonato</th><th style="text-align:right;">Ação</th></tr></thead>
+                            <tbody id="champs-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA EQUIPES -->
+        <div id="tab-equipes" class="tab-content">
+            <div class="card">
+                <div class="card-header"><span class="card-title" id="team-form-title"><i class="fa-solid fa-user-plus"></i> Cadastrar Equipe</span></div>
+                <form id="team-form" onsubmit="saveTeam(event)">
+                    <input type="hidden" id="team-id">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nome da Equipe</label>
+                            <input type="text" id="team-name" class="form-control" placeholder="Ex: 9º Ano A" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Segmento</label>
+                            <select id="team-segment" class="form-control" required>
+                                <option value="">Selecione...</option>
+                                <option value="Fundamental 02">Fundamental 02</option>
+                                <option value="Ensino Médio 01">Ensino Médio 01</option>
+                                <option value="Ensino Médio 02">Ensino Médio 02</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <button type="submit" class="btn btn-primary" id="team-submit-btn"><i class="fa-solid fa-plus"></i> Cadastrar Equipe</button>
+                        <button type="button" class="btn btn-light" id="team-cancel-btn" style="display:none; color:black;" onclick="resetTeamForm()"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header"><span class="card-title"><i class="fa-solid fa-list"></i> Equipes Cadastradas</span></div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr><th>Nome da Equipe</th><th>Segmento</th><th class="no-print" style="text-align: right;">Ações</th></tr>
+                        </thead>
+                        <tbody id="teams-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA MODALIDADES COLETIVAS -->
+        <div id="tab-modalidades" class="tab-content">
+            <div class="card">
+                <div class="card-header"><span class="card-title"><i class="fa-solid fa-gear"></i> Configurar Esporte Coletivo</span></div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Naipe / Gênero</label>
+                        <select id="gender-select" class="form-control" onchange="renderMatches()">
+                            <option value="MASCULINO">Masculino</option>
+                            <option value="FEMININO">Feminino</option>
+                            <option value="MISTO">Misto</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Modalidade</label>
+                        <select id="mod-select" class="form-control" onchange="renderMatches()">
+                            <option value="Futebol de Campo">Futebol de Campo</option>
+                            <option value="Futsal">Futsal</option>
+                            <option value="Basquetebol">Basquetebol</option>
+                            <option value="Voleibol">Voleibol</option>
+                            <option value="Handebol">Handebol</option>
+                            <option value="Queimada">Queimada</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Segmento</label>
+                        <select id="mod-segment-select" class="form-control" onchange="onSegmentOrCategoryChange()">
+                            <option value="Fundamental 02">Fundamental 02</option>
+                            <option value="Ensino Médio 01">Ensino Médio 01</option>
+                            <option value="Ensino Médio 02">Ensino Médio 02</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Forma de Disputa</label>
+                        <select id="mod-format-select" class="form-control">
+                            <option value="eliminatoria_simples">Mata-Mata Completo (com BYE e 3º Place/Final)</option>
+                            <option value="todos_contra_todos">Todos contra Todos (Turno Único)</option>
+                            <option value="ida_e_volta">Ida e Volta</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- SELEÇÃO MANUAL DE EQUIPES QUE VÃO PARTICIPAR -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 4px;">
+                        <label><i class="fa-solid fa-check-double"></i> Selecionar Equipes Participantes Desta Modalidade</label>
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn btn-light btn-sm" style="color:black;" onclick="toggleAllTeamsSelect(true)">Marcar Todas</button>
+                            <button class="btn btn-light btn-sm" style="color:black;" onclick="toggleAllTeamsSelect(false)">Desmarcar Todas</button>
+                        </div>
+                    </div>
+                    <div id="teams-selector-container" class="teams-selection-box">
+                        <!-- Gerado via JavaScript -->
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="generateMatches()"><i class="fa-solid fa-shuffle"></i> Sorteio / Iniciar Chaves</button>
+                    <button class="btn btn-warning" onclick="resetCurrentMatches()"><i class="fa-solid fa-rotate-left"></i> Zerar Categoria</button>
+                    <button class="btn btn-light" style="color:black;" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir Tudo</button>
+                </div>
+            </div>
+
+            <div class="modality-grid-container">
+                <div class="card" id="card-chaveamento-modalidade">
+                    <div class="card-header">
+                        <span class="card-title"><i class="fa-solid fa-sitemap"></i> Chaveamento Sequencial de Partidas</span>
+                        <button class="btn btn-light btn-sm no-print" style="color: black;" onclick="printChaveamentoOnly()"><i class="fa-solid fa-print"></i> Imprimir Chaveamento</button>
+                    </div>
+                    <div id="matches-container"><p style="color:var(--text-muted);">Selecione os parâmetros e clique em Sorteio.</p></div>
+                </div>
+
+                <div class="card" id="card-podio-modalidade">
+                    <div class="card-header"><span class="card-title"><i class="fa-solid fa-ranking-star"></i> Tabela de Pontos da Categoria</span></div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Colocação</th><th>Equipe</th><th>Pontos (3/1)</th></tr></thead>
+                            <tbody id="modality-standings-body">
+                                <tr><td colspan="3" style="text-align:center;">Nenhuma partida processada.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA ARRECADAÇÃO -->
+        <div id="tab-arrecadacao" class="tab-content">
+            <div class="card">
+                <div class="card-header"><span class="card-title"><i class="fa-solid fa-box-archive"></i> Tarefa Solidária / Arrecadação</span></div>
+                <p style="margin-bottom: 15px; color: var(--text-muted);">Insira a quantidade arrecadada por cada equipe para contabilizar pontuação direta na Classificação Geral.</p>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Equipe</th>
+                                <th>Segmento</th>
+                                <th>Alimentos (Kg / Unid.)</th>
+                                <th>Lacres / Tampinhas (Kg)</th>
+                                <th>Pontuação Atribuída</th>
+                            </tr>
+                        </thead>
+                        <tbody id="arrecadacao-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA CULTURAL -->
+        <div id="tab-cultural" class="tab-content">
+            <div class="card">
+                <div class="card-header"><span class="card-title"><i class="fa-solid fa-masks-theater"></i> Atividades Culturais e Recreativas</span></div>
+                <p style="margin-bottom: 15px; color: var(--text-muted);">Registre notas ou pontos obtidos em Dança, Gincanas, Mascote e Torcida.</p>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Equipe</th>
+                                <th>Segmento</th>
+                                <th>Apresentação / Dança</th>
+                                <th>Mascote / Torcida</th>
+                                <th>Pontos Culturais Totais</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cultural-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA CRONOGRAMA & TEMPOS -->
+        <div id="tab-cronograma" class="tab-content">
+            <div class="card">
+                <div class="card-header"><span class="card-title"><i class="fa-solid fa-stopwatch"></i> Calculadora e Simulador de Tempo de Jogos</span></div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Horário de Início do Torneio</label>
+                        <input type="time" id="time-start" class="form-control" value="08:00" onchange="calculateSchedule()">
+                    </div>
+                    <div class="form-group">
+                        <label>Duração do Jogo (Minutos)</label>
+                        <input type="number" id="time-duration" class="form-control" value="20" min="1" onchange="calculateSchedule()">
+                    </div>
+                    <div class="form-group">
+                        <label>Intervalo entre Jogos (Minutos)</label>
+                        <input type="number" id="time-rest" class="form-control" value="5" min="0" onchange="calculateSchedule()">
+                    </div>
+                    <div class="form-group">
+                        <label>Quadras / Campos Simultâneos</label>
+                        <input type="number" id="time-courts" class="form-control" value="1" min="1" onchange="calculateSchedule()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-grid" style="grid-template-columns: 1fr 2fr;">
+                <div class="card" style="background:var(--primary-light);">
+                    <div class="card-header"><span class="card-title"><i class="fa-solid fa-chart-pie"></i> Resumo da Duração</span></div>
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">TOTAL DE PARTIDAS:</span>
+                            <h2 id="summary-total-matches" style="color:var(--primary);">0 jogos</h2>
+                        </div>
+                        <div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">TEMPO TOTAL ESTIMADO:</span>
+                            <h2 id="summary-total-time" style="color:var(--primary);">0h 0min</h2>
+                        </div>
+                        <div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">HORÁRIO PREVISTO DE TÉRMINO:</span>
+                            <h2 id="summary-end-time" style="color:var(--accent-amber);">--:--</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><span class="card-title"><i class="fa-solid fa-list-ol"></i> Cronograma Geral do Torneio</span></div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>Jogo</th><th>Horário</th><th>Modalidade / Categoria</th><th>Partida</th></tr>
+                            </thead>
+                            <tbody id="schedule-table-body">
+                                <tr><td colspan="4" style="text-align:center;">Gere chaves de jogos para exibir o cronograma.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA CLASSIFICAÇÃO GERAL -->
+        <div id="tab-geral" class="tab-content">
+            <div class="sub-nav no-print" style="display:flex; gap:10px; margin-bottom:15px; flex-wrap: wrap;">
+                <button class="btn btn-light" style="color:black;" onclick="switchGeralView('Fundamental 02', this)">Fundamental 02</button>
+                <button class="btn btn-light" style="color:black;" onclick="switchGeralView('Ensino Médio 01', this)">Ensino Médio 01</button>
+                <button class="btn btn-light" style="color:black;" onclick="switchGeralView('Ensino Médio 02', this)">Ensino Médio 02</button>
+                <button class="btn btn-primary" onclick="switchGeralView('GERAL_CONSOLIDADO', this)">🏆 CONSOLIDADO GERAL</button>
+            </div>
+
+            <div class="card">
+                <div class="card-header"><span class="card-title" id="geral-title"><i class="fa-solid fa-trophy"></i> Classificação Geral</span></div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Posição</th>
+                                <th>Equipe</th>
+                                <th>Segmento</th>
+                                <th>Pts Esportivos (3/1)</th>
+                                <th>Pts Arrecadação</th>
+                                <th>Pts Culturais</th>
+                                <th>TOTAL CONSOLIDADO</th>
+                            </tr>
+                        </thead>
+                        <tbody id="geral-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA BOLETIM IMPRESSO -->
+        <div id="tab-boletim" class="tab-content">
+            <div class="card">
+                <div class="card-header"><span class="card-title"><i class="fa-solid fa-file-invoice"></i> Boletim Oficial do Campeonato</span></div>
+                <div style="margin-bottom: 15px;">
+                    <button class="btn btn-primary no-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir Boletim Oficial</button>
+                </div>
+                <div id="boletim-content"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let appData = {
+            config: { title: "CAMPEONATO INTERCLASSE", subtitle: "Escola Verde — Gestão Esportiva", logo: "" },
+            activeYear: "2026",
+            activeChamp: "Campeonato Principal",
+            years: ["2026"],
+            champs: { "2026": ["Campeonato Principal"] },
+            teams: {},
+            matches: {},
+            arrecadacao: {},
+            cultural: {}
+        };
+
+        let currentGeralFilter = "GERAL_CONSOLIDADO";
+
+        function initApp() {
+            const saved = localStorage.getItem('interclasse_system_db');
+            if (saved) {
+                try { appData = JSON.parse(saved); } catch (e) { console.error("Erro ao carregar dados", e); }
+            }
+            if (!appData.arrecadacao) appData.arrecadacao = {};
+            if (!appData.cultural) appData.cultural = {};
+
+            applyHeaderConfig();
+            renderYearAndChampSelectors();
+            renderTeams();
+            onSegmentOrCategoryChange();
+            renderArrecadacao();
+            renderCultural();
+            renderClassificacaoGeral();
+        }
+
+        function silentSave() { localStorage.setItem('interclasse_system_db', JSON.stringify(appData)); }
+        function resetWholeSystem() {
+            if (confirm("ATENÇÃO: Tem certeza que deseja zerar TODOS os dados cadastrados?")) {
+                localStorage.removeItem('interclasse_system_db');
+                location.reload();
+            }
+        }
+
+        function printChaveamentoOnly() {
+            document.body.classList.add('hide-podio-print');
+            window.print();
+            document.body.classList.remove('hide-podio-print');
+        }
+
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'cronograma') calculateSchedule();
+            if (tabId === 'arrecadacao') renderArrecadacao();
+            if (tabId === 'cultural') renderCultural();
+            if (tabId === 'geral') renderClassificacaoGeral();
+            if (tabId === 'boletim') renderBoletim();
+            if (tabId === 'modalidades') onSegmentOrCategoryChange();
+        }
+
+        function toggleConfigDrawer() {
+            const drawer = document.getElementById('config-drawer');
+            drawer.classList.toggle('open');
+            document.getElementById('cfg-title').value = appData.config.title;
+            document.getElementById('cfg-subtitle').value = appData.config.subtitle;
+        }
+
+        function saveHeaderConfig() {
+            appData.config.title = document.getElementById('cfg-title').value || "CAMPEONATO INTERCLASSE";
+            appData.config.subtitle = document.getElementById('cfg-subtitle').value || "";
+            applyHeaderConfig();
+            toggleConfigDrawer();
+            silentSave();
+        }
+
+        function applyHeaderConfig() {
+            document.getElementById('header-title-text').innerHTML = `<i class="fa-solid fa-trophy" style="color: #f59e0b;"></i> ${appData.config.title}`;
+            document.getElementById('header-subtitle-text').innerText = appData.config.subtitle;
+            document.getElementById('print-header-title').innerText = appData.config.title;
+            document.getElementById('print-header-info').innerText = `Ano: ${appData.activeYear} | ${appData.activeChamp}`;
+
+            const logoImg = document.getElementById('header-logo-img');
+            const printLogo = document.getElementById('print-header-logo');
+
+            if (appData.config.logo) {
+                logoImg.src = appData.config.logo; logoImg.style.display = 'block';
+                printLogo.src = appData.config.logo; printLogo.style.display = 'block';
+            } else {
+                logoImg.style.display = 'none'; printLogo.style.display = 'none';
+            }
+
+            document.getElementById('hdr-year-name').innerText = appData.activeYear;
+            document.getElementById('hdr-champ-name').innerText = appData.activeChamp;
+        }
+
+        function uploadLogoDirect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) { appData.config.logo = evt.target.result; applyHeaderConfig(); silentSave(); };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeLogo() { appData.config.logo = ""; applyHeaderConfig(); silentSave(); }
+
+        function renderYearAndChampSelectors() {
+            const yearSel = document.getElementById('select-active-year');
+            const champSel = document.getElementById('select-active-champ');
+            
+            yearSel.innerHTML = appData.years.map(y => `<option value="${y}" ${y === appData.activeYear ? 'selected' : ''}>${y}</option>`).join('');
+            const currentChamps = appData.champs[appData.activeYear] || [];
+            champSel.innerHTML = currentChamps.map(c => `<option value="${c}" ${c === appData.activeChamp ? 'selected' : ''}>${c}</option>`).join('');
+
+            document.getElementById('years-table-body').innerHTML = appData.years.map(y => `
+                <tr><td><strong>${y}</strong></td><td style="text-align:right;"><button class="btn btn-danger btn-sm" onclick="removeYear('${y}')"><i class="fa-solid fa-trash"></i></button></td></tr>
+            `).join('');
+
+            document.getElementById('champs-table-body').innerHTML = currentChamps.map(c => `
+                <tr><td><strong>${c}</strong></td><td style="text-align:right;"><button class="btn btn-danger btn-sm" onclick="removeChamp('${c}')"><i class="fa-solid fa-trash"></i></button></td></tr>
+            `).join('');
+        }
+
+        function addNewYear(e) {
+            e.preventDefault();
+            const val = document.getElementById('new-year-input').value.trim();
+            if (val && !appData.years.includes(val)) {
+                appData.years.push(val); appData.champs[val] = ["Campeonato Principal"];
+                appData.activeYear = val; appData.activeChamp = "Campeonato Principal";
+                renderYearAndChampSelectors(); applyHeaderConfig(); silentSave();
+                document.getElementById('new-year-input').value = '';
+            }
+        }
+
+        function addNewChamp(e) {
+            e.preventDefault();
+            const val = document.getElementById('new-champ-input').value.trim();
+            if (!appData.champs[appData.activeYear]) appData.champs[appData.activeYear] = [];
+            if (val && !appData.champs[appData.activeYear].includes(val)) {
+                appData.champs[appData.activeYear].push(val); appData.activeChamp = val;
+                renderYearAndChampSelectors(); applyHeaderConfig(); silentSave();
+                document.getElementById('new-champ-input').value = '';
+            }
+        }
+
+        function changeActiveYear(y) {
+            appData.activeYear = y;
+            if (!appData.champs[y] || appData.champs[y].length === 0) appData.champs[y] = ["Campeonato Principal"];
+            appData.activeChamp = appData.champs[y][0];
+            renderYearAndChampSelectors(); applyHeaderConfig(); renderMatches(); renderClassificacaoGeral();
+        }
+
+        function changeActiveChamp(c) {
+            appData.activeChamp = c; applyHeaderConfig(); renderMatches(); renderClassificacaoGeral();
+        }
+
+        function removeYear(y) {
+            if (appData.years.length <= 1) return;
+            appData.years = appData.years.filter(item => item !== y);
+            delete appData.champs[y];
+            appData.activeYear = appData.years[0];
+            appData.activeChamp = appData.champs[appData.activeYear][0];
+            renderYearAndChampSelectors(); applyHeaderConfig(); silentSave();
+        }
+
+        function removeChamp(c) {
+            const list = appData.champs[appData.activeYear];
+            if (list.length <= 1) return;
+            appData.champs[appData.activeYear] = list.filter(item => item !== c);
+            appData.activeChamp = appData.champs[appData.activeYear][0];
+            renderYearAndChampSelectors(); applyHeaderConfig(); silentSave();
+        }
+
+        function saveTeam(e) {
+            e.preventDefault();
+            const id = document.getElementById('team-id').value || 'team_' + Date.now();
+            const name = document.getElementById('team-name').value.trim();
+            const segment = document.getElementById('team-segment').value;
+
+            appData.teams[id] = { id, name, segment };
+            resetTeamForm(); renderTeams(); renderClassificacaoGeral(); onSegmentOrCategoryChange(); silentSave();
+        }
+
+        function editTeam(id) {
+            const t = appData.teams[id]; if (!t) return;
+            document.getElementById('team-id').value = t.id;
+            document.getElementById('team-name').value = t.name;
+            document.getElementById('team-segment').value = t.segment;
+            document.getElementById('team-submit-btn').innerHTML = `<i class="fa-solid fa-check"></i> Atualizar Equipe`;
+            document.getElementById('team-cancel-btn').style.display = 'inline-flex';
+        }
+
+        function deleteTeam(id) {
+            delete appData.teams[id];
+            renderTeams(); renderClassificacaoGeral(); onSegmentOrCategoryChange(); silentSave();
+        }
+
+        function resetTeamForm() {
+            document.getElementById('team-id').value = '';
+            document.getElementById('team-name').value = '';
+            document.getElementById('team-segment').value = '';
+            document.getElementById('team-submit-btn').innerHTML = `<i class="fa-solid fa-plus"></i> Cadastrar Equipe`;
+            document.getElementById('team-cancel-btn').style.display = 'none';
+        }
+
+        function renderTeams() {
+            const tbody = document.getElementById('teams-table-body');
+            const teamsList = Object.values(appData.teams);
+
+            if (teamsList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">Nenhuma equipe cadastrada ainda.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = teamsList.map(t => `
+                <tr>
+                    <td><strong>${t.name}</strong></td>
+                    <td>${t.segment}</td>
+                    <td class="no-print" style="text-align: right;">
+                        <button class="btn btn-light btn-sm" style="color:black;" onclick="editTeam('${t.id}')"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteTeam('${t.id}')"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function getMatchKey() {
+            const gender = document.getElementById('gender-select').value;
+            const mod = document.getElementById('mod-select').value;
+            const seg = document.getElementById('mod-segment-select').value;
+            return `${appData.activeYear}_${appData.activeChamp}_${gender}_${mod}_${seg}`;
+        }
+
+        function onSegmentOrCategoryChange() {
+            renderTeamSelectorBox();
+            renderMatches();
+        }
+
+        function renderTeamSelectorBox() {
+            const container = document.getElementById('teams-selector-container');
+            const seg = document.getElementById('mod-segment-select').value;
+            const availableTeams = Object.values(appData.teams).filter(t => t.segment === seg);
+
+            if (availableTeams.length === 0) {
+                container.innerHTML = `<span style="color:var(--text-muted); font-size:0.85rem; grid-column:1/-1;">Nenhuma equipe cadastrada para este segmento.</span>`;
+                return;
+            }
+
+            container.innerHTML = availableTeams.map(t => `
+                <label class="team-checkbox-item">
+                    <input type="checkbox" class="modality-team-checkbox" value="${t.id}" checked>
+                    <span>${t.name}</span>
+                </label>
+            `).join('');
+        }
+
+        function toggleAllTeamsSelect(status) {
+            const checkboxes = document.querySelectorAll('.modality-team-checkbox');
+            checkboxes.forEach(cb => cb.checked = status);
+        }
+
+        function generateMatches() {
+            const key = getMatchKey();
+            const format = document.getElementById('mod-format-select').value;
+            
+            // Pega apenas as equipes explicitamente selecionadas nos checkboxes
+            const selectedCheckboxes = document.querySelectorAll('.modality-team-checkbox:checked');
+            const selectedTeamIds = Array.from(selectedCheckboxes).map(cb => cb.value);
+            const availableTeams = selectedTeamIds.map(id => appData.teams[id]).filter(Boolean);
+
+            if (availableTeams.length < 2) {
+                alert("Selecione pelo menos 2 equipes para participar desta modalidade e gerar as chaves!");
+                return;
+            }
+
+            let matches = [];
+
+            if (format === 'eliminatoria_simples') {
+                const shuffled = [...availableTeams].sort(() => Math.random() - 0.5);
+                let roundName = "Primeira Fase";
+                if (shuffled.length === 2) roundName = "Grande Final";
+                else if (shuffled.length <= 4) roundName = "Semifinais";
+                else if (shuffled.length <= 8) roundName = "Quartas de Final";
+
+                let byeTeam = null;
+                let activeTeams = [...shuffled];
+
+                if (activeTeams.length % 2 !== 0) {
+                    byeTeam = activeTeams.pop();
+                    matches.push({
+                        id: 'm_' + Date.now() + '_bye',
+                        round: roundName,
+                        teamA: byeTeam.id,
+                        teamB: 'BYE',
+                        scoreA: 'BYE',
+                        scoreB: 'BYE',
+                        isBye: true
+                    });
+                }
+
+                for (let i = 0; i < activeTeams.length; i += 2) {
+                    matches.push({
+                        id: 'm_' + Date.now() + '_' + i,
+                        round: roundName,
+                        teamA: activeTeams[i].id,
+                        teamB: activeTeams[i+1].id,
+                        scoreA: '',
+                        scoreB: ''
+                    });
+                }
+            } else if (format === 'todos_contra_todos' || format === 'ida_e_volta') {
+                for (let i = 0; i < availableTeams.length; i++) {
+                    for (let j = i + 1; j < availableTeams.length; j++) {
+                        matches.push({
+                            id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                            round: 'Fase de Grupos / Turno Único',
+                            teamA: availableTeams[i].id,
+                            teamB: availableTeams[j].id,
+                            scoreA: '', scoreB: ''
+                        });
+                        if (format === 'ida_e_volta') {
+                            matches.push({
+                                id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                                round: 'Turno de Volta',
+                                teamA: availableTeams[j].id,
+                                teamB: availableTeams[i].id,
+                                scoreA: '', scoreB: ''
+                            });
+                        }
+                    }
+                }
+            }
+
+            appData.matches[key] = matches;
+            renderMatches();
+            silentSave();
+        }
+
+        function checkAndAdvanceNextRound(key) {
+            const matches = appData.matches[key] || [];
+            if (matches.length === 0) return;
+
+            const rounds = [...new Set(matches.map(m => m.round))];
+            const lastRoundName = rounds[rounds.length - 1];
+            
+            if (lastRoundName === "Grande Final" || lastRoundName === "Fase de Grupos / Turno Único" || lastRoundName === "Turno de Volta") {
+                return;
+            }
+
+            const lastRoundMatches = matches.filter(m => m.round === lastRoundName);
+            const allFinished = lastRoundMatches.every(m => m.isBye || (m.scoreA !== '' && m.scoreB !== '' && m.scoreA !== m.scoreB));
+
+            if (allFinished) {
+                let winners = [];
+                let losers = [];
+
+                lastRoundMatches.forEach(m => {
+                    if (m.isBye) {
+                        winners.push(m.teamA);
+                    } else {
+                        if (m.scoreA > m.scoreB) {
+                            winners.push(m.teamA);
+                            losers.push(m.teamB);
+                        } else {
+                            winners.push(m.teamB);
+                            losers.push(m.teamA);
+                        }
+                    }
+                });
+
+                let nextRoundName = "Próxima Fase";
+                if (winners.length === 2) nextRoundName = "Grande Final";
+                else if (winners.length <= 4) nextRoundName = "Semifinais";
+                else if (winners.length <= 8) nextRoundName = "Quartas de Final";
+
+                if (nextRoundName === "Grande Final" && losers.length === 2) {
+                    const existsThird = matches.some(m => m.round === "Disputa de 3º Lugar");
+                    if (!existsThird) {
+                        matches.push({
+                            id: 'm_' + Date.now() + '_3place',
+                            round: 'Disputa de 3º Lugar',
+                            teamA: losers[0],
+                            teamB: losers[1],
+                            scoreA: '',
+                            scoreB: ''
+                        });
+                    }
+                }
+
+                const existsNext = matches.some(m => m.round === nextRoundName);
+                if (!existsNext && winners.length >= 2) {
+                    let activeWinners = [...winners];
+                    if (activeWinners.length % 2 !== 0) {
+                        const bye = activeWinners.pop();
+                        matches.push({
+                            id: 'm_' + Date.now() + '_next_bye',
+                            round: nextRoundName,
+                            teamA: bye,
+                            teamB: 'BYE',
+                            scoreA: 'BYE',
+                            scoreB: 'BYE',
+                            isBye: true
+                        });
+                    }
+
+                    for (let i = 0; i < activeWinners.length; i += 2) {
+                        matches.push({
+                            id: 'm_' + Date.now() + '_next_' + i,
+                            round: nextRoundName,
+                            teamA: activeWinners[i],
+                            teamB: activeWinners[i+1],
+                            scoreA: '',
+                            scoreB: ''
+                        });
+                    }
+                }
+            }
+        }
+
+        function updateScore(key, matchId, field, val) {
+            const list = appData.matches[key];
+            if (!list) return;
+            const match = list.find(m => m.id === matchId);
+            if (match) {
+                match[field] = val !== '' ? parseInt(val, 10) : '';
+                checkAndAdvanceNextRound(key);
+                renderMatches();
+                silentSave();
+            }
+        }
+
+        function deleteSingleMatch(key, matchId) {
+            if (appData.matches[key]) {
+                appData.matches[key] = appData.matches[key].filter(m => m.id !== matchId);
+                renderMatches();
+                silentSave();
+            }
+        }
+
+        function resetCurrentMatches() {
+            const key = getMatchKey();
+            delete appData.matches[key];
+            renderMatches();
+            silentSave();
+        }
+
+        function renderMatches() {
+            const key = getMatchKey();
+            const container = document.getElementById('matches-container');
+            const matches = appData.matches[key] || [];
+
+            if (matches.length === 0) {
+                container.innerHTML = `<p style="color:var(--text-muted);">Nenhum jogo gerado para os filtros selecionados.</p>`;
+                renderModalityStandings([]);
+                return;
+            }
+
+            let html = '';
+            let currentRound = '';
+
+            matches.forEach((m, idx) => {
+                if (m.round !== currentRound) {
+                    currentRound = m.round;
+                    html += `<div class="round-title"><span><i class="fa-solid fa-trophy"></i> ${currentRound}</span></div>`;
+                }
+
+                const nameA = appData.teams[m.teamA]?.name || 'Equipe A';
+                const nameB = m.teamB === 'BYE' ? 'BYE (Avança Direto)' : (appData.teams[m.teamB]?.name || 'Equipe B');
+                
+                if (m.isBye) {
+                    html += `
+                        <div class="match-box bye-box">
+                            <div class="match-header">
+                                <span>Jogo #${idx + 1}</span>
+                                <span class="bye-badge"><i class="fa-solid fa-forward"></i> ISENTO / BYE</span>
+                            </div>
+                            <div class="match-row">
+                                <span style="font-weight:800; color:var(--primary);">${nameA}</span>
+                                <span style="font-size:0.8rem; font-weight:700; color:var(--accent-blue);">Classificado</span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    const winA = m.scoreA !== '' && m.scoreB !== '' && m.scoreA > m.scoreB;
+                    const winB = m.scoreA !== '' && m.scoreB !== '' && m.scoreB > m.scoreA;
+
+                    html += `
+                        <div class="match-box ${winA || winB ? 'winner-box' : ''}">
+                            <div class="match-header">
+                                <span>Jogo #${idx + 1}</span>
+                                <button class="delete-match-btn no-print" onclick="deleteSingleMatch('${key}', '${m.id}')" title="Excluir este jogo">
+                                    <i class="fa-solid fa-trash"></i> Excluir
+                                </button>
+                            </div>
+                            <div class="match-row">
+                                <span style="${winA ? 'font-weight:800; color:var(--primary);' : ''}">${nameA}</span>
+                                <input type="number" class="score-input" value="${m.scoreA !== undefined ? m.scoreA : ''}" onchange="updateScore('${key}', '${m.id}', 'scoreA', this.value)">
+                            </div>
+                            <div class="match-row">
+                                <span style="${winB ? 'font-weight:800; color:var(--primary);' : ''}">${nameB}</span>
+                                <input type="number" class="score-input" value="${m.scoreB !== undefined ? m.scoreB : ''}" onchange="updateScore('${key}', '${m.id}', 'scoreB', this.value)">
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            container.innerHTML = html;
+            calculateModalityStandings(matches);
+        }
+
+        function calculateModalityStandings(matches) {
+            const scores = {};
+
+            matches.forEach(m => {
+                if (!m.isBye && m.scoreA !== '' && m.scoreB !== '' && !isNaN(m.scoreA) && !isNaN(m.scoreB)) {
+                    if (!scores[m.teamA]) scores[m.teamA] = 0;
+                    if (!scores[m.teamB]) scores[m.teamB] = 0;
+
+                    if (m.scoreA > m.scoreB) {
+                        scores[m.teamA] += 3;
+                    } else if (m.scoreB > m.scoreA) {
+                        scores[m.teamB] += 3;
+                    } else {
+                        scores[m.teamA] += 1;
+                        scores[m.teamB] += 1;
+                    }
+                }
+            });
+
+            const sorted = Object.keys(scores).map(id => ({
+                id, pts: scores[id]
+            })).sort((a, b) => b.pts - a.pts);
+
+            renderModalityStandings(sorted);
+        }
+
+        function renderModalityStandings(standings) {
+            const tbody = document.getElementById('modality-standings-body');
+            if (standings.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">Nenhuma partida processada.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = standings.map((item, index) => `
+                <tr>
+                    <td><strong>${index + 1}º Lugar</strong></td>
+                    <td>${appData.teams[item.id]?.name || 'Equipe'}</td>
+                    <td><strong>${item.pts} pts</strong></td>
+                </tr>
+            `).join('');
+        }
+
+        function updateArrecadacao(teamId, field, val) {
+            if (!appData.arrecadacao[teamId]) appData.arrecadacao[teamId] = { alimentos: 0, lacres: 0, pontos: 0 };
+            appData.arrecadacao[teamId][field] = parseFloat(val) || 0;
+            silentSave();
+        }
+
+        function renderArrecadacao() {
+            const tbody = document.getElementById('arrecadacao-table-body');
+            const teams = Object.values(appData.teams);
+
+            if (teams.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Cadastre equipes para registrar arrecadação.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = teams.map(t => {
+                const data = appData.arrecadacao[t.id] || { alimentos: 0, lacres: 0, pontos: 0 };
+                return `
+                    <tr>
+                        <td><strong>${t.name}</strong></td>
+                        <td>${t.segment}</td>
+                        <td><input type="number" class="score-input" style="width:90px;" value="${data.alimentos}" onchange="updateArrecadacao('${t.id}', 'alimentos', this.value)"></td>
+                        <td><input type="number" class="score-input" style="width:90px;" value="${data.lacres}" onchange="updateArrecadacao('${t.id}', 'lacres', this.value)"></td>
+                        <td><input type="number" class="score-input" style="width:90px;" value="${data.pontos}" onchange="updateArrecadacao('${t.id}', 'pontos', this.value)"></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateCultural(teamId, field, val) {
+            if (!appData.cultural[teamId]) appData.cultural[teamId] = { danca: 0, torcida: 0, pontos: 0 };
+            appData.cultural[teamId][field] = parseFloat(val) || 0;
+            silentSave();
+        }
+
+        function renderCultural() {
+            const tbody = document.getElementById('cultural-table-body');
+            const teams = Object.values(appData.teams);
+
+            if (teams.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Cadastre equipes para registrar tarefas culturais.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = teams.map(t => {
+                const data = appData.cultural[t.id] || { danca: 0, torcida: 0, pontos: 0 };
+                return `
+                    <tr>
+                        <td><strong>${t.name}</strong></td>
+                        <td>${t.segment}</td>
+                        <td><input type="number" class="score-input" style="width:90px;" value="${data.danca}" onchange="updateCultural('${t.id}', 'danca', this.value)"></td>
+                        <td><input type="number" class="score-input" style="width:90px;" value="${data.torcida}" onchange="updateCultural('${t.id}', 'torcida', this.value)"></td>
+                        <td><input type="number" class="score-input" style="width:90px;" value="${data.pontos}" onchange="updateCultural('${t.id}', 'pontos', this.value)"></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function calculateSchedule() {
+            const startTime = document.getElementById('time-start').value || '08:00';
+            const duration = parseInt(document.getElementById('time-duration').value, 10) || 20;
+            const rest = parseInt(document.getElementById('time-rest').value, 10) || 5;
+            const courts = parseInt(document.getElementById('time-courts').value, 10) || 1;
+
+            let allMatches = [];
+            Object.keys(appData.matches).forEach(key => {
+                if (key.startsWith(`${appData.activeYear}_${appData.activeChamp}`)) {
+                    const parts = key.split('_');
+                    const label = `${parts[3]} (${parts[2]} - ${parts[4]})`;
+                    appData.matches[key].forEach(m => {
+                        if (!m.isBye) allMatches.push({ ...m, label });
+                    });
+                }
+            });
+
+            document.getElementById('summary-total-matches').innerText = `${allMatches.length} jogos`;
+
+            if (allMatches.length === 0) {
+                document.getElementById('summary-total-time').innerText = `0h 0min`;
+                document.getElementById('summary-end-time').innerText = `--:--`;
+                document.getElementById('schedule-table-body').innerHTML = `<tr><td colspan="4" style="text-align:center;">Nenhum jogo encontrado.</td></tr>`;
+                return;
+            }
+
+            const timePerGame = duration + rest;
+            const totalMinutes = Math.ceil(allMatches.length / courts) * timePerGame;
+            const hours = Math.floor(totalMinutes / 60);
+            const mins = totalMinutes % 60;
+            document.getElementById('summary-total-time').innerText = `${hours}h ${mins}min`;
+
+            const [hStart, mStart] = startTime.split(':').map(Number);
+            const endDate = new Date();
+            endDate.setHours(hStart, mStart + totalMinutes);
+            document.getElementById('summary-end-time').innerText = endDate.toTimeString().substr(0, 5);
+
+            let currentMinutes = hStart * 60 + mStart;
+            let html = '';
+
+            allMatches.forEach((m, idx) => {
+                const matchHour = Math.floor(currentMinutes / 60).toString().padStart(2, '0');
+                const matchMin = (currentMinutes % 60).toString().padStart(2, '0');
+                const teamA = appData.teams[m.teamA]?.name || 'Equipe A';
+                const teamB = appData.teams[m.teamB]?.name || 'Equipe B';
+
+                html += `
+                    <tr>
+                        <td><strong>Jogo #${idx + 1}</strong></td>
+                        <td>${matchHour}:${matchMin}</td>
+                        <td>${m.label} - ${m.round}</td>
+                        <td>${teamA} x ${teamB}</td>
+                    </tr>
+                `;
+
+                if ((idx + 1) % courts === 0) {
+                    currentMinutes += timePerGame;
+                }
+            });
+
+            document.getElementById('schedule-table-body').innerHTML = html;
+        }
+
+        function switchGeralView(segment, btn) {
+            currentGeralFilter = segment;
+            document.querySelectorAll('#tab-geral .sub-nav button').forEach(b => {
+                b.classList.remove('btn-primary');
+                b.classList.add('btn-light');
+            });
+            btn.classList.remove('btn-light');
+            btn.classList.add('btn-primary');
+            renderClassificacaoGeral();
+        }
+
+        function renderClassificacaoGeral() {
+            const tbody = document.getElementById('geral-table-body');
+            const title = document.getElementById('geral-title');
+            title.innerHTML = `<i class="fa-solid fa-trophy"></i> Classificação Geral - ${currentGeralFilter}`;
+
+            let teams = Object.values(appData.teams);
+            if (currentGeralFilter !== 'GERAL_CONSOLIDADO') {
+                teams = teams.filter(t => t.segment === currentGeralFilter);
+            }
+
+            if (teams.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Nenhuma equipe cadastrada neste segmento.</td></tr>`;
+                return;
+            }
+
+            const result = teams.map(t => {
+                let wins = 0;
+                let draws = 0;
+
+                Object.keys(appData.matches).forEach(key => {
+                    if (key.startsWith(`${appData.activeYear}_${appData.activeChamp}`)) {
+                        appData.matches[key].forEach(m => {
+                            if (!m.isBye && m.scoreA !== '' && m.scoreB !== '' && !isNaN(m.scoreA) && !isNaN(m.scoreB)) {
+                                if (m.teamA === t.id) {
+                                    if (m.scoreA > m.scoreB) wins++;
+                                    else if (m.scoreA === m.scoreB) draws++;
+                                }
+                                if (m.teamB === t.id) {
+                                    if (m.scoreB > m.scoreA) wins++;
+                                    else if (m.scoreA === m.scoreB) draws++;
+                                }
+                            }
+                        });
+                    }
+                });
+
+                const esportivos = (wins * 3) + (draws * 1);
+                const arrecadacaoPts = appData.arrecadacao[t.id]?.pontos || 0;
+                const culturalPts = appData.cultural[t.id]?.pontos || 0;
+                const totalGeral = esportivos + arrecadacaoPts + culturalPts;
+
+                return { ...t, esportivos, arrecadacaoPts, culturalPts, totalGeral };
+            });
+
+            result.sort((a, b) => b.totalGeral - a.totalGeral || b.esportivos - a.esportivos);
+
+            tbody.innerHTML = result.map((t, index) => `
+                <tr>
+                    <td><strong>${index + 1}º</strong></td>
+                    <td><strong>${t.name}</strong></td>
+                    <td>${t.segment}</td>
+                    <td>${t.esportivos} pts</td>
+                    <td>${t.arrecadacaoPts} pts</td>
+                    <td>${t.culturalPts} pts</td>
+                    <td><strong style="color:var(--primary); font-size:1.1rem;">${t.totalGeral} pts</strong></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderBoletim() {
+            const container = document.getElementById('boletim-content');
+            const teams = Object.values(appData.teams);
+
+            let html = `
+                <div style="margin-bottom:20px;">
+                    <h3>${appData.config.title} — Boletim Informativo</h3>
+                    <p>Ano Letivo: ${appData.activeYear} | Edição: ${appData.activeChamp}</p>
+                    <hr style="margin: 10px 0;">
+                </div>
+                <h4>Equipes Participantes</h4><ul>
+            `;
+            teams.forEach(t => { html += `<li><strong>${t.name}</strong> (${t.segment})</li>`; });
+            html += `</ul>`;
+            container.innerHTML = html;
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
