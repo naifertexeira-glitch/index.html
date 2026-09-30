@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -24,28 +25,16 @@
             --radius-lg: 16px;
             --radius-md: 10px;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
-        
-        header {
-            background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #059669 100%);
-            color: white; padding: 1.8rem 2rem; box-shadow: var(--shadow);
-        }
-
-        .header-container {
-            max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
-        }
-
+        header { background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #059669 100%); color: white; padding: 1.8rem 2rem; box-shadow: var(--shadow); }
+        .header-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
         .header-brand { display: flex; align-items: center; gap: 20px; }
         .header-logo { height: 65px; width: auto; border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.15); padding: 6px; display: none; }
         .header-titles h1 { font-size: 1.7rem; font-weight: 800; display: flex; align-items: center; gap: 12px; }
         .header-titles p { font-size: 0.95rem; opacity: 0.9; margin-top: 4px; }
         .header-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.2); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-top: 6px; }
-
-        .btn {
-            padding: 10px 20px; border-radius: var(--radius-md); border: none; font-weight: 600; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s ease;
-        }
+        .btn { padding: 10px 20px; border-radius: var(--radius-md); border: none; font-weight: 600; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s ease; }
         .btn-light { background-color: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(255, 255, 255, 0.2); }
         .btn-light:hover { background-color: rgba(255, 255, 255, 0.25); }
         .btn-primary { background-color: var(--primary); color: white; }
@@ -53,70 +42,59 @@
         .btn-danger { background-color: var(--accent-rose); color: white; }
         .btn-warning { background-color: var(--accent-amber); color: white; }
         .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
-
         .config-drawer { display: none; background: rgba(6, 78, 59, 0.96); padding: 25px; margin-top: 20px; border-radius: var(--radius-lg); color: white; }
         .config-drawer.open { display: block; }
-
         nav { background-color: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1400px; margin: 0 auto; display: flex; overflow-x: auto; white-space: nowrap; }
         .nav-tab { padding: 18px 24px; font-weight: 600; font-size: 0.9rem; color: var(--text-muted); border: none; background: none; cursor: pointer; border-bottom: 3px solid transparent; display: flex; align-items: center; gap: 10px; }
         .nav-tab.active { color: var(--primary); border-bottom-color: var(--primary); background-color: var(--primary-light); }
-
         main { max-width: 1400px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; width: 100%; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-
         .card { background: var(--card-bg); border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 1.8rem; margin-bottom: 1.8rem; border: 1px solid var(--border); }
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
         .card-title { font-size: 1.25rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 12px; }
-
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 18px; }
         .form-group { display: flex; flex-direction: column; gap: 8px; }
         .form-group label { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
         .form-control { padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: var(--radius-md); font-size: 0.95rem; outline: none; background: #f8fafc; }
         .form-control:focus { border-color: var(--primary); background: white; }
-
-        .teams-selection-box {
-            background: #f8fafc; border: 1px solid #cbd5e1; border-radius: var(--radius-md); padding: 12px; max-height: 160px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 5px;
-        }
+        .teams-selection-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: var(--radius-md); padding: 12px; max-height: 160px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 5px; }
         .team-checkbox-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); cursor: pointer; }
         .team-checkbox-item input { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
-
         .table-responsive { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; font-size: 0.92rem; text-align: left; }
         th, td { padding: 14px 18px; border-bottom: 1px solid var(--border); }
         th { background-color: var(--primary-light); color: var(--text-main); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; }
-
-        .match-box { background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px; margin-bottom: 12px; position: relative; }
+        .match-box { background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px; margin-bottom: 12px; position: relative; page-break-inside: avoid; }
         .match-box.winner-box { border-color: var(--accent-green); background-color: var(--primary-light); }
         .match-box.bye-box { border-color: var(--accent-blue); background-color: #eff6ff; }
         .match-header { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
         .match-row { display: flex; justify-content: space-between; align-items: center; margin: 4px 0; gap: 10px; font-weight: 600; font-size: 0.9rem; }
-        .score-input { width: 65px; text-align: center; padding: 6px; border: 1px solid #cbd5e1; border-radius: var(--radius-md); font-weight: 700; }
-
+        .score-input { width: 60px; text-align: center; padding: 6px; border: 1px solid #cbd5e1; border-radius: var(--radius-md); font-weight: 700; }
+        .penalty-container { background: #fffbe3; padding: 6px 10px; border-radius: 6px; border: 1px solid #fef08a; margin-top: 6px; }
+        .penalty-title { font-size: 0.7rem; font-weight: 800; color: #b45309; text-transform: uppercase; margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
         .modality-grid-container { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
-        .round-title { font-size: 1.05rem; font-weight: 800; color: var(--primary-hover); margin: 20px 0 10px 0; border-bottom: 2px solid var(--border); padding-bottom: 6px; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
-
+        .round-title { font-size: 1.05rem; font-weight: 800; color: var(--primary-hover); margin: 20px 0 10px 0; border-bottom: 2px solid var(--border); padding-bottom: 6px; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; page-break-after: avoid; }
         .print-header { display: none; text-align: center; padding-bottom: 15px; margin-bottom: 20px; border-bottom: 2px solid var(--primary); }
         .print-header img { max-height: 80px; width: auto; margin-bottom: 10px; }
         .print-header h2 { font-size: 1.6rem; color: #064e3b; font-weight: 800; text-transform: uppercase; }
         .print-header p { font-size: 0.95rem; color: #475569; font-weight: 600; margin-top: 4px; }
-
         .delete-match-btn { background: transparent; border: none; color: var(--accent-rose); cursor: pointer; font-size: 0.9rem; padding: 2px 6px; border-radius: 4px; transition: background 0.2s; }
         .delete-match-btn:hover { background: #ffe4e6; }
         .bye-badge { background: var(--accent-blue); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; }
-
+        .champ-badge { background: var(--accent-amber); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 800; }
+        .proof-mgr-bar { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; background: #f8fafc; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--border); }
         @page { margin: 1cm; size: A4 portrait; }
         @media print {
             body { background: white !important; color: black !important; padding: 0 !important; }
-            header, nav, footer, .btn, .no-print, .config-drawer, .delete-match-btn { display: none !important; }
+            header, nav, footer, .btn, .no-print, .config-drawer, .delete-match-btn, .proof-mgr-bar { display: none !important; }
             .print-header { display: block !important; }
             .card { box-shadow: none !important; border: 1px solid #ccc !important; padding: 1rem !important; margin-bottom: 1rem !important; }
-            .hide-podio-print #card-podio-modalidade { display: none !important; }
-            .hide-podio-print .modality-grid-container { grid-template-columns: 1fr !important; }
+            body.print-only-bracket #card-podio-modalidade, body.print-only-bracket #card-config-modalidade { display: none !important; }
+            body.print-only-bracket .modality-grid-container { grid-template-columns: 1fr !important; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
-
         @media (max-width: 900px) { .modality-grid-container { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -126,7 +104,6 @@
         <h2 id="print-header-title">CAMPEONATO INTERCLASSE</h2>
         <p id="print-header-info">Ano: 2026 | Campeonato Principal</p>
     </div>
-
     <header>
         <div class="header-container">
             <div class="header-brand">
@@ -145,7 +122,6 @@
                 <button class="btn btn-light" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir Página</button>
             </div>
         </div>
-
         <div id="config-drawer" class="config-drawer no-print">
             <h4 style="margin-bottom: 15px;"><i class="fa-solid fa-sliders"></i> Personalizar Sistema</h4>
             <div class="form-grid">
@@ -168,7 +144,6 @@
             </div>
         </div>
     </header>
-
     <nav class="no-print">
         <div class="nav-container">
             <button class="nav-tab active" onclick="switchTab('anos-campeonatos', this)"><i class="fa-solid fa-calendar-days"></i> Anos & Campeonatos</button>
@@ -181,7 +156,6 @@
             <button class="nav-tab" onclick="switchTab('boletim', this)"><i class="fa-solid fa-file-invoice"></i> Boletim</button>
         </div>
     </nav>
-
     <main>
         <!-- ABA ANOS E CAMPEONATOS -->
         <div id="tab-anos-campeonatos" class="tab-content active">
@@ -198,7 +172,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
                 <div class="card">
                     <div class="card-header"><span class="card-title"><i class="fa-solid fa-calendar-plus"></i> Gerenciar Anos</span></div>
@@ -216,7 +189,6 @@
                         </table>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header"><span class="card-title"><i class="fa-solid fa-trophy"></i> Campeonatos do Ano</span></div>
                     <form onsubmit="addNewChamp(event)" style="margin-bottom:20px;">
@@ -263,7 +235,6 @@
                     </div>
                 </form>
             </div>
-
             <div class="card">
                 <div class="card-header"><span class="card-title"><i class="fa-solid fa-list"></i> Equipes Cadastradas</span></div>
                 <div class="table-responsive">
@@ -279,7 +250,7 @@
 
         <!-- ABA MODALIDADES COLETIVAS -->
         <div id="tab-modalidades" class="tab-content">
-            <div class="card">
+            <div class="card" id="card-config-modalidade">
                 <div class="card-header"><span class="card-title"><i class="fa-solid fa-gear"></i> Configurar Esporte Coletivo</span></div>
                 <div class="form-grid">
                     <div class="form-group">
@@ -312,14 +283,12 @@
                     <div class="form-group">
                         <label>Forma de Disputa</label>
                         <select id="mod-format-select" class="form-control">
-                            <option value="eliminatoria_simples">Mata-Mata Completo (com BYE e 3º Place/Final)</option>
+                            <option value="eliminatoria_simples">Mata-Mata Completo (com BYE e Final)</option>
+                            <option value="ida_volta">Jogos de Ida e Volta (Turno e Returno)</option>
                             <option value="todos_contra_todos">Todos contra Todos (Turno Único)</option>
-                            <option value="ida_e_volta">Ida e Volta</option>
                         </select>
                     </div>
                 </div>
-
-                <!-- SELEÇÃO MANUAL DE EQUIPES QUE VÃO PARTICIPAR -->
                 <div class="form-group" style="margin-bottom: 20px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 4px;">
                         <label><i class="fa-solid fa-check-double"></i> Selecionar Equipes Participantes Desta Modalidade</label>
@@ -328,32 +297,27 @@
                             <button class="btn btn-light btn-sm" style="color:black;" onclick="toggleAllTeamsSelect(false)">Desmarcar Todas</button>
                         </div>
                     </div>
-                    <div id="teams-selector-container" class="teams-selection-box">
-                        <!-- Gerado via JavaScript -->
-                    </div>
+                    <div id="teams-selector-container" class="teams-selection-box"></div>
                 </div>
-
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class="btn btn-primary" onclick="generateMatches()"><i class="fa-solid fa-shuffle"></i> Sorteio / Iniciar Chaves</button>
                     <button class="btn btn-warning" onclick="resetCurrentMatches()"><i class="fa-solid fa-rotate-left"></i> Zerar Categoria</button>
+                    <button class="btn btn-light" style="color:black;" onclick="printOnlyBracket()"><i class="fa-solid fa-sitemap"></i> Imprimir Somente Chaveamento</button>
                     <button class="btn btn-light" style="color:black;" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir Tudo</button>
                 </div>
             </div>
-
             <div class="modality-grid-container">
                 <div class="card" id="card-chaveamento-modalidade">
                     <div class="card-header">
                         <span class="card-title"><i class="fa-solid fa-sitemap"></i> Chaveamento Sequencial de Partidas</span>
-                        <button class="btn btn-light btn-sm no-print" style="color: black;" onclick="printChaveamentoOnly()"><i class="fa-solid fa-print"></i> Imprimir Chaveamento</button>
                     </div>
                     <div id="matches-container"><p style="color:var(--text-muted);">Selecione os parâmetros e clique em Sorteio.</p></div>
                 </div>
-
                 <div class="card" id="card-podio-modalidade">
                     <div class="card-header"><span class="card-title"><i class="fa-solid fa-ranking-star"></i> Tabela de Pontos da Categoria</span></div>
                     <div class="table-responsive">
                         <table>
-                            <thead><tr><th>Colocação</th><th>Equipe</th><th>Pontos (3/1)</th></tr></thead>
+                            <thead><tr><th>Colocação</th><th>Equipe</th><th>Pontos</th></tr></thead>
                             <tbody id="modality-standings-body">
                                 <tr><td colspan="3" style="text-align:center;">Nenhuma partida processada.</td></tr>
                             </tbody>
@@ -367,18 +331,14 @@
         <div id="tab-arrecadacao" class="tab-content">
             <div class="card">
                 <div class="card-header"><span class="card-title"><i class="fa-solid fa-box-archive"></i> Tarefa Solidária / Arrecadação</span></div>
-                <p style="margin-bottom: 15px; color: var(--text-muted);">Insira a quantidade arrecadada por cada equipe para contabilizar pontuação direta na Classificação Geral.</p>
+                <p style="margin-bottom: 15px; color: var(--text-muted);">Cadastre manualmente as provas de arrecadação e atribua a pontuação direta de cada equipe.</p>
+                <div class="proof-mgr-bar no-print">
+                    <input type="text" id="new-arrecadacao-proof-name" class="form-control" placeholder="Nome da Prova (Ex: Alimentos Kg, Tampinhas)">
+                    <button class="btn btn-primary" onclick="addProof('arrecadacao')"><i class="fa-solid fa-plus"></i> Adicionar Prova</button>
+                </div>
                 <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Equipe</th>
-                                <th>Segmento</th>
-                                <th>Alimentos (Kg / Unid.)</th>
-                                <th>Lacres / Tampinhas (Kg)</th>
-                                <th>Pontuação Atribuída</th>
-                            </tr>
-                        </thead>
+                    <table id="arrecadacao-table">
+                        <thead id="arrecadacao-table-head"></thead>
                         <tbody id="arrecadacao-table-body"></tbody>
                     </table>
                 </div>
@@ -389,18 +349,14 @@
         <div id="tab-cultural" class="tab-content">
             <div class="card">
                 <div class="card-header"><span class="card-title"><i class="fa-solid fa-masks-theater"></i> Atividades Culturais e Recreativas</span></div>
-                <p style="margin-bottom: 15px; color: var(--text-muted);">Registre notas ou pontos obtidos em Dança, Gincanas, Mascote e Torcida.</p>
+                <p style="margin-bottom: 15px; color: var(--text-muted);">Cadastre manualmente as modalidades culturais/recreativas para pontuar as equipes.</p>
+                <div class="proof-mgr-bar no-print">
+                    <input type="text" id="new-cultural-proof-name" class="form-control" placeholder="Nome da Prova (Ex: Apresentação Dança, Mascote, Torcida)">
+                    <button class="btn btn-primary" onclick="addProof('cultural')"><i class="fa-solid fa-plus"></i> Adicionar Prova</button>
+                </div>
                 <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Equipe</th>
-                                <th>Segmento</th>
-                                <th>Apresentação / Dança</th>
-                                <th>Mascote / Torcida</th>
-                                <th>Pontos Culturais Totais</th>
-                            </tr>
-                        </thead>
+                    <table id="cultural-table">
+                        <thead id="cultural-table-head"></thead>
                         <tbody id="cultural-table-body"></tbody>
                     </table>
                 </div>
@@ -430,7 +386,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-grid" style="grid-template-columns: 1fr 2fr;">
                 <div class="card" style="background:var(--primary-light);">
                     <div class="card-header"><span class="card-title"><i class="fa-solid fa-chart-pie"></i> Resumo da Duração</span></div>
@@ -449,7 +404,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-header"><span class="card-title"><i class="fa-solid fa-list-ol"></i> Cronograma Geral do Torneio</span></div>
                     <div class="table-responsive">
@@ -474,7 +428,6 @@
                 <button class="btn btn-light" style="color:black;" onclick="switchGeralView('Ensino Médio 02', this)">Ensino Médio 02</button>
                 <button class="btn btn-primary" onclick="switchGeralView('GERAL_CONSOLIDADO', this)">🏆 CONSOLIDADO GERAL</button>
             </div>
-
             <div class="card">
                 <div class="card-header"><span class="card-title" id="geral-title"><i class="fa-solid fa-trophy"></i> Classificação Geral</span></div>
                 <div class="table-responsive">
@@ -484,7 +437,7 @@
                                 <th>Posição</th>
                                 <th>Equipe</th>
                                 <th>Segmento</th>
-                                <th>Pts Esportivos (3/1)</th>
+                                <th>Pts Esportivos</th>
                                 <th>Pts Arrecadação</th>
                                 <th>Pts Culturais</th>
                                 <th>TOTAL CONSOLIDADO</th>
@@ -515,452 +468,566 @@
             activeChamp: "Campeonato Principal",
             years: ["2026"],
             champs: { "2026": ["Campeonato Principal"] },
-            teams: {},
+            teams: [],
             matches: {},
-            arrecadacao: {},
-            cultural: {}
+            matchFormats: {},
+            proofs: {
+                arrecadacao: ["Alimentos (Kg)", "Lacres / Tampinhas"],
+                cultural: ["Apresentação Dança", "Mascote / Torcida"]
+            },
+            scores: {
+                arrecadacao: {},
+                cultural: {}
+            }
         };
 
-        let currentGeralFilter = "GERAL_CONSOLIDADO";
-
+        // --- INICIALIZAÇÃO & LOCAL STORAGE ---
         function initApp() {
-            const saved = localStorage.getItem('interclasse_system_db');
-            if (saved) {
-                try { appData = JSON.parse(saved); } catch (e) { console.error("Erro ao carregar dados", e); }
+            const savedData = localStorage.getItem('interclasse_db');
+            if (savedData) {
+                appData = JSON.parse(savedData);
+                if (!appData.proofs) appData.proofs = { arrecadacao: ["Alimentos (Kg)", "Lacres / Tampinhas"], cultural: ["Apresentação Dança", "Mascote / Torcida"] };
+                if (!appData.scores) appData.scores = { arrecadacao: {}, cultural: {} };
+                if (!appData.matchFormats) appData.matchFormats = {};
+            } else {
+                saveAppData();
             }
-            if (!appData.arrecadacao) appData.arrecadacao = {};
-            if (!appData.cultural) appData.cultural = {};
-
-            applyHeaderConfig();
-            renderYearAndChampSelectors();
+            renderHeader();
+            renderYearsAndChamps();
             renderTeams();
-            onSegmentOrCategoryChange();
-            renderArrecadacao();
-            renderCultural();
-            renderClassificacaoGeral();
+            renderMatches();
+            renderManualTab('arrecadacao');
+            renderManualTab('cultural');
+            calculateSchedule();
         }
 
-        function silentSave() { localStorage.setItem('interclasse_system_db', JSON.stringify(appData)); }
+        function saveAppData() {
+            localStorage.setItem('interclasse_db', JSON.stringify(appData));
+        }
+
         function resetWholeSystem() {
-            if (confirm("ATENÇÃO: Tem certeza que deseja zerar TODOS os dados cadastrados?")) {
-                localStorage.removeItem('interclasse_system_db');
+            if (confirm("Atenção: Todos os dados (anos, campeonatos, equipes, jogos) serão apagados. Deseja continuar?")) {
+                localStorage.removeItem('interclasse_db');
                 location.reload();
             }
         }
 
-        function printChaveamentoOnly() {
-            document.body.classList.add('hide-podio-print');
-            window.print();
-            document.body.classList.remove('hide-podio-print');
-        }
-
-        function switchTab(tabId, btnElement) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
-            document.getElementById(`tab-${tabId}`).classList.add('active');
-            if (btnElement) btnElement.classList.add('active');
-
-            if (tabId === 'cronograma') calculateSchedule();
-            if (tabId === 'arrecadacao') renderArrecadacao();
-            if (tabId === 'cultural') renderCultural();
-            if (tabId === 'geral') renderClassificacaoGeral();
-            if (tabId === 'boletim') renderBoletim();
-            if (tabId === 'modalidades') onSegmentOrCategoryChange();
-        }
-
+        // --- CABEÇALHO & CONFIGURAÇÃO ---
         function toggleConfigDrawer() {
             const drawer = document.getElementById('config-drawer');
             drawer.classList.toggle('open');
-            document.getElementById('cfg-title').value = appData.config.title;
-            document.getElementById('cfg-subtitle').value = appData.config.subtitle;
+            if (drawer.classList.contains('open')) {
+                document.getElementById('cfg-title').value = appData.config.title;
+                document.getElementById('cfg-subtitle').value = appData.config.subtitle;
+            }
         }
 
         function saveHeaderConfig() {
             appData.config.title = document.getElementById('cfg-title').value || "CAMPEONATO INTERCLASSE";
             appData.config.subtitle = document.getElementById('cfg-subtitle').value || "";
-            applyHeaderConfig();
+            saveAppData();
+            renderHeader();
             toggleConfigDrawer();
-            silentSave();
         }
 
-        function applyHeaderConfig() {
-            document.getElementById('header-title-text').innerHTML = `<i class="fa-solid fa-trophy" style="color: #f59e0b;"></i> ${appData.config.title}`;
-            document.getElementById('header-subtitle-text').innerText = appData.config.subtitle;
-            document.getElementById('print-header-title').innerText = appData.config.title;
-            document.getElementById('print-header-info').innerText = `Ano: ${appData.activeYear} | ${appData.activeChamp}`;
-
-            const logoImg = document.getElementById('header-logo-img');
-            const printLogo = document.getElementById('print-header-logo');
-
-            if (appData.config.logo) {
-                logoImg.src = appData.config.logo; logoImg.style.display = 'block';
-                printLogo.src = appData.config.logo; printLogo.style.display = 'block';
-            } else {
-                logoImg.style.display = 'none'; printLogo.style.display = 'none';
-            }
-
-            document.getElementById('hdr-year-name').innerText = appData.activeYear;
-            document.getElementById('hdr-champ-name').innerText = appData.activeChamp;
-        }
-
-        function uploadLogoDirect(e) {
-            const file = e.target.files[0];
+        function uploadLogoDirect(event) {
+            const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(evt) { appData.config.logo = evt.target.result; applyHeaderConfig(); silentSave(); };
+                reader.onload = function(e) {
+                    appData.config.logo = e.target.result;
+                    saveAppData();
+                    renderHeader();
+                };
                 reader.readAsDataURL(file);
             }
         }
 
-        function removeLogo() { appData.config.logo = ""; applyHeaderConfig(); silentSave(); }
+        function removeLogo() {
+            appData.config.logo = "";
+            saveAppData();
+            renderHeader();
+        }
 
-        function renderYearAndChampSelectors() {
-            const yearSel = document.getElementById('select-active-year');
-            const champSel = document.getElementById('select-active-champ');
-            
-            yearSel.innerHTML = appData.years.map(y => `<option value="${y}" ${y === appData.activeYear ? 'selected' : ''}>${y}</option>`).join('');
+        function renderHeader() {
+            document.getElementById('header-title-text').innerHTML = `<i class="fa-solid fa-trophy" style="color: #f59e0b;"></i> ${appData.config.title}`;
+            document.getElementById('header-subtitle-text').innerText = appData.config.subtitle;
+            document.getElementById('hdr-year-name').innerText = appData.activeYear;
+            document.getElementById('hdr-champ-name').innerText = appData.activeChamp;
+
+            document.getElementById('print-header-title').innerText = appData.config.title;
+            document.getElementById('print-header-info').innerText = `Ano: ${appData.activeYear} | ${appData.activeChamp}`;
+
+            const logoImg = document.getElementById('header-logo-img');
+            const printLogoImg = document.getElementById('print-header-logo');
+            if (appData.config.logo) {
+                logoImg.src = appData.config.logo;
+                logoImg.style.display = 'block';
+                printLogoImg.src = appData.config.logo;
+                printLogoImg.style.display = 'inline-block';
+            } else {
+                logoImg.style.display = 'none';
+                printLogoImg.style.display = 'none';
+            }
+        }
+
+        // --- ABAS E NAVEGAÇÃO ---
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            btn.classList.add('active');
+
+            if (tabId === 'geral') renderGeralStandings();
+            if (tabId === 'boletim') renderBoletim();
+            if (tabId === 'cronograma') calculateSchedule();
+        }
+
+        // --- ANOS E CAMPEONATOS ---
+        function renderYearsAndChamps() {
+            const yearSelect = document.getElementById('select-active-year');
+            const champSelect = document.getElementById('select-active-champ');
+
+            yearSelect.innerHTML = appData.years.map(y => `<option value="${y}" ${y === appData.activeYear ? 'selected' : ''}>${y}</option>`).join('');
+
             const currentChamps = appData.champs[appData.activeYear] || [];
-            champSel.innerHTML = currentChamps.map(c => `<option value="${c}" ${c === appData.activeChamp ? 'selected' : ''}>${c}</option>`).join('');
+            champSelect.innerHTML = currentChamps.map(c => `<option value="${c}" ${c === appData.activeChamp ? 'selected' : ''}>${c}</option>`).join('');
 
             document.getElementById('years-table-body').innerHTML = appData.years.map(y => `
-                <tr><td><strong>${y}</strong></td><td style="text-align:right;"><button class="btn btn-danger btn-sm" onclick="removeYear('${y}')"><i class="fa-solid fa-trash"></i></button></td></tr>
+                <tr>
+                    <td><strong>${y}</strong></td>
+                    <td style="text-align:right;">
+                        <button class="btn btn-danger btn-sm" onclick="deleteYear('${y}')"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
             `).join('');
 
             document.getElementById('champs-table-body').innerHTML = currentChamps.map(c => `
-                <tr><td><strong>${c}</strong></td><td style="text-align:right;"><button class="btn btn-danger btn-sm" onclick="removeChamp('${c}')"><i class="fa-solid fa-trash"></i></button></td></tr>
+                <tr>
+                    <td><strong>${c}</strong></td>
+                    <td style="text-align:right;">
+                        <button class="btn btn-danger btn-sm" onclick="deleteChamp('${c}')"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
             `).join('');
+        }
+
+        function changeActiveYear(year) {
+            appData.activeYear = year;
+            appData.activeChamp = appData.champs[year] ? appData.champs[year][0] : '';
+            saveAppData();
+            renderHeader();
+            renderYearsAndChamps();
+            renderTeams();
+            renderMatches();
+            renderManualTab('arrecadacao');
+            renderManualTab('cultural');
+        }
+
+        function changeActiveChamp(champ) {
+            appData.activeChamp = champ;
+            saveAppData();
+            renderHeader();
+            renderMatches();
+            renderTeams();
         }
 
         function addNewYear(e) {
             e.preventDefault();
             const val = document.getElementById('new-year-input').value.trim();
             if (val && !appData.years.includes(val)) {
-                appData.years.push(val); appData.champs[val] = ["Campeonato Principal"];
-                appData.activeYear = val; appData.activeChamp = "Campeonato Principal";
-                renderYearAndChampSelectors(); applyHeaderConfig(); silentSave();
+                appData.years.push(val);
+                appData.champs[val] = ["Campeonato Principal"];
+                appData.activeYear = val;
+                appData.activeChamp = "Campeonato Principal";
                 document.getElementById('new-year-input').value = '';
+                saveAppData();
+                initApp();
             }
         }
 
         function addNewChamp(e) {
             e.preventDefault();
             const val = document.getElementById('new-champ-input').value.trim();
-            if (!appData.champs[appData.activeYear]) appData.champs[appData.activeYear] = [];
             if (val && !appData.champs[appData.activeYear].includes(val)) {
-                appData.champs[appData.activeYear].push(val); appData.activeChamp = val;
-                renderYearAndChampSelectors(); applyHeaderConfig(); silentSave();
+                appData.champs[appData.activeYear].push(val);
+                appData.activeChamp = val;
                 document.getElementById('new-champ-input').value = '';
+                saveAppData();
+                initApp();
             }
         }
 
-        function changeActiveYear(y) {
-            appData.activeYear = y;
-            if (!appData.champs[y] || appData.champs[y].length === 0) appData.champs[y] = ["Campeonato Principal"];
-            appData.activeChamp = appData.champs[y][0];
-            renderYearAndChampSelectors(); applyHeaderConfig(); renderMatches(); renderClassificacaoGeral();
+        function deleteYear(y) {
+            if (appData.years.length <= 1) return alert("É necessário manter pelo menos um ano letivo.");
+            if (confirm(`Remover ano ${y}?`)) {
+                appData.years = appData.years.filter(item => item !== y);
+                delete appData.champs[y];
+                appData.activeYear = appData.years[0];
+                appData.activeChamp = appData.champs[appData.activeYear][0];
+                saveAppData();
+                initApp();
+            }
         }
 
-        function changeActiveChamp(c) {
-            appData.activeChamp = c; applyHeaderConfig(); renderMatches(); renderClassificacaoGeral();
+        function deleteChamp(c) {
+            if (appData.champs[appData.activeYear].length <= 1) return alert("Mantenha ao menos um campeonato.");
+            if (confirm(`Remover campeonato ${c}?`)) {
+                appData.champs[appData.activeYear] = appData.champs[appData.activeYear].filter(item => item !== c);
+                appData.activeChamp = appData.champs[appData.activeYear][0];
+                saveAppData();
+                initApp();
+            }
         }
 
-        function removeYear(y) {
-            if (appData.years.length <= 1) return;
-            appData.years = appData.years.filter(item => item !== y);
-            delete appData.champs[y];
-            appData.activeYear = appData.years[0];
-            appData.activeChamp = appData.champs[appData.activeYear][0];
-            renderYearAndChampSelectors(); applyHeaderConfig(); silentSave();
-        }
+        // --- EQUIPES ---
+        function renderTeams() {
+            const tbody = document.getElementById('teams-table-body');
+            const currentTeams = appData.teams.filter(t => t.year === appData.activeYear && t.champ === appData.activeChamp);
 
-        function removeChamp(c) {
-            const list = appData.champs[appData.activeYear];
-            if (list.length <= 1) return;
-            appData.champs[appData.activeYear] = list.filter(item => item !== c);
-            appData.activeChamp = appData.champs[appData.activeYear][0];
-            renderYearAndChampSelectors(); applyHeaderConfig(); silentSave();
+            if (currentTeams.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color: var(--text-muted);">Nenhuma equipe cadastrada para este campeonato.</td></tr>`;
+            } else {
+                tbody.innerHTML = currentTeams.map(t => `
+                    <tr>
+                        <td><strong>${t.name}</strong></td>
+                        <td>${t.segment}</td>
+                        <td class="no-print" style="text-align: right;">
+                            <button class="btn btn-warning btn-sm" onclick="editTeam('${t.id}')"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteTeam('${t.id}')"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            renderTeamsSelector();
+            renderManualTab('arrecadacao');
+            renderManualTab('cultural');
         }
 
         function saveTeam(e) {
             e.preventDefault();
-            const id = document.getElementById('team-id').value || 'team_' + Date.now();
+            const id = document.getElementById('team-id').value;
             const name = document.getElementById('team-name').value.trim();
             const segment = document.getElementById('team-segment').value;
 
-            appData.teams[id] = { id, name, segment };
-            resetTeamForm(); renderTeams(); renderClassificacaoGeral(); onSegmentOrCategoryChange(); silentSave();
+            if (id) {
+                const team = appData.teams.find(t => t.id === id);
+                if (team) { team.name = name; team.segment = segment; }
+            } else {
+                appData.teams.push({
+                    id: Date.now().toString(),
+                    year: appData.activeYear,
+                    champ: appData.activeChamp,
+                    name,
+                    segment
+                });
+            }
+            saveAppData();
+            resetTeamForm();
+            renderTeams();
         }
 
         function editTeam(id) {
-            const t = appData.teams[id]; if (!t) return;
-            document.getElementById('team-id').value = t.id;
-            document.getElementById('team-name').value = t.name;
-            document.getElementById('team-segment').value = t.segment;
-            document.getElementById('team-submit-btn').innerHTML = `<i class="fa-solid fa-check"></i> Atualizar Equipe`;
-            document.getElementById('team-cancel-btn').style.display = 'inline-flex';
-        }
-
-        function deleteTeam(id) {
-            delete appData.teams[id];
-            renderTeams(); renderClassificacaoGeral(); onSegmentOrCategoryChange(); silentSave();
+            const team = appData.teams.find(t => t.id === id);
+            if (team) {
+                document.getElementById('team-id').value = team.id;
+                document.getElementById('team-name').value = team.name;
+                document.getElementById('team-segment').value = team.segment;
+                document.getElementById('team-form-title').innerHTML = `<i class="fa-solid fa-pen"></i> Editar Equipe`;
+                document.getElementById('team-submit-btn').innerHTML = `<i class="fa-solid fa-check"></i> Salvar Alterações`;
+                document.getElementById('team-cancel-btn').style.display = 'inline-flex';
+            }
         }
 
         function resetTeamForm() {
             document.getElementById('team-id').value = '';
-            document.getElementById('team-name').value = '';
-            document.getElementById('team-segment').value = '';
+            document.getElementById('team-form').reset();
+            document.getElementById('team-form-title').innerHTML = `<i class="fa-solid fa-user-plus"></i> Cadastrar Equipe`;
             document.getElementById('team-submit-btn').innerHTML = `<i class="fa-solid fa-plus"></i> Cadastrar Equipe`;
             document.getElementById('team-cancel-btn').style.display = 'none';
         }
 
-        function renderTeams() {
-            const tbody = document.getElementById('teams-table-body');
-            const teamsList = Object.values(appData.teams);
-
-            if (teamsList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">Nenhuma equipe cadastrada ainda.</td></tr>`;
-                return;
+        function deleteTeam(id) {
+            if (confirm("Deseja remover esta equipe?")) {
+                appData.teams = appData.teams.filter(t => t.id !== id);
+                saveAppData();
+                renderTeams();
             }
-
-            tbody.innerHTML = teamsList.map(t => `
-                <tr>
-                    <td><strong>${t.name}</strong></td>
-                    <td>${t.segment}</td>
-                    <td class="no-print" style="text-align: right;">
-                        <button class="btn btn-light btn-sm" style="color:black;" onclick="editTeam('${t.id}')"><i class="fa-solid fa-pen"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteTeam('${t.id}')"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
         }
 
-        function getMatchKey() {
-            const gender = document.getElementById('gender-select').value;
-            const mod = document.getElementById('mod-select').value;
-            const seg = document.getElementById('mod-segment-select').value;
-            return `${appData.activeYear}_${appData.activeChamp}_${gender}_${mod}_${seg}`;
-        }
-
+        // --- SELEÇÃO DE EQUIPES NA MODALIDADE ---
         function onSegmentOrCategoryChange() {
-            renderTeamSelectorBox();
+            renderTeamsSelector();
             renderMatches();
         }
 
-        function renderTeamSelectorBox() {
+        function renderTeamsSelector() {
+            const segment = document.getElementById('mod-segment-select').value;
             const container = document.getElementById('teams-selector-container');
-            const seg = document.getElementById('mod-segment-select').value;
-            const availableTeams = Object.values(appData.teams).filter(t => t.segment === seg);
+            const filteredTeams = appData.teams.filter(t => t.year === appData.activeYear && t.champ === appData.activeChamp && t.segment === segment);
 
-            if (availableTeams.length === 0) {
-                container.innerHTML = `<span style="color:var(--text-muted); font-size:0.85rem; grid-column:1/-1;">Nenhuma equipe cadastrada para este segmento.</span>`;
+            if (filteredTeams.length === 0) {
+                container.innerHTML = `<p style="font-size:0.85rem; color:var(--text-muted);">Nenhuma equipe cadastrada neste segmento.</p>`;
                 return;
             }
 
-            container.innerHTML = availableTeams.map(t => `
+            container.innerHTML = filteredTeams.map(t => `
                 <label class="team-checkbox-item">
-                    <input type="checkbox" class="modality-team-checkbox" value="${t.id}" checked>
-                    <span>${t.name}</span>
+                    <input type="checkbox" value="${t.name}" class="chk-team-mod" checked>
+                    ${t.name}
                 </label>
             `).join('');
         }
 
         function toggleAllTeamsSelect(status) {
-            const checkboxes = document.querySelectorAll('.modality-team-checkbox');
-            checkboxes.forEach(cb => cb.checked = status);
+            document.querySelectorAll('.chk-team-mod').forEach(chk => chk.checked = status);
+        }
+
+        // --- JOGOS E CHAVEAMENTO ---
+        function getCategoryKey() {
+            const gender = document.getElementById('gender-select').value;
+            const mod = document.getElementById('mod-select').value;
+            const seg = document.getElementById('mod-segment-select').value;
+            return `${appData.activeYear}_${appData.activeChamp}_${seg}_${mod}_${gender}`;
         }
 
         function generateMatches() {
-            const key = getMatchKey();
+            const key = getCategoryKey();
             const format = document.getElementById('mod-format-select').value;
-            
-            // Pega apenas as equipes explicitamente selecionadas nos checkboxes
-            const selectedCheckboxes = document.querySelectorAll('.modality-team-checkbox:checked');
-            const selectedTeamIds = Array.from(selectedCheckboxes).map(cb => cb.value);
-            const availableTeams = selectedTeamIds.map(id => appData.teams[id]).filter(Boolean);
+            const selectedTeams = Array.from(document.querySelectorAll('.chk-team-mod:checked')).map(c => c.value);
 
-            if (availableTeams.length < 2) {
-                alert("Selecione pelo menos 2 equipes para participar desta modalidade e gerar as chaves!");
+            if (selectedTeams.length < 2) {
+                alert("Selecione pelo menos 2 equipes para gerar a tabela de jogos.");
                 return;
             }
 
+            const shuffled = [...selectedTeams].sort(() => Math.random() - 0.5);
             let matches = [];
 
+            appData.matchFormats[key] = format;
+
             if (format === 'eliminatoria_simples') {
-                const shuffled = [...availableTeams].sort(() => Math.random() - 0.5);
-                let roundName = "Primeira Fase";
-                if (shuffled.length === 2) roundName = "Grande Final";
-                else if (shuffled.length <= 4) roundName = "Semifinais";
-                else if (shuffled.length <= 8) roundName = "Quartas de Final";
-
-                let byeTeam = null;
-                let activeTeams = [...shuffled];
-
-                if (activeTeams.length % 2 !== 0) {
-                    byeTeam = activeTeams.pop();
-                    matches.push({
-                        id: 'm_' + Date.now() + '_bye',
-                        round: roundName,
-                        teamA: byeTeam.id,
-                        teamB: 'BYE',
-                        scoreA: 'BYE',
-                        scoreB: 'BYE',
-                        isBye: true
-                    });
-                }
-
-                for (let i = 0; i < activeTeams.length; i += 2) {
-                    matches.push({
-                        id: 'm_' + Date.now() + '_' + i,
-                        round: roundName,
-                        teamA: activeTeams[i].id,
-                        teamB: activeTeams[i+1].id,
-                        scoreA: '',
-                        scoreB: ''
-                    });
-                }
-            } else if (format === 'todos_contra_todos' || format === 'ida_e_volta') {
-                for (let i = 0; i < availableTeams.length; i++) {
-                    for (let j = i + 1; j < availableTeams.length; j++) {
-                        matches.push({
-                            id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-                            round: 'Fase de Grupos / Turno Único',
-                            teamA: availableTeams[i].id,
-                            teamB: availableTeams[j].id,
-                            scoreA: '', scoreB: ''
-                        });
-                        if (format === 'ida_e_volta') {
-                            matches.push({
-                                id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-                                round: 'Turno de Volta',
-                                teamA: availableTeams[j].id,
-                                teamB: availableTeams[i].id,
-                                scoreA: '', scoreB: ''
-                            });
-                        }
-                    }
-                }
+                matches = generateInitialKnockoutRound(shuffled);
+            } else if (format === 'todos_contra_todos') {
+                matches = generateRoundRobin(shuffled);
+            } else {
+                matches = generateRoundRobin(shuffled, true);
             }
 
             appData.matches[key] = matches;
+            saveAppData();
             renderMatches();
-            silentSave();
         }
 
-        function checkAndAdvanceNextRound(key) {
-            const matches = appData.matches[key] || [];
-            if (matches.length === 0) return;
+        function getKnockoutRoundName(numMatches) {
+            if (numMatches === 1) return "GRANDE FINAL";
+            if (numMatches === 2) return "SEMIFINAL";
+            if (numMatches === 4) return "QUARTAS DE FINAL";
+            if (numMatches === 8) return "OITAVAS DE FINAL";
+            return `RODADA ELIMINATÓRIA (${numMatches * 2} Equipes)`;
+        }
 
-            const rounds = [...new Set(matches.map(m => m.round))];
-            const lastRoundName = rounds[rounds.length - 1];
+        function generateInitialKnockoutRound(teams) {
+            let list = [];
+            let n = teams.length;
             
-            if (lastRoundName === "Grande Final" || lastRoundName === "Fase de Grupos / Turno Único" || lastRoundName === "Turno de Volta") {
-                return;
+            // Determinar o tamanho de chave ideal (potência de 2)
+            let targetSize = 2;
+            while (targetSize < n) {
+                targetSize *= 2;
             }
+            
+            let byesCount = targetSize - n; // Equipes que passam direto na 1ª rodada
+            let numMatches = targetSize / 2;
+            let roundName = getKnockoutRoundName(numMatches);
 
-            const lastRoundMatches = matches.filter(m => m.round === lastRoundName);
-            const allFinished = lastRoundMatches.every(m => m.isBye || (m.scoreA !== '' && m.scoreB !== '' && m.scoreA !== m.scoreB));
+            let pool = [...teams];
+            let matchIdx = 1;
 
-            if (allFinished) {
-                let winners = [];
-                let losers = [];
-
-                lastRoundMatches.forEach(m => {
-                    if (m.isBye) {
-                        winners.push(m.teamA);
-                    } else {
-                        if (m.scoreA > m.scoreB) {
-                            winners.push(m.teamA);
-                            losers.push(m.teamB);
-                        } else {
-                            winners.push(m.teamB);
-                            losers.push(m.teamA);
-                        }
-                    }
+            // Alocar BYEs
+            for (let i = 0; i < byesCount; i++) {
+                let team = pool.shift();
+                list.push({
+                    id: Date.now() + Math.random(),
+                    roundNum: 1,
+                    round: roundName,
+                    matchIndex: matchIdx++,
+                    team1: team,
+                    team2: "BYE (Isento)",
+                    score1: null,
+                    score2: null,
+                    pen1: null,
+                    pen2: null,
+                    isBye: true,
+                    winner: team
                 });
+            }
 
-                let nextRoundName = "Próxima Fase";
-                if (winners.length === 2) nextRoundName = "Grande Final";
-                else if (winners.length <= 4) nextRoundName = "Semifinais";
-                else if (winners.length <= 8) nextRoundName = "Quartas de Final";
+            // Alocar Jogos
+            while (pool.length >= 2) {
+                let t1 = pool.shift();
+                let t2 = pool.shift();
+                list.push({
+                    id: Date.now() + Math.random(),
+                    roundNum: 1,
+                    round: roundName,
+                    matchIndex: matchIdx++,
+                    team1: t1,
+                    team2: t2,
+                    score1: null,
+                    score2: null,
+                    pen1: null,
+                    pen2: null,
+                    isBye: false,
+                    winner: null
+                });
+            }
 
-                if (nextRoundName === "Grande Final" && losers.length === 2) {
-                    const existsThird = matches.some(m => m.round === "Disputa de 3º Lugar");
-                    if (!existsThird) {
+            return list;
+        }
+
+        function getMatchWinner(m) {
+            if (m.isBye) return m.team1;
+            if (m.score1 === null || m.score2 === null) return null;
+
+            if (m.score1 > m.score2) return m.team1;
+            if (m.score2 > m.score1) return m.team2;
+
+            // Empate: exige desempate por pênaltis
+            if (m.pen1 !== null && m.pen2 !== null) {
+                if (m.pen1 > m.pen2) return m.team1;
+                if (m.pen2 > m.pen1) return m.team2;
+            }
+
+            return null; // Ainda indefinido em pênaltis
+        }
+
+        function processKnockoutProgression(matches) {
+            if (matches.length === 0) return matches;
+
+            let maxRound = Math.max(...matches.map(m => m.roundNum || 1));
+            let currentRoundMatches = matches.filter(m => m.roundNum === maxRound);
+
+            // Verificar se a rodada atual está 100% concluída com vencedores definidos
+            let winners = [];
+            let allFinished = true;
+
+            for (let m of currentRoundMatches) {
+                let w = getMatchWinner(m);
+                if (w) {
+                    winners.push(w);
+                } else {
+                    allFinished = false;
+                    break;
+                }
+            }
+
+            // Se rodada concluída e temos mais de 1 vencedor, criar a próxima rodada!
+            if (allFinished && winners.length > 1) {
+                let nextRoundNum = maxRound + 1;
+                let numMatches = winners.length / 2;
+                let roundName = getKnockoutRoundName(numMatches);
+
+                let nextRoundMatches = [];
+                let matchIdx = 1;
+
+                for (let i = 0; i < winners.length; i += 2) {
+                    let t1 = winners[i];
+                    let t2 = winners[i + 1];
+
+                    // Checar se esta partida da próxima rodada já havia sido gerada
+                    let existing = matches.find(m => m.roundNum === nextRoundNum && m.matchIndex === matchIdx);
+
+                    if (existing) {
+                        // Preservar estado e resultados existentes
+                        existing.team1 = t1;
+                        existing.team2 = t2;
+                    } else {
+                        // Criar novo confronto da próxima fase
                         matches.push({
-                            id: 'm_' + Date.now() + '_3place',
-                            round: 'Disputa de 3º Lugar',
-                            teamA: losers[0],
-                            teamB: losers[1],
-                            scoreA: '',
-                            scoreB: ''
+                            id: Date.now() + Math.random(),
+                            roundNum: nextRoundNum,
+                            round: roundName,
+                            matchIndex: matchIdx,
+                            team1: t1,
+                            team2: t2,
+                            score1: null,
+                            score2: null,
+                            pen1: null,
+                            pen2: null,
+                            isBye: false,
+                            winner: null
+                        });
+                    }
+                    matchIdx++;
+                }
+
+                // Chamar recursivamente para o caso da nova rodada já ter resultados preenchidos previamente
+                return processKnockoutProgression(matches);
+            }
+
+            return matches;
+        }
+
+        function generateRoundRobin(teams, doubleRound = false) {
+            let list = [];
+            let n = teams.length;
+            let rounds = n % 2 === 0 ? n - 1 : n;
+
+            for (let r = 0; r < rounds; r++) {
+                for (let i = 0; i < n / 2; i++) {
+                    let t1 = teams[i];
+                    let t2 = teams[n - 1 - i];
+                    if (t1 && t2 && t1 !== t2) {
+                        list.push({
+                            id: Date.now() + Math.random(),
+                            roundNum: r + 1,
+                            round: `Turno - Rodada ${r + 1}`,
+                            team1: t1,
+                            team2: t2,
+                            score1: null,
+                            score2: null,
+                            pen1: null,
+                            pen2: null,
+                            isBye: false
                         });
                     }
                 }
-
-                const existsNext = matches.some(m => m.round === nextRoundName);
-                if (!existsNext && winners.length >= 2) {
-                    let activeWinners = [...winners];
-                    if (activeWinners.length % 2 !== 0) {
-                        const bye = activeWinners.pop();
-                        matches.push({
-                            id: 'm_' + Date.now() + '_next_bye',
-                            round: nextRoundName,
-                            teamA: bye,
-                            teamB: 'BYE',
-                            scoreA: 'BYE',
-                            scoreB: 'BYE',
-                            isBye: true
-                        });
-                    }
-
-                    for (let i = 0; i < activeWinners.length; i += 2) {
-                        matches.push({
-                            id: 'm_' + Date.now() + '_next_' + i,
-                            round: nextRoundName,
-                            teamA: activeWinners[i],
-                            teamB: activeWinners[i+1],
-                            scoreA: '',
-                            scoreB: ''
-                        });
-                    }
-                }
+                teams.splice(1, 0, teams.pop());
             }
-        }
 
-        function updateScore(key, matchId, field, val) {
-            const list = appData.matches[key];
-            if (!list) return;
-            const match = list.find(m => m.id === matchId);
-            if (match) {
-                match[field] = val !== '' ? parseInt(val, 10) : '';
-                checkAndAdvanceNextRound(key);
-                renderMatches();
-                silentSave();
+            if (doubleRound) {
+                const returnoMatches = list.map(m => ({
+                    id: Date.now() + Math.random(),
+                    roundNum: m.roundNum + rounds,
+                    round: m.round.replace('Turno', 'Returno'),
+                    team1: m.team2,
+                    team2: m.team1,
+                    score1: null,
+                    score2: null,
+                    pen1: null,
+                    pen2: null,
+                    isBye: false
+                }));
+                list = list.concat(returnoMatches);
             }
-        }
-
-        function deleteSingleMatch(key, matchId) {
-            if (appData.matches[key]) {
-                appData.matches[key] = appData.matches[key].filter(m => m.id !== matchId);
-                renderMatches();
-                silentSave();
-            }
-        }
-
-        function resetCurrentMatches() {
-            const key = getMatchKey();
-            delete appData.matches[key];
-            renderMatches();
-            silentSave();
+            return list;
         }
 
         function renderMatches() {
-            const key = getMatchKey();
+            const key = getCategoryKey();
+            let matches = appData.matches[key] || [];
+            const format = appData.matchFormats[key] || 'eliminatoria_simples';
             const container = document.getElementById('matches-container');
-            const matches = appData.matches[key] || [];
+
+            if (format === 'eliminatoria_simples' && matches.length > 0) {
+                matches = processKnockoutProgression(matches);
+                appData.matches[key] = matches;
+                saveAppData();
+            }
 
             if (matches.length === 0) {
-                container.innerHTML = `<p style="color:var(--text-muted);">Nenhum jogo gerado para os filtros selecionados.</p>`;
+                container.innerHTML = `<p style="color:var(--text-muted); padding: 10px;">Nenhum jogo gerado para esta categoria. Selecione as equipes e clique em "Sorteio / Iniciar Chaves".</p>`;
                 renderModalityStandings([]);
                 return;
             }
@@ -968,48 +1035,72 @@
             let html = '';
             let currentRound = '';
 
+            // Verificar Campeão em Eliminatória Simples
+            let championText = '';
+            if (format === 'eliminatoria_simples') {
+                let finalMatch = matches.find(m => m.round === "GRANDE FINAL");
+                if (finalMatch) {
+                    let winner = getMatchWinner(finalMatch);
+                    if (winner) {
+                        championText = `<div style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color:white; padding:15px; border-radius:var(--radius-md); text-align:center; font-weight:800; font-size:1.1rem; margin-bottom:20px; box-shadow:var(--shadow);">🏆 CAMPEÃO DA CATEGORIA: ${winner.toUpperCase()} 🏆</div>`;
+                    }
+                }
+            }
+
+            html += championText;
+
             matches.forEach((m, idx) => {
                 if (m.round !== currentRound) {
                     currentRound = m.round;
-                    html += `<div class="round-title"><span><i class="fa-solid fa-trophy"></i> ${currentRound}</span></div>`;
+                    html += `<div class="round-title"><span>${currentRound}</span></div>`;
                 }
 
-                const nameA = appData.teams[m.teamA]?.name || 'Equipe A';
-                const nameB = m.teamB === 'BYE' ? 'BYE (Avança Direto)' : (appData.teams[m.teamB]?.name || 'Equipe B');
-                
+                let winner = getMatchWinner(m);
+                let isFinished = winner !== null;
+                let isTie = format === 'eliminatoria_simples' && !m.isBye && m.score1 !== null && m.score2 !== null && m.score1 === m.score2;
+
                 if (m.isBye) {
                     html += `
                         <div class="match-box bye-box">
                             <div class="match-header">
-                                <span>Jogo #${idx + 1}</span>
-                                <span class="bye-badge"><i class="fa-solid fa-forward"></i> ISENTO / BYE</span>
+                                <span>Partida #${idx + 1}</span>
+                                <span class="bye-badge">ISENTO / BYE (Sem Pts)</span>
                             </div>
                             <div class="match-row">
-                                <span style="font-weight:800; color:var(--primary);">${nameA}</span>
-                                <span style="font-size:0.8rem; font-weight:700; color:var(--accent-blue);">Classificado</span>
+                                <span>${m.team1}</span>
+                                <span style="font-size:0.8rem; color:var(--accent-blue); font-weight:700;">Avança direto</span>
                             </div>
                         </div>
                     `;
                 } else {
-                    const winA = m.scoreA !== '' && m.scoreB !== '' && m.scoreA > m.scoreB;
-                    const winB = m.scoreA !== '' && m.scoreB !== '' && m.scoreB > m.scoreA;
-
                     html += `
-                        <div class="match-box ${winA || winB ? 'winner-box' : ''}">
+                        <div class="match-box ${isFinished ? 'winner-box' : ''}">
                             <div class="match-header">
-                                <span>Jogo #${idx + 1}</span>
-                                <button class="delete-match-btn no-print" onclick="deleteSingleMatch('${key}', '${m.id}')" title="Excluir este jogo">
-                                    <i class="fa-solid fa-trash"></i> Excluir
-                                </button>
+                                <span>Partida #${idx + 1}</span>
+                                ${winner ? `<span class="champ-badge">VENCEDOR: ${winner}</span>` : ''}
+                                <button class="delete-match-btn no-print" onclick="deleteSingleMatch('${key}', ${idx})"><i class="fa-solid fa-trash"></i></button>
                             </div>
                             <div class="match-row">
-                                <span style="${winA ? 'font-weight:800; color:var(--primary);' : ''}">${nameA}</span>
-                                <input type="number" class="score-input" value="${m.scoreA !== undefined ? m.scoreA : ''}" onchange="updateScore('${key}', '${m.id}', 'scoreA', this.value)">
+                                <span>${m.team1}</span>
+                                <input type="number" class="score-input" value="${m.score1 !== null ? m.score1 : ''}" onchange="updateScore('${key}', ${idx}, 1, this.value)">
                             </div>
                             <div class="match-row">
-                                <span style="${winB ? 'font-weight:800; color:var(--primary);' : ''}">${nameB}</span>
-                                <input type="number" class="score-input" value="${m.scoreB !== undefined ? m.scoreB : ''}" onchange="updateScore('${key}', '${m.id}', 'scoreB', this.value)">
+                                <span>${m.team2}</span>
+                                <input type="number" class="score-input" value="${m.score2 !== null ? m.score2 : ''}" onchange="updateScore('${key}', ${idx}, 2, this.value)">
                             </div>
+                            ${isTie ? `
+                                <div class="penalty-container">
+                                    <div class="penalty-title"><i class="fa-solid fa-futbol"></i> EMPATE! Disputa de Pênaltis</div>
+                                    <div class="match-row">
+                                        <span style="font-size:0.8rem;">${m.team1} (Pênaltis)</span>
+                                        <input type="number" class="score-input" style="border-color:#f59e0b;" value="${m.pen1 !== null ? m.pen1 : ''}" onchange="updatePenalty('${key}',${idx}, 1, this.value)">
+                                    </div>
+                                    <div class="match-row">
+                                        <span style="font-size:0.8rem;">${m.team2} (Pênaltis)</span>
+                                        <input type="number" class="score-input" style="border-color:#f59e0b;" value="${m.pen2 !== null ? m.pen2 : ''}" onchange="updatePenalty('${key}',${idx}, 2, this.value)">
+                                    </div>
+                                </div>
+                            ` : ''}
                         </div>
                     `;
                 }
@@ -1019,108 +1110,188 @@
             calculateModalityStandings(matches);
         }
 
+        function updateScore(key, idx, teamNum, val) {
+            const parsed = val === '' ? null : parseInt(val, 10);
+            if (teamNum === 1) appData.matches[key][idx].score1 = parsed;
+            if (teamNum === 2) appData.matches[key][idx].score2 = parsed;
+            
+            // Resetar pênaltis se o placar deixar de ser empate
+            const m = appData.matches[key][idx];
+            if (m.score1 !== m.score2) {
+                m.pen1 = null;
+                m.pen2 = null;
+            }
+
+            saveAppData();
+            renderMatches();
+        }
+
+        function updatePenalty(key, idx, teamNum, val) {
+            const parsed = val === '' ? null : parseInt(val, 10);
+            if (teamNum === 1) appData.matches[key][idx].pen1 = parsed;
+            if (teamNum === 2) appData.matches[key][idx].pen2 = parsed;
+            saveAppData();
+            renderMatches();
+        }
+
+        function deleteSingleMatch(key, idx) {
+            appData.matches[key].splice(idx, 1);
+            saveAppData();
+            renderMatches();
+        }
+
+        function resetCurrentMatches() {
+            const key = getCategoryKey();
+            if (confirm("Zerar todas as partidas e pontuações desta categoria?")) {
+                delete appData.matches[key];
+                delete appData.matchFormats[key];
+                saveAppData();
+                renderMatches();
+            }
+        }
+
+        function printOnlyBracket() {
+            document.body.classList.add('print-only-bracket');
+            window.print();
+            document.body.classList.remove('print-only-bracket');
+        }
+
+        // --- PONTUAÇÃO E CLASSIFICAÇÃO DA MODALIDADE ---
         function calculateModalityStandings(matches) {
-            const scores = {};
+            let standings = {};
 
             matches.forEach(m => {
-                if (!m.isBye && m.scoreA !== '' && m.scoreB !== '' && !isNaN(m.scoreA) && !isNaN(m.scoreB)) {
-                    if (!scores[m.teamA]) scores[m.teamA] = 0;
-                    if (!scores[m.teamB]) scores[m.teamB] = 0;
+                // REGRA BYE IGNORADA NA PONTUAÇÃO ESPORTIVA
+                if (!m.isBye && m.score1 !== null && m.score2 !== null) {
+                    if (!standings[m.team1]) standings[m.team1] = 0;
+                    if (!standings[m.team2]) standings[m.team2] = 0;
 
-                    if (m.scoreA > m.scoreB) {
-                        scores[m.teamA] += 3;
-                    } else if (m.scoreB > m.scoreA) {
-                        scores[m.teamB] += 3;
+                    if (m.score1 > m.score2) {
+                        standings[m.team1] += 3;
+                    } else if (m.score2 > m.score1) {
+                        standings[m.team2] += 3;
                     } else {
-                        scores[m.teamA] += 1;
-                        scores[m.teamB] += 1;
+                        // Empate no tempo regulamentar pontua 1 pt para cada
+                        standings[m.team1] += 1;
+                        standings[m.team2] += 1;
                     }
                 }
             });
 
-            const sorted = Object.keys(scores).map(id => ({
-                id, pts: scores[id]
-            })).sort((a, b) => b.pts - a.pts);
+            const sorted = Object.keys(standings)
+                .map(team => ({ team, pts: standings[team] }))
+                .sort((a, b) => b.pts - a.pts);
 
             renderModalityStandings(sorted);
         }
 
-        function renderModalityStandings(standings) {
+        function renderModalityStandings(sorted) {
             const tbody = document.getElementById('modality-standings-body');
-            if (standings.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">Nenhuma partida processada.</td></tr>`;
+            if (sorted.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">Nenhuma partida finalizada.</td></tr>`;
                 return;
             }
-
-            tbody.innerHTML = standings.map((item, index) => `
+            tbody.innerHTML = sorted.map((s, idx) => `
                 <tr>
-                    <td><strong>${index + 1}º Lugar</strong></td>
-                    <td>${appData.teams[item.id]?.name || 'Equipe'}</td>
-                    <td><strong>${item.pts} pts</strong></td>
+                    <td><strong>${idx + 1}º Lugar</strong></td>
+                    <td>${s.team}</td>
+                    <td><strong>${s.pts} pts</strong></td>
                 </tr>
             `).join('');
         }
 
-        function updateArrecadacao(teamId, field, val) {
-            if (!appData.arrecadacao[teamId]) appData.arrecadacao[teamId] = { alimentos: 0, lacres: 0, pontos: 0 };
-            appData.arrecadacao[teamId][field] = parseFloat(val) || 0;
-            silentSave();
+        // --- ARRECADAÇÃO & CULTURAL (GERENCIAMENTO DE PROVAS MANUAIS) ---
+        function addProof(type) {
+            const input = document.getElementById(`new-${type}-proof-name`);
+            const proofName = input.value.trim();
+            if (!proofName) return alert("Digite um nome para a prova.");
+
+            if (!appData.proofs[type].includes(proofName)) {
+                appData.proofs[type].push(proofName);
+                saveAppData();
+                input.value = '';
+                renderManualTab(type);
+            } else {
+                alert("Esta prova já está cadastrada.");
+            }
         }
 
-        function renderArrecadacao() {
-            const tbody = document.getElementById('arrecadacao-table-body');
-            const teams = Object.values(appData.teams);
+        function removeProof(type, proofName) {
+            if (confirm(`Remover a prova "${proofName}" e suas pontuações?`)) {
+                appData.proofs[type] = appData.proofs[type].filter(p => p !== proofName);
+                saveAppData();
+                renderManualTab(type);
+            }
+        }
 
-            if (teams.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Cadastre equipes para registrar arrecadação.</td></tr>`;
+        function updateScoreManual(type, teamId, proofName, value) {
+            if (!appData.scores[type]) appData.scores[type] = {};
+            if (!appData.scores[type][teamId]) appData.scores[type][teamId] = {};
+
+            appData.scores[type][teamId][proofName] = parseFloat(value) || 0;
+            saveAppData();
+
+            // Atualiza total da linha instantaneamente
+            const currentTeams = appData.teams.filter(t => t.year === appData.activeYear && t.champ === appData.activeChamp);
+            const team = currentTeams.find(t => t.id === teamId);
+            if (team) {
+                let sum = 0;
+                appData.proofs[type].forEach(p => {
+                    sum += (appData.scores[type][teamId] && appData.scores[type][teamId][p]) || 0;
+                });
+                const totalCell = document.getElementById(`total-${type}-${teamId}`);
+                if (totalCell) totalCell.innerText = `${sum} pts`;
+            }
+        }
+
+        function renderManualTab(type) {
+            const thead = document.getElementById(`${type}-table-head`);
+            const tbody = document.getElementById(`${type}-table-body`);
+            const currentTeams = appData.teams.filter(t => t.year === appData.activeYear && t.champ === appData.activeChamp);
+            const proofs = appData.proofs[type] || [];
+
+            // Montar Cabeçalho Dinâmico
+            let headHtml = `<tr><th>Equipe</th><th>Segmento</th>`;
+            proofs.forEach(p => {
+                headHtml += `
+                    <th>
+                        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                            <span>${p}</span>
+                            <button class="delete-match-btn no-print" onclick="removeProof('${type}', '${p}')" title="Excluir Prova"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    </th>`;
+            });
+            headHtml += `<th>TOTAL OBTIDO</th></tr>`;
+            thead.innerHTML = headHtml;
+
+            // Montar Corpo da Tabela
+            if (currentTeams.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="${proofs.length + 3}" style="text-align:center;">Cadastre equipes neste campeonato para registrar pontos.</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = teams.map(t => {
-                const data = appData.arrecadacao[t.id] || { alimentos: 0, lacres: 0, pontos: 0 };
-                return `
-                    <tr>
-                        <td><strong>${t.name}</strong></td>
-                        <td>${t.segment}</td>
-                        <td><input type="number" class="score-input" style="width:90px;" value="${data.alimentos}" onchange="updateArrecadacao('${t.id}', 'alimentos', this.value)"></td>
-                        <td><input type="number" class="score-input" style="width:90px;" value="${data.lacres}" onchange="updateArrecadacao('${t.id}', 'lacres', this.value)"></td>
-                        <td><input type="number" class="score-input" style="width:90px;" value="${data.pontos}" onchange="updateArrecadacao('${t.id}', 'pontos', this.value)"></td>
-                    </tr>
-                `;
+            tbody.innerHTML = currentTeams.map(t => {
+                let total = 0;
+                let rowHtml = `<tr><td><strong>${t.name}</strong></td><td>${t.segment}</td>`;
+
+                proofs.forEach(p => {
+                    const val = (appData.scores[type] && appData.scores[type][t.id] && appData.scores[type][t.id][p]) || 0;
+                    total += val;
+                    rowHtml += `
+                        <td>
+                            <input type="number" class="form-control" style="width:110px;" value="${val}" onchange="updateScoreManual('${type}', '${t.id}', '${p}', this.value)">
+                        </td>
+                    `;
+                });
+
+                rowHtml += `<td><strong id="total-${type}-${t.id}" style="color:var(--primary);">${total} pts</strong></td></tr>`;
+                return rowHtml;
             }).join('');
         }
 
-        function updateCultural(teamId, field, val) {
-            if (!appData.cultural[teamId]) appData.cultural[teamId] = { danca: 0, torcida: 0, pontos: 0 };
-            appData.cultural[teamId][field] = parseFloat(val) || 0;
-            silentSave();
-        }
-
-        function renderCultural() {
-            const tbody = document.getElementById('cultural-table-body');
-            const teams = Object.values(appData.teams);
-
-            if (teams.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Cadastre equipes para registrar tarefas culturais.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = teams.map(t => {
-                const data = appData.cultural[t.id] || { danca: 0, torcida: 0, pontos: 0 };
-                return `
-                    <tr>
-                        <td><strong>${t.name}</strong></td>
-                        <td>${t.segment}</td>
-                        <td><input type="number" class="score-input" style="width:90px;" value="${data.danca}" onchange="updateCultural('${t.id}', 'danca', this.value)"></td>
-                        <td><input type="number" class="score-input" style="width:90px;" value="${data.torcida}" onchange="updateCultural('${t.id}', 'torcida', this.value)"></td>
-                        <td><input type="number" class="score-input" style="width:90px;" value="${data.pontos}" onchange="updateCultural('${t.id}', 'pontos', this.value)"></td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
+        // --- CRONOGRAMA DE JOGOS ---
         function calculateSchedule() {
-            const startTime = document.getElementById('time-start').value || '08:00';
+            const startTime = document.getElementById('time-start').value || "08:00";
             const duration = parseInt(document.getElementById('time-duration').value, 10) || 20;
             const rest = parseInt(document.getElementById('time-rest').value, 10) || 5;
             const courts = parseInt(document.getElementById('time-courts').value, 10) || 1;
@@ -1129,9 +1300,11 @@
             Object.keys(appData.matches).forEach(key => {
                 if (key.startsWith(`${appData.activeYear}_${appData.activeChamp}`)) {
                     const parts = key.split('_');
-                    const label = `${parts[3]} (${parts[2]} - ${parts[4]})`;
+                    const modName = `${parts[3]} (${parts[4]} - ${parts[2]})`;
                     appData.matches[key].forEach(m => {
-                        if (!m.isBye) allMatches.push({ ...m, label });
+                        if (!m.isBye) {
+                            allMatches.push({ ...m, modality: modName });
+                        }
                     });
                 }
             });
@@ -1141,131 +1314,176 @@
             if (allMatches.length === 0) {
                 document.getElementById('summary-total-time').innerText = `0h 0min`;
                 document.getElementById('summary-end-time').innerText = `--:--`;
-                document.getElementById('schedule-table-body').innerHTML = `<tr><td colspan="4" style="text-align:center;">Nenhum jogo encontrado.</td></tr>`;
+                document.getElementById('schedule-table-body').innerHTML = `<tr><td colspan="4" style="text-align:center;">Gere chaves de jogos para exibir o cronograma.</td></tr>`;
                 return;
             }
 
-            const timePerGame = duration + rest;
-            const totalMinutes = Math.ceil(allMatches.length / courts) * timePerGame;
+            const matchSlotTime = duration + rest;
+            const totalSlots = Math.ceil(allMatches.length / courts);
+            const totalMinutes = totalSlots * matchSlotTime;
+
             const hours = Math.floor(totalMinutes / 60);
             const mins = totalMinutes % 60;
             document.getElementById('summary-total-time').innerText = `${hours}h ${mins}min`;
 
-            const [hStart, mStart] = startTime.split(':').map(Number);
-            const endDate = new Date();
-            endDate.setHours(hStart, mStart + totalMinutes);
-            document.getElementById('summary-end-time').innerText = endDate.toTimeString().substr(0, 5);
+            let [startH, startM] = startTime.split(':').map(Number);
+            let endMinsTotal = startH * 60 + startM + totalMinutes;
+            let endH = Math.floor(endMinsTotal / 60) % 24;
+            let endM = endMinsTotal % 60;
+            document.getElementById('summary-end-time').innerText = `${String(endH).padStart(2, '0')}:${String(endM).padStart(2, '0')}`;
 
-            let currentMinutes = hStart * 60 + mStart;
-            let html = '';
+            let currentMins = startH * 60 + startM;
+            let tbodyHtml = '';
 
             allMatches.forEach((m, idx) => {
-                const matchHour = Math.floor(currentMinutes / 60).toString().padStart(2, '0');
-                const matchMin = (currentMinutes % 60).toString().padStart(2, '0');
-                const teamA = appData.teams[m.teamA]?.name || 'Equipe A';
-                const teamB = appData.teams[m.teamB]?.name || 'Equipe B';
+                let slotIdx = Math.floor(idx / courts);
+                let timeMins = currentMins + (slotIdx * matchSlotTime);
+                let h = Math.floor(timeMins / 60) % 24;
+                let min = timeMins % 60;
+                let timeStr = `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
 
-                html += `
+                tbodyHtml += `
                     <tr>
                         <td><strong>Jogo #${idx + 1}</strong></td>
-                        <td>${matchHour}:${matchMin}</td>
-                        <td>${m.label} - ${m.round}</td>
-                        <td>${teamA} x ${teamB}</td>
+                        <td><span class="bye-badge">${timeStr}</span></td>
+                        <td>${m.modality}</td>
+                        <td>${m.team1} x ${m.team2}</td>
                     </tr>
                 `;
-
-                if ((idx + 1) % courts === 0) {
-                    currentMinutes += timePerGame;
-                }
             });
 
-            document.getElementById('schedule-table-body').innerHTML = html;
+            document.getElementById('schedule-table-body').innerHTML = tbodyHtml;
         }
 
-        function switchGeralView(segment, btn) {
-            currentGeralFilter = segment;
-            document.querySelectorAll('#tab-geral .sub-nav button').forEach(b => {
+        // --- CLASSIFICAÇÃO GERAL CONSOLIDADA ---
+        function switchGeralView(viewFilter, btn) {
+            document.querySelectorAll('#tab-geral .sub-nav .btn').forEach(b => {
                 b.classList.remove('btn-primary');
                 b.classList.add('btn-light');
             });
             btn.classList.remove('btn-light');
             btn.classList.add('btn-primary');
-            renderClassificacaoGeral();
+
+            renderGeralStandings(viewFilter);
         }
 
-        function renderClassificacaoGeral() {
+        function renderGeralStandings(filter = 'GERAL_CONSOLIDADO') {
+            const currentTeams = appData.teams.filter(t => {
+                if (t.year !== appData.activeYear || t.champ !== appData.activeChamp) return false;
+                if (filter !== 'GERAL_CONSOLIDADO' && t.segment !== filter) return false;
+                return true;
+            });
+
+            let totals = {};
+
+            currentTeams.forEach(t => {
+                let sumArrecadacao = 0;
+                (appData.proofs.arrecadacao || []).forEach(p => {
+                    sumArrecadacao += (appData.scores.arrecadacao && appData.scores.arrecadacao[t.id] && appData.scores.arrecadacao[t.id][p]) || 0;
+                });
+
+                let sumCultural = 0;
+                (appData.proofs.cultural || []).forEach(p => {
+                    sumCultural += (appData.scores.cultural && appData.scores.cultural[t.id] && appData.scores.cultural[t.id][p]) || 0;
+                });
+
+                totals[t.id] = {
+                    team: t,
+                    esportivo: 0,
+                    arrecadacao: sumArrecadacao,
+                    cultural: sumCultural
+                };
+            });
+
+            // Somar pontos esportivos (ignorando jogos BYE)
+            Object.keys(appData.matches).forEach(key => {
+                if (key.startsWith(`${appData.activeYear}_${appData.activeChamp}`)) {
+                    appData.matches[key].forEach(m => {
+                        if (!m.isBye && m.score1 !== null && m.score2 !== null) {
+                            const t1 = currentTeams.find(t => t.name === m.team1);
+                            const t2 = currentTeams.find(t => t.name === m.team2);
+
+                            if (t1 && m.score1 > m.score2) totals[t1.id].esportivo += 3;
+                            if (t2 && m.score2 > m.score1) totals[t2.id].esportivo += 3;
+                            if (m.score1 === m.score2) {
+                                if (t1) totals[t1.id].esportivo += 1;
+                                if (t2) totals[t2.id].esportivo += 1;
+                            }
+                        }
+                    });
+                }
+            });
+
+            const sorted = Object.values(totals).map(item => ({
+                ...item,
+                total: item.esportivo + item.arrecadacao + item.cultural
+            })).sort((a, b) => b.total - a.total);
+
+            document.getElementById('geral-title').innerHTML = `<i class="fa-solid fa-trophy"></i> Classificação Geral: ${filter}`;
+
             const tbody = document.getElementById('geral-table-body');
-            const title = document.getElementById('geral-title');
-            title.innerHTML = `<i class="fa-solid fa-trophy"></i> Classificação Geral - ${currentGeralFilter}`;
-
-            let teams = Object.values(appData.teams);
-            if (currentGeralFilter !== 'GERAL_CONSOLIDADO') {
-                teams = teams.filter(t => t.segment === currentGeralFilter);
-            }
-
-            if (teams.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Nenhuma equipe cadastrada neste segmento.</td></tr>`;
+            if (sorted.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Nenhuma equipe cadastrada nesta visualização.</td></tr>`;
                 return;
             }
 
-            const result = teams.map(t => {
-                let wins = 0;
-                let draws = 0;
-
-                Object.keys(appData.matches).forEach(key => {
-                    if (key.startsWith(`${appData.activeYear}_${appData.activeChamp}`)) {
-                        appData.matches[key].forEach(m => {
-                            if (!m.isBye && m.scoreA !== '' && m.scoreB !== '' && !isNaN(m.scoreA) && !isNaN(m.scoreB)) {
-                                if (m.teamA === t.id) {
-                                    if (m.scoreA > m.scoreB) wins++;
-                                    else if (m.scoreA === m.scoreB) draws++;
-                                }
-                                if (m.teamB === t.id) {
-                                    if (m.scoreB > m.scoreA) wins++;
-                                    else if (m.scoreA === m.scoreB) draws++;
-                                }
-                            }
-                        });
-                    }
-                });
-
-                const esportivos = (wins * 3) + (draws * 1);
-                const arrecadacaoPts = appData.arrecadacao[t.id]?.pontos || 0;
-                const culturalPts = appData.cultural[t.id]?.pontos || 0;
-                const totalGeral = esportivos + arrecadacaoPts + culturalPts;
-
-                return { ...t, esportivos, arrecadacaoPts, culturalPts, totalGeral };
-            });
-
-            result.sort((a, b) => b.totalGeral - a.totalGeral || b.esportivos - a.esportivos);
-
-            tbody.innerHTML = result.map((t, index) => `
+            tbody.innerHTML = sorted.map((item, idx) => `
                 <tr>
-                    <td><strong>${index + 1}º</strong></td>
-                    <td><strong>${t.name}</strong></td>
-                    <td>${t.segment}</td>
-                    <td>${t.esportivos} pts</td>
-                    <td>${t.arrecadacaoPts} pts</td>
-                    <td>${t.culturalPts} pts</td>
-                    <td><strong style="color:var(--primary); font-size:1.1rem;">${t.totalGeral} pts</strong></td>
+                    <td><strong>${idx + 1}º Lugar</strong></td>
+                    <td><strong>${item.team.name}</strong></td>
+                    <td>${item.team.segment}</td>
+                    <td>${item.esportivo} pts</td>
+                    <td>${item.arrecadacao} pts</td>
+                    <td>${item.cultural} pts</td>
+                    <td><strong style="color:var(--primary); font-size:1.05rem;">${item.total} pts</strong></td>
                 </tr>
             `).join('');
         }
 
+        // --- BOLETIM OFICIAL ---
         function renderBoletim() {
             const container = document.getElementById('boletim-content');
-            const teams = Object.values(appData.teams);
-
             let html = `
-                <div style="margin-bottom:20px;">
-                    <h3>${appData.config.title} — Boletim Informativo</h3>
-                    <p>Ano Letivo: ${appData.activeYear} | Edição: ${appData.activeChamp}</p>
-                    <hr style="margin: 10px 0;">
+                <div style="text-align:center; margin-bottom:20px;">
+                    <h2>BOLETIM INFORMATIVO OFICIAL</h2>
+                    <p><strong>${appData.config.title}</strong> — ${appData.activeYear} (${appData.activeChamp})</p>
                 </div>
-                <h4>Equipes Participantes</h4><ul>
             `;
-            teams.forEach(t => { html += `<li><strong>${t.name}</strong> (${t.segment})</li>`; });
-            html += `</ul>`;
+
+            let hasMatches = false;
+            Object.keys(appData.matches).forEach(key => {
+                if (key.startsWith(`${appData.activeYear}_${appData.activeChamp}`)) {
+                    const parts = key.split('_');
+                    const title = `${parts[3]} (${parts[4]} - ${parts[2]})`;
+                    const matches = appData.matches[key];
+
+                    if (matches.length > 0) {
+                        hasMatches = true;
+                        html += `
+                            <div style="margin-bottom:20px;">
+                                <h4 style="color:var(--primary); border-bottom:1px solid var(--border); padding-bottom:4px;">${title}</h4>
+                                <table style="margin-top:8px;">
+                                    <thead><tr><th>Partida</th><th>Confronto</th><th>Placar</th></tr></thead>
+                                    <tbody>
+                                        ${matches.map((m, idx) => `
+                                            <tr>
+                                                <td>Jogo #${idx + 1} (${m.round})</td>
+                                                <td>${m.team1} vs${m.team2}</td>
+                                                <td><strong>${m.isBye ? 'ISENTO / BYE' : (m.score1 !== null ? m.score1 : '-') + ' x ' + (m.score2 !== null ? m.score2 : '-') + (m.pen1 !== null ? ` (${m.pen1}x${m.pen2} Pênaltis)` : '')}</strong></td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        `;
+                    }
+                }
+            });
+
+            if (!hasMatches) {
+                html += `<p style="text-align:center; color:var(--text-muted);">Nenhum jogo cadastrado para emissão do boletim.</p>`;
+            }
+
             container.innerHTML = html;
         }
 
