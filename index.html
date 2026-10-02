@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -72,8 +71,8 @@
         .match-header { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
         .match-row { display: flex; justify-content: space-between; align-items: center; margin: 4px 0; gap: 10px; font-weight: 600; font-size: 0.9rem; }
         .score-input { width: 60px; text-align: center; padding: 6px; border: 1px solid #cbd5e1; border-radius: var(--radius-md); font-weight: 700; }
-        .penalty-container { background: #fffbe3; padding: 6px 10px; border-radius: 6px; border: 1px solid #fef08a; margin-top: 6px; }
-        .penalty-title { font-size: 0.7rem; font-weight: 800; color: #b45309; text-transform: uppercase; margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+        .penalty-container { background: #fffbe3; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef08a; margin-top: 8px; }
+        .penalty-title { font-size: 0.7rem; font-weight: 800; color: #b45309; text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }
         .modality-grid-container { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
         .round-title { font-size: 1.05rem; font-weight: 800; color: var(--primary-hover); margin: 20px 0 10px 0; border-bottom: 2px solid var(--border); padding-bottom: 6px; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; page-break-after: avoid; }
         .print-header { display: none; text-align: center; padding-bottom: 15px; margin-bottom: 20px; border-bottom: 2px solid var(--primary); }
@@ -83,6 +82,7 @@
         .delete-match-btn { background: transparent; border: none; color: var(--accent-rose); cursor: pointer; font-size: 0.9rem; padding: 2px 6px; border-radius: 4px; transition: background 0.2s; }
         .delete-match-btn:hover { background: #ffe4e6; }
         .bye-badge { background: var(--accent-blue); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; }
+        .leg-badge { background: #6366f1; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; }
         .champ-badge { background: var(--accent-amber); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 800; }
         .proof-mgr-bar { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; background: #f8fafc; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--border); }
         @page { margin: 1cm; size: A4 portrait; }
@@ -104,6 +104,7 @@
         <h2 id="print-header-title">CAMPEONATO INTERCLASSE</h2>
         <p id="print-header-info">Ano: 2026 | Campeonato Principal</p>
     </div>
+
     <header>
         <div class="header-container">
             <div class="header-brand">
@@ -144,6 +145,7 @@
             </div>
         </div>
     </header>
+
     <nav class="no-print">
         <div class="nav-container">
             <button class="nav-tab active" onclick="switchTab('anos-campeonatos', this)"><i class="fa-solid fa-calendar-days"></i> Anos & Campeonatos</button>
@@ -156,6 +158,7 @@
             <button class="nav-tab" onclick="switchTab('boletim', this)"><i class="fa-solid fa-file-invoice"></i> Boletim</button>
         </div>
     </nav>
+
     <main>
         <!-- ABA ANOS E CAMPEONATOS -->
         <div id="tab-anos-campeonatos" class="tab-content active">
@@ -283,8 +286,8 @@
                     <div class="form-group">
                         <label>Forma de Disputa</label>
                         <select id="mod-format-select" class="form-control">
-                            <option value="eliminatoria_simples">Mata-Mata Completo (com BYE e Final)</option>
-                            <option value="ida_volta">Jogos de Ida e Volta (Turno e Returno)</option>
+                            <option value="eliminatoria_simples">Mata-Mata Único (Jogo Único com BYE e Pênaltis)</option>
+                            <option value="ida_e_volta">Mata-Mata (Ida e Volta)</option>
                             <option value="todos_contra_todos">Todos contra Todos (Turno Único)</option>
                         </select>
                     </div>
@@ -453,257 +456,238 @@
         <div id="tab-boletim" class="tab-content">
             <div class="card">
                 <div class="card-header"><span class="card-title"><i class="fa-solid fa-file-invoice"></i> Boletim Oficial do Campeonato</span></div>
-                <div style="margin-bottom: 15px;">
-                    <button class="btn btn-primary no-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir Boletim Oficial</button>
-                </div>
-                <div id="boletim-content"></div>
+                <p style="margin-bottom:15px; color:var(--text-muted);">Relatório unificado para impressão de resultados e quadro geral.</p>
+                <button class="btn btn-primary no-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir Boletim</button>
             </div>
         </div>
     </main>
 
     <script>
-        let appData = {
-            config: { title: "CAMPEONATO INTERCLASSE", subtitle: "Escola Verde — Gestão Esportiva", logo: "" },
-            activeYear: "2026",
-            activeChamp: "Campeonato Principal",
+        // ESTADO GLOBAL DO SISTEMA
+        let DB = {
             years: ["2026"],
+            activeYear: "2026",
             champs: { "2026": ["Campeonato Principal"] },
-            teams: [],
-            matches: {},
-            matchFormats: {},
-            proofs: {
-                arrecadacao: ["Alimentos (Kg)", "Lacres / Tampinhas"],
-                cultural: ["Apresentação Dança", "Mascote / Torcida"]
-            },
-            scores: {
-                arrecadacao: {},
-                cultural: {}
-            }
+            activeChamp: "Campeonato Principal",
+            teams: [], 
+            matches: [], 
+            proofs: [], 
+            headerConfig: { title: "CAMPEONATO INTERCLASSE", subtitle: "Escola Verde — Gestão Esportiva e Cultural", logo: "" }
         };
 
-        // --- INICIALIZAÇÃO & LOCAL STORAGE ---
-        function initApp() {
-            const savedData = localStorage.getItem('interclasse_db');
-            if (savedData) {
-                appData = JSON.parse(savedData);
-                if (!appData.proofs) appData.proofs = { arrecadacao: ["Alimentos (Kg)", "Lacres / Tampinhas"], cultural: ["Apresentação Dança", "Mascote / Torcida"] };
-                if (!appData.scores) appData.scores = { arrecadacao: {}, cultural: {} };
-                if (!appData.matchFormats) appData.matchFormats = {};
-            } else {
-                saveAppData();
-            }
-            renderHeader();
-            renderYearsAndChamps();
+        let currentGeralFilter = "GERAL_CONSOLIDADO";
+
+        // INICIALIZAÇÃO
+        window.onload = function() {
+            loadDB();
+            updateHeaderUI();
+            populateYearSelect();
+            populateChampSelect();
             renderTeams();
-            renderMatches();
-            renderManualTab('arrecadacao');
-            renderManualTab('cultural');
-            calculateSchedule();
+            onSegmentOrCategoryChange();
+            renderProofs();
+        };
+
+        function saveDB() {
+            localStorage.setItem('INTERCLASSE_DB_2026', JSON.stringify(DB));
         }
 
-        function saveAppData() {
-            localStorage.setItem('interclasse_db', JSON.stringify(appData));
+        function loadDB() {
+            const data = localStorage.getItem('INTERCLASSE_DB_2026');
+            if (data) {
+                try { DB = JSON.parse(data); } catch(e) {}
+            }
         }
 
         function resetWholeSystem() {
-            if (confirm("Atenção: Todos os dados (anos, campeonatos, equipes, jogos) serão apagados. Deseja continuar?")) {
-                localStorage.removeItem('interclasse_db');
+            if (confirm("Tem certeza que deseja apagar TODOS os dados do sistema? Esta ação não pode ser desfeita.")) {
+                localStorage.removeItem('INTERCLASSE_DB_2026');
                 location.reload();
             }
         }
 
-        // --- CABEÇALHO & CONFIGURAÇÃO ---
         function toggleConfigDrawer() {
             const drawer = document.getElementById('config-drawer');
             drawer.classList.toggle('open');
-            if (drawer.classList.contains('open')) {
-                document.getElementById('cfg-title').value = appData.config.title;
-                document.getElementById('cfg-subtitle').value = appData.config.subtitle;
-            }
+            document.getElementById('cfg-title').value = DB.headerConfig.title;
+            document.getElementById('cfg-subtitle').value = DB.headerConfig.subtitle;
         }
 
         function saveHeaderConfig() {
-            appData.config.title = document.getElementById('cfg-title').value || "CAMPEONATO INTERCLASSE";
-            appData.config.subtitle = document.getElementById('cfg-subtitle').value || "";
-            saveAppData();
-            renderHeader();
+            DB.headerConfig.title = document.getElementById('cfg-title').value || "CAMPEONATO INTERCLASSE";
+            DB.headerConfig.subtitle = document.getElementById('cfg-subtitle').value || "";
+            saveDB();
+            updateHeaderUI();
             toggleConfigDrawer();
         }
 
-        function uploadLogoDirect(event) {
-            const file = event.target.files[0];
+        function uploadLogoDirect(e) {
+            const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    appData.config.logo = e.target.result;
-                    saveAppData();
-                    renderHeader();
-                };
+                reader.onload = function(evt) {
+                    DB.headerConfig.logo = evt.target.result;
+                    saveDB();
+                    updateHeaderUI();
+                }
                 reader.readAsDataURL(file);
             }
         }
 
         function removeLogo() {
-            appData.config.logo = "";
-            saveAppData();
-            renderHeader();
+            DB.headerConfig.logo = "";
+            saveDB();
+            updateHeaderUI();
         }
 
-        function renderHeader() {
-            document.getElementById('header-title-text').innerHTML = `<i class="fa-solid fa-trophy" style="color: #f59e0b;"></i> ${appData.config.title}`;
-            document.getElementById('header-subtitle-text').innerText = appData.config.subtitle;
-            document.getElementById('hdr-year-name').innerText = appData.activeYear;
-            document.getElementById('hdr-champ-name').innerText = appData.activeChamp;
-
-            document.getElementById('print-header-title').innerText = appData.config.title;
-            document.getElementById('print-header-info').innerText = `Ano: ${appData.activeYear} | ${appData.activeChamp}`;
+        function updateHeaderUI() {
+            document.getElementById('header-title-text').innerHTML = `<i class="fa-solid fa-trophy" style="color: #f59e0b;"></i> ${DB.headerConfig.title}`;
+            document.getElementById('header-subtitle-text').textContent = DB.headerConfig.subtitle;
+            document.getElementById('hdr-year-name').textContent = DB.activeYear;
+            document.getElementById('hdr-champ-name').textContent = DB.activeChamp;
 
             const logoImg = document.getElementById('header-logo-img');
-            const printLogoImg = document.getElementById('print-header-logo');
-            if (appData.config.logo) {
-                logoImg.src = appData.config.logo;
-                logoImg.style.display = 'block';
-                printLogoImg.src = appData.config.logo;
-                printLogoImg.style.display = 'inline-block';
+            const printLogo = document.getElementById('print-header-logo');
+            if (DB.headerConfig.logo) {
+                logoImg.src = DB.headerConfig.logo;
+                logoImg.style.display = "block";
+                printLogo.src = DB.headerConfig.logo;
+                printLogo.style.display = "inline-block";
             } else {
-                logoImg.style.display = 'none';
-                printLogoImg.style.display = 'none';
+                logoImg.style.display = "none";
+                printLogo.style.display = "none";
             }
+
+            document.getElementById('print-header-title').textContent = DB.headerConfig.title;
+            document.getElementById('print-header-info').textContent = `Ano: ${DB.activeYear} | ${DB.activeChamp}`;
         }
 
-        // --- ABAS E NAVEGAÇÃO ---
+        // TAB NAVIGATION
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-            document.getElementById(`tab-${tabId}`).classList.add('active');
-            btn.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+            if(btn) btn.classList.add('active');
+            document.body.classList.remove('print-only-bracket');
 
-            if (tabId === 'geral') renderGeralStandings();
-            if (tabId === 'boletim') renderBoletim();
-            if (tabId === 'cronograma') calculateSchedule();
+            if(tabId === 'cronograma') calculateSchedule();
+            if(tabId === 'geral') renderGeralClassification();
         }
 
-        // --- ANOS E CAMPEONATOS ---
-        function renderYearsAndChamps() {
-            const yearSelect = document.getElementById('select-active-year');
-            const champSelect = document.getElementById('select-active-champ');
-
-            yearSelect.innerHTML = appData.years.map(y => `<option value="${y}" ${y === appData.activeYear ? 'selected' : ''}>${y}</option>`).join('');
-
-            const currentChamps = appData.champs[appData.activeYear] || [];
-            champSelect.innerHTML = currentChamps.map(c => `<option value="${c}" ${c === appData.activeChamp ? 'selected' : ''}>${c}</option>`).join('');
-
-            document.getElementById('years-table-body').innerHTML = appData.years.map(y => `
-                <tr>
-                    <td><strong>${y}</strong></td>
-                    <td style="text-align:right;">
-                        <button class="btn btn-danger btn-sm" onclick="deleteYear('${y}')"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-
-            document.getElementById('champs-table-body').innerHTML = currentChamps.map(c => `
-                <tr>
-                    <td><strong>${c}</strong></td>
-                    <td style="text-align:right;">
-                        <button class="btn btn-danger btn-sm" onclick="deleteChamp('${c}')"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
+        // GESTÃO DE ANOS E CAMPEONATOS
+        function populateYearSelect() {
+            const sel = document.getElementById('select-active-year');
+            sel.innerHTML = DB.years.map(y => `<option value="${y}" ${y===DB.activeYear?'selected':''}>${y}</option>`).join('');
+            renderYearsTable();
         }
 
-        function changeActiveYear(year) {
-            appData.activeYear = year;
-            appData.activeChamp = appData.champs[year] ? appData.champs[year][0] : '';
-            saveAppData();
-            renderHeader();
-            renderYearsAndChamps();
+        function populateChampSelect() {
+            const sel = document.getElementById('select-active-champ');
+            const list = DB.champs[DB.activeYear] || [];
+            sel.innerHTML = list.map(c => `<option value="${c}" ${c===DB.activeChamp?'selected':''}>${c}</option>`).join('');
+            renderChampsTable();
+        }
+
+        function changeActiveYear(val) {
+            DB.activeYear = val;
+            if (!DB.champs[val] || DB.champs[val].length === 0) {
+                DB.champs[val] = ["Campeonato Principal"];
+            }
+            DB.activeChamp = DB.champs[val][0];
+            saveDB();
+            updateHeaderUI();
+            populateChampSelect();
             renderTeams();
-            renderMatches();
-            renderManualTab('arrecadacao');
-            renderManualTab('cultural');
+            onSegmentOrCategoryChange();
         }
 
-        function changeActiveChamp(champ) {
-            appData.activeChamp = champ;
-            saveAppData();
-            renderHeader();
-            renderMatches();
+        function changeActiveChamp(val) {
+            DB.activeChamp = val;
+            saveDB();
+            updateHeaderUI();
             renderTeams();
+            onSegmentOrCategoryChange();
         }
 
         function addNewYear(e) {
             e.preventDefault();
             const val = document.getElementById('new-year-input').value.trim();
-            if (val && !appData.years.includes(val)) {
-                appData.years.push(val);
-                appData.champs[val] = ["Campeonato Principal"];
-                appData.activeYear = val;
-                appData.activeChamp = "Campeonato Principal";
-                document.getElementById('new-year-input').value = '';
-                saveAppData();
-                initApp();
+            if (val && !DB.years.includes(val)) {
+                DB.years.push(val);
+                DB.champs[val] = ["Campeonato Principal"];
+                DB.activeYear = val;
+                DB.activeChamp = "Campeonato Principal";
+                document.getElementById('new-year-input').value = "";
+                saveDB();
+                populateYearSelect();
+                populateChampSelect();
+                updateHeaderUI();
             }
         }
 
         function addNewChamp(e) {
             e.preventDefault();
             const val = document.getElementById('new-champ-input').value.trim();
-            if (val && !appData.champs[appData.activeYear].includes(val)) {
-                appData.champs[appData.activeYear].push(val);
-                appData.activeChamp = val;
-                document.getElementById('new-champ-input').value = '';
-                saveAppData();
-                initApp();
+            if (val) {
+                if(!DB.champs[DB.activeYear]) DB.champs[DB.activeYear] = [];
+                if(!DB.champs[DB.activeYear].includes(val)) {
+                    DB.champs[DB.activeYear].push(val);
+                    DB.activeChamp = val;
+                    document.getElementById('new-champ-input').value = "";
+                    saveDB();
+                    populateChampSelect();
+                    updateHeaderUI();
+                }
             }
         }
 
+        function renderYearsTable() {
+            document.getElementById('years-table-body').innerHTML = DB.years.map(y => `
+                <tr>
+                    <td><strong>${y}</strong> ${y===DB.activeYear?'<span class="champ-badge">ATIVO</span>':''}</td>
+                    <td style="text-align:right;">
+                        ${DB.years.length > 1 ? `<button class="btn btn-danger btn-sm" onclick="deleteYear('${y}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderChampsTable() {
+            const list = DB.champs[DB.activeYear] || [];
+            document.getElementById('champs-table-body').innerHTML = list.map(c => `
+                <tr>
+                    <td><strong>${c}</strong> ${c===DB.activeChamp?'<span class="champ-badge">ATIVO</span>':''}</td>
+                    <td style="text-align:right;">
+                        ${list.length > 1 ? `<button class="btn btn-danger btn-sm" onclick="deleteChamp('${c}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
         function deleteYear(y) {
-            if (appData.years.length <= 1) return alert("É necessário manter pelo menos um ano letivo.");
-            if (confirm(`Remover ano ${y}?`)) {
-                appData.years = appData.years.filter(item => item !== y);
-                delete appData.champs[y];
-                appData.activeYear = appData.years[0];
-                appData.activeChamp = appData.champs[appData.activeYear][0];
-                saveAppData();
-                initApp();
+            if(confirm(`Excluir o ano ${y} e todos os registros associados?`)) {
+                DB.years = DB.years.filter(x => x !== y);
+                delete DB.champs[y];
+                DB.activeYear = DB.years[0];
+                DB.activeChamp = DB.champs[DB.activeYear][0];
+                saveDB();
+                populateYearSelect();
+                populateChampSelect();
+                updateHeaderUI();
             }
         }
 
         function deleteChamp(c) {
-            if (appData.champs[appData.activeYear].length <= 1) return alert("Mantenha ao menos um campeonato.");
-            if (confirm(`Remover campeonato ${c}?`)) {
-                appData.champs[appData.activeYear] = appData.champs[appData.activeYear].filter(item => item !== c);
-                appData.activeChamp = appData.champs[appData.activeYear][0];
-                saveAppData();
-                initApp();
+            if(confirm(`Excluir o campeonato "${c}"?`)) {
+                DB.champs[DB.activeYear] = DB.champs[DB.activeYear].filter(x => x !== c);
+                DB.activeChamp = DB.champs[DB.activeYear][0];
+                saveDB();
+                populateChampSelect();
+                updateHeaderUI();
             }
         }
 
-        // --- EQUIPES ---
-        function renderTeams() {
-            const tbody = document.getElementById('teams-table-body');
-            const currentTeams = appData.teams.filter(t => t.year === appData.activeYear && t.champ === appData.activeChamp);
-
-            if (currentTeams.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color: var(--text-muted);">Nenhuma equipe cadastrada para este campeonato.</td></tr>`;
-            } else {
-                tbody.innerHTML = currentTeams.map(t => `
-                    <tr>
-                        <td><strong>${t.name}</strong></td>
-                        <td>${t.segment}</td>
-                        <td class="no-print" style="text-align: right;">
-                            <button class="btn btn-warning btn-sm" onclick="editTeam('${t.id}')"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteTeam('${t.id}')"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `).join('');
-            }
-            renderTeamsSelector();
-            renderManualTab('arrecadacao');
-            renderManualTab('cultural');
-        }
-
+        // CADASTRO DE EQUIPES
         function saveTeam(e) {
             e.preventDefault();
             const id = document.getElementById('team-id').value;
@@ -711,783 +695,837 @@
             const segment = document.getElementById('team-segment').value;
 
             if (id) {
-                const team = appData.teams.find(t => t.id === id);
-                if (team) { team.name = name; team.segment = segment; }
+                const team = DB.teams.find(t => t.id === id);
+                if (team) {
+                    team.name = name;
+                    team.segment = segment;
+                }
             } else {
-                appData.teams.push({
-                    id: Date.now().toString(),
-                    year: appData.activeYear,
-                    champ: appData.activeChamp,
-                    name,
-                    segment
+                DB.teams.push({
+                    id: 'team_' + Date.now(),
+                    year: DB.activeYear,
+                    champ: DB.activeChamp,
+                    name: name,
+                    segment: segment
                 });
             }
-            saveAppData();
+            saveDB();
             resetTeamForm();
             renderTeams();
+            onSegmentOrCategoryChange();
         }
 
         function editTeam(id) {
-            const team = appData.teams.find(t => t.id === id);
+            const team = DB.teams.find(t => t.id === id);
             if (team) {
                 document.getElementById('team-id').value = team.id;
                 document.getElementById('team-name').value = team.name;
                 document.getElementById('team-segment').value = team.segment;
                 document.getElementById('team-form-title').innerHTML = `<i class="fa-solid fa-pen"></i> Editar Equipe`;
-                document.getElementById('team-submit-btn').innerHTML = `<i class="fa-solid fa-check"></i> Salvar Alterações`;
-                document.getElementById('team-cancel-btn').style.display = 'inline-flex';
+                document.getElementById('team-submit-btn').innerHTML = `<i class="fa-solid fa-check"></i> Atualizar Equipe`;
+                document.getElementById('team-cancel-btn').style.display = "inline-flex";
             }
         }
 
         function resetTeamForm() {
-            document.getElementById('team-id').value = '';
-            document.getElementById('team-form').reset();
+            document.getElementById('team-id').value = "";
+            document.getElementById('team-name').value = "";
+            document.getElementById('team-segment').value = "";
             document.getElementById('team-form-title').innerHTML = `<i class="fa-solid fa-user-plus"></i> Cadastrar Equipe`;
             document.getElementById('team-submit-btn').innerHTML = `<i class="fa-solid fa-plus"></i> Cadastrar Equipe`;
-            document.getElementById('team-cancel-btn').style.display = 'none';
+            document.getElementById('team-cancel-btn').style.display = "none";
         }
 
         function deleteTeam(id) {
-            if (confirm("Deseja remover esta equipe?")) {
-                appData.teams = appData.teams.filter(t => t.id !== id);
-                saveAppData();
+            if (confirm("Deseja realmente excluir esta equipe?")) {
+                DB.teams = DB.teams.filter(t => t.id !== id);
+                saveDB();
                 renderTeams();
+                onSegmentOrCategoryChange();
             }
         }
 
-        // --- SELEÇÃO DE EQUIPES NA MODALIDADE ---
+        function getActiveTeams() {
+            return DB.teams.filter(t => t.year === DB.activeYear && t.champ === DB.activeChamp);
+        }
+
+        function renderTeams() {
+            const list = getActiveTeams();
+            const tbody = document.getElementById('teams-table-body');
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">Nenhuma equipe cadastrada para este campeonato.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = list.map(t => `
+                <tr>
+                    <td><strong>${t.name}</strong></td>
+                    <td>${t.segment}</td>
+                    <td class="no-print" style="text-align: right;">
+                        <button class="btn btn-light btn-sm" style="color:black;" onclick="editTeam('${t.id}')"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteTeam('${t.id}')"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // GERENCIAMENTO DAS MODALIDADES E SELEÇÃO DE EQUIPES
         function onSegmentOrCategoryChange() {
-            renderTeamsSelector();
+            renderTeamSelector();
             renderMatches();
         }
 
-        function renderTeamsSelector() {
+        function renderTeamSelector() {
             const segment = document.getElementById('mod-segment-select').value;
             const container = document.getElementById('teams-selector-container');
-            const filteredTeams = appData.teams.filter(t => t.year === appData.activeYear && t.champ === appData.activeChamp && t.segment === segment);
+            const availableTeams = getActiveTeams().filter(t => t.segment === segment);
 
-            if (filteredTeams.length === 0) {
-                container.innerHTML = `<p style="font-size:0.85rem; color:var(--text-muted);">Nenhuma equipe cadastrada neste segmento.</p>`;
+            if (availableTeams.length === 0) {
+                container.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem;">Nenhuma equipe cadastrada para o segmento ${segment}.</p>`;
                 return;
             }
 
-            container.innerHTML = filteredTeams.map(t => `
+            container.innerHTML = availableTeams.map(t => `
                 <label class="team-checkbox-item">
-                    <input type="checkbox" value="${t.name}" class="chk-team-mod" checked>
-                    ${t.name}
+                    <input type="checkbox" class="mod-team-checkbox" value="${t.id}" checked>
+                    <span>${t.name}</span>
                 </label>
             `).join('');
         }
 
         function toggleAllTeamsSelect(status) {
-            document.querySelectorAll('.chk-team-mod').forEach(chk => chk.checked = status);
+            document.querySelectorAll('.mod-team-checkbox').forEach(cb => cb.checked = status);
         }
 
-        // --- JOGOS E CHAVEAMENTO ---
-        function getCategoryKey() {
-            const gender = document.getElementById('gender-select').value;
-            const mod = document.getElementById('mod-select').value;
-            const seg = document.getElementById('mod-segment-select').value;
-            return `${appData.activeYear}_${appData.activeChamp}_${seg}_${mod}_${gender}`;
-        }
-
+        // SORTEIO / CHAVEAMENTO E REGRAS DE JOGO
         function generateMatches() {
-            const key = getCategoryKey();
+            const gender = document.getElementById('gender-select').value;
+            const modality = document.getElementById('mod-select').value;
+            const segment = document.getElementById('mod-segment-select').value;
             const format = document.getElementById('mod-format-select').value;
-            const selectedTeams = Array.from(document.querySelectorAll('.chk-team-mod:checked')).map(c => c.value);
+
+            const selectedTeamIds = Array.from(document.querySelectorAll('.mod-team-checkbox:checked')).map(cb => cb.value);
+            const selectedTeams = getActiveTeams().filter(t => selectedTeamIds.includes(t.id));
 
             if (selectedTeams.length < 2) {
-                alert("Selecione pelo menos 2 equipes para gerar a tabela de jogos.");
+                alert("Selecione pelo menos 2 equipes para gerar o chaveamento!");
                 return;
             }
 
-            const shuffled = [...selectedTeams].sort(() => Math.random() - 0.5);
-            let matches = [];
+            // Remove jogos existentes dessa categoria
+            DB.matches = DB.matches.filter(m => !(m.year === DB.activeYear && m.champ === DB.activeChamp && m.gender === gender && m.modality === modality && m.segment === segment));
 
-            appData.matchFormats[key] = format;
-
-            if (format === 'eliminatoria_simples') {
-                matches = generateInitialKnockoutRound(shuffled);
-            } else if (format === 'todos_contra_todos') {
-                matches = generateRoundRobin(shuffled);
+            if (format === 'todos_contra_todos') {
+                generateRoundRobinMatches(selectedTeams, gender, modality, segment);
+            } else if (format === 'ida_e_volta') {
+                generateEliminationMatches(selectedTeams, gender, modality, segment, true);
             } else {
-                matches = generateRoundRobin(shuffled, true);
+                generateEliminationMatches(selectedTeams, gender, modality, segment, false);
             }
 
-            appData.matches[key] = matches;
-            saveAppData();
+            saveDB();
             renderMatches();
         }
 
-        function getKnockoutRoundName(numMatches) {
-            if (numMatches === 1) return "GRANDE FINAL";
-            if (numMatches === 2) return "SEMIFINAL";
-            if (numMatches === 4) return "QUARTAS DE FINAL";
-            if (numMatches === 8) return "OITAVAS DE FINAL";
-            return `RODADA ELIMINATÓRIA (${numMatches * 2} Equipes)`;
-        }
-
-        function generateInitialKnockoutRound(teams) {
-            let list = [];
-            let n = teams.length;
+        /**
+         * 1. TODOS CONTRA TODOS (ROUND-ROBIN COM NÚMERO ÍMPAR SUPORTADO / "FOLGA")
+         */
+        function generateRoundRobinMatches(teams, gender, modality, segment) {
+            let teamList = [...teams];
             
-            // Determinar o tamanho de chave ideal (potência de 2)
-            let targetSize = 2;
-            while (targetSize < n) {
-                targetSize *= 2;
-            }
-            
-            let byesCount = targetSize - n; // Equipes que passam direto na 1ª rodada
-            let numMatches = targetSize / 2;
-            let roundName = getKnockoutRoundName(numMatches);
-
-            let pool = [...teams];
-            let matchIdx = 1;
-
-            // Alocar BYEs
-            for (let i = 0; i < byesCount; i++) {
-                let team = pool.shift();
-                list.push({
-                    id: Date.now() + Math.random(),
-                    roundNum: 1,
-                    round: roundName,
-                    matchIndex: matchIdx++,
-                    team1: team,
-                    team2: "BYE (Isento)",
-                    score1: null,
-                    score2: null,
-                    pen1: null,
-                    pen2: null,
-                    isBye: true,
-                    winner: team
-                });
+            // Se for ímpar, insere "FOLGA" para equilibrar a rotação de jogos
+            const isOdd = teamList.length % 2 !== 0;
+            if (isOdd) {
+                teamList.push({ id: 'BYE_TEAM', name: 'FOLGA', segment: segment });
             }
 
-            // Alocar Jogos
-            while (pool.length >= 2) {
-                let t1 = pool.shift();
-                let t2 = pool.shift();
-                list.push({
-                    id: Date.now() + Math.random(),
-                    roundNum: 1,
-                    round: roundName,
-                    matchIndex: matchIdx++,
-                    team1: t1,
-                    team2: t2,
-                    score1: null,
-                    score2: null,
-                    pen1: null,
-                    pen2: null,
-                    isBye: false,
-                    winner: null
-                });
-            }
+            const numTeams = teamList.length;
+            const numRounds = numTeams - 1;
+            const matchesPerRound = numTeams / 2;
 
-            return list;
-        }
+            for (let r = 0; r < numRounds; r++) {
+                for (let i = 0; i < matchesPerRound; i++) {
+                    const home = teamList[i];
+                    const away = teamList[numTeams - 1 - i];
 
-        function getMatchWinner(m) {
-            if (m.isBye) return m.team1;
-            if (m.score1 === null || m.score2 === null) return null;
-
-            if (m.score1 > m.score2) return m.team1;
-            if (m.score2 > m.score1) return m.team2;
-
-            // Empate: exige desempate por pênaltis
-            if (m.pen1 !== null && m.pen2 !== null) {
-                if (m.pen1 > m.pen2) return m.team1;
-                if (m.pen2 > m.pen1) return m.team2;
-            }
-
-            return null; // Ainda indefinido em pênaltis
-        }
-
-        function processKnockoutProgression(matches) {
-            if (matches.length === 0) return matches;
-
-            let maxRound = Math.max(...matches.map(m => m.roundNum || 1));
-            let currentRoundMatches = matches.filter(m => m.roundNum === maxRound);
-
-            // Verificar se a rodada atual está 100% concluída com vencedores definidos
-            let winners = [];
-            let allFinished = true;
-
-            for (let m of currentRoundMatches) {
-                let w = getMatchWinner(m);
-                if (w) {
-                    winners.push(w);
-                } else {
-                    allFinished = false;
-                    break;
-                }
-            }
-
-            // Se rodada concluída e temos mais de 1 vencedor, criar a próxima rodada!
-            if (allFinished && winners.length > 1) {
-                let nextRoundNum = maxRound + 1;
-                let numMatches = winners.length / 2;
-                let roundName = getKnockoutRoundName(numMatches);
-
-                let nextRoundMatches = [];
-                let matchIdx = 1;
-
-                for (let i = 0; i < winners.length; i += 2) {
-                    let t1 = winners[i];
-                    let t2 = winners[i + 1];
-
-                    // Checar se esta partida da próxima rodada já havia sido gerada
-                    let existing = matches.find(m => m.roundNum === nextRoundNum && m.matchIndex === matchIdx);
-
-                    if (existing) {
-                        // Preservar estado e resultados existentes
-                        existing.team1 = t1;
-                        existing.team2 = t2;
-                    } else {
-                        // Criar novo confronto da próxima fase
-                        matches.push({
-                            id: Date.now() + Math.random(),
-                            roundNum: nextRoundNum,
-                            round: roundName,
-                            matchIndex: matchIdx,
-                            team1: t1,
-                            team2: t2,
-                            score1: null,
-                            score2: null,
-                            pen1: null,
-                            pen2: null,
-                            isBye: false,
-                            winner: null
+                    if (home.id === 'BYE_TEAM' || away.id === 'BYE_TEAM') {
+                        const realTeam = home.id === 'BYE_TEAM' ? away : home;
+                        DB.matches.push({
+                            id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                            year: DB.activeYear,
+                            champ: DB.activeChamp,
+                            gender, modality, segment,
+                            format: 'todos_contra_todos',
+                            round: `Rodada ${r + 1}`,
+                            teamA: realTeam.name,
+                            teamB: 'FOLGA',
+                            scoreA: null,
+                            scoreB: null,
+                            isBye: true
                         });
-                    }
-                    matchIdx++;
-                }
-
-                // Chamar recursivamente para o caso da nova rodada já ter resultados preenchidos previamente
-                return processKnockoutProgression(matches);
-            }
-
-            return matches;
-        }
-
-        function generateRoundRobin(teams, doubleRound = false) {
-            let list = [];
-            let n = teams.length;
-            let rounds = n % 2 === 0 ? n - 1 : n;
-
-            for (let r = 0; r < rounds; r++) {
-                for (let i = 0; i < n / 2; i++) {
-                    let t1 = teams[i];
-                    let t2 = teams[n - 1 - i];
-                    if (t1 && t2 && t1 !== t2) {
-                        list.push({
-                            id: Date.now() + Math.random(),
-                            roundNum: r + 1,
-                            round: `Turno - Rodada ${r + 1}`,
-                            team1: t1,
-                            team2: t2,
-                            score1: null,
-                            score2: null,
-                            pen1: null,
-                            pen2: null,
+                    } else {
+                        DB.matches.push({
+                            id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                            year: DB.activeYear,
+                            champ: DB.activeChamp,
+                            gender, modality, segment,
+                            format: 'todos_contra_todos',
+                            round: `Rodada ${r + 1}`,
+                            teamA: home.name,
+                            teamB: away.name,
+                            scoreA: null,
+                            scoreB: null,
+                            penaltiesA: null,
+                            penaltiesB: null,
                             isBye: false
                         });
                     }
                 }
-                teams.splice(1, 0, teams.pop());
+                // Rotação do Polígono
+                teamList.splice(1, 0, teamList.pop());
+            }
+        }
+
+        /**
+         * 2. ELIMINATÓRIA SIMPLES E IDA E VOLTA
+         */
+        function generateEliminationMatches(teams, gender, modality, segment, isTwoLegs = false) {
+            const shuffled = [...teams].sort(() => Math.random() - 0.5);
+            let nextPow2 = 2;
+            while (nextPow2 < shuffled.length) nextPow2 *= 2;
+
+            const byesCount = nextPow2 - shuffled.length;
+            let roundName = nextPow2 === 2 ? "Final" : (nextPow2 === 4 ? "Semi-Final" : (nextPow2 === 8 ? "Quartas de Final" : "Oitavas de Final"));
+
+            let currentTeams = [...shuffled];
+
+            // Inserir BYEs
+            for (let i = 0; i < byesCount; i++) {
+                const teamAdvancing = currentTeams.shift();
+                DB.matches.push({
+                    id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                    year: DB.activeYear,
+                    champ: DB.activeChamp,
+                    gender, modality, segment,
+                    format: isTwoLegs ? 'ida_e_volta' : 'eliminatoria_simples',
+                    round: roundName,
+                    teamA: teamAdvancing.name,
+                    teamB: 'BYE (Avança Direto)',
+                    scoreA: null,
+                    scoreB: null,
+                    isBye: true,
+                    winner: teamAdvancing.name
+                });
             }
 
-            if (doubleRound) {
-                const returnoMatches = list.map(m => ({
-                    id: Date.now() + Math.random(),
-                    roundNum: m.roundNum + rounds,
-                    round: m.round.replace('Turno', 'Returno'),
-                    team1: m.team2,
-                    team2: m.team1,
-                    score1: null,
-                    score2: null,
-                    pen1: null,
-                    pen2: null,
-                    isBye: false
-                }));
-                list = list.concat(returnoMatches);
+            // Jogos
+            const formatStr = isTwoLegs ? 'ida_e_volta' : 'eliminatoria_simples';
+            for (let i = 0; i < currentTeams.length; i += 2) {
+                const pairId = 'pair_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+                
+                if (isTwoLegs) {
+                    // Jogo 1 (Ida)
+                    DB.matches.push({
+                        id: 'm_' + Date.now() + '_1_' + Math.random().toString(36).substr(2, 5),
+                        pairId: pairId,
+                        leg: 1,
+                        year: DB.activeYear, champ: DB.activeChamp, gender, modality, segment,
+                        format: formatStr, round: roundName,
+                        teamA: currentTeams[i].name, teamB: currentTeams[i + 1].name,
+                        scoreA: null, scoreB: null, penaltiesA: null, penaltiesB: null, isBye: false, winner: null
+                    });
+                    // Jogo 2 (Volta)
+                    DB.matches.push({
+                        id: 'm_' + Date.now() + '_2_' + Math.random().toString(36).substr(2, 5),
+                        pairId: pairId,
+                        leg: 2,
+                        year: DB.activeYear, champ: DB.activeChamp, gender, modality, segment,
+                        format: formatStr, round: roundName,
+                        teamA: currentTeams[i + 1].name, teamB: currentTeams[i].name,
+                        scoreA: null, scoreB: null, penaltiesA: null, penaltiesB: null, isBye: false, winner: null
+                    });
+                } else {
+                    DB.matches.push({
+                        id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                        year: DB.activeYear, champ: DB.activeChamp, gender, modality, segment,
+                        format: formatStr, round: roundName,
+                        teamA: currentTeams[i].name, teamB: currentTeams[i + 1].name,
+                        scoreA: null, scoreB: null, penaltiesA: null, penaltiesB: null, isBye: false, winner: null
+                    });
+                }
             }
-            return list;
+        }
+
+        // RENDERIZAÇÃO E ATUALIZAÇÃO DOS RESULTADOS DE JOGOS
+        function getCurrentMatches() {
+            const gender = document.getElementById('gender-select').value;
+            const modality = document.getElementById('mod-select').value;
+            const segment = document.getElementById('mod-segment-select').value;
+
+            return DB.matches.filter(m => m.year === DB.activeYear && m.champ === DB.activeChamp && m.gender === gender && m.modality === modality && m.segment === segment);
         }
 
         function renderMatches() {
-            const key = getCategoryKey();
-            let matches = appData.matches[key] || [];
-            const format = appData.matchFormats[key] || 'eliminatoria_simples';
+            const matches = getCurrentMatches();
             const container = document.getElementById('matches-container');
 
-            if (format === 'eliminatoria_simples' && matches.length > 0) {
-                matches = processKnockoutProgression(matches);
-                appData.matches[key] = matches;
-                saveAppData();
-            }
-
             if (matches.length === 0) {
-                container.innerHTML = `<p style="color:var(--text-muted); padding: 10px;">Nenhum jogo gerado para esta categoria. Selecione as equipes e clique em "Sorteio / Iniciar Chaves".</p>`;
+                container.innerHTML = `<p style="color:var(--text-muted);">Nenhuma partida cadastrada para esta categoria. Clique em "Sorteio / Iniciar Chaves".</p>`;
                 renderModalityStandings([]);
                 return;
             }
 
-            let html = '';
-            let currentRound = '';
-
-            // Verificar Campeão em Eliminatória Simples
-            let championText = '';
-            if (format === 'eliminatoria_simples') {
-                let finalMatch = matches.find(m => m.round === "GRANDE FINAL");
-                if (finalMatch) {
-                    let winner = getMatchWinner(finalMatch);
-                    if (winner) {
-                        championText = `<div style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color:white; padding:15px; border-radius:var(--radius-md); text-align:center; font-weight:800; font-size:1.1rem; margin-bottom:20px; box-shadow:var(--shadow);">🏆 CAMPEÃO DA CATEGORIA: ${winner.toUpperCase()} 🏆</div>`;
-                    }
-                }
-            }
-
-            html += championText;
-
-            matches.forEach((m, idx) => {
-                if (m.round !== currentRound) {
-                    currentRound = m.round;
-                    html += `<div class="round-title"><span>${currentRound}</span></div>`;
-                }
-
-                let winner = getMatchWinner(m);
-                let isFinished = winner !== null;
-                let isTie = format === 'eliminatoria_simples' && !m.isBye && m.score1 !== null && m.score2 !== null && m.score1 === m.score2;
-
-                if (m.isBye) {
-                    html += `
-                        <div class="match-box bye-box">
-                            <div class="match-header">
-                                <span>Partida #${idx + 1}</span>
-                                <span class="bye-badge">ISENTO / BYE (Sem Pts)</span>
-                            </div>
-                            <div class="match-row">
-                                <span>${m.team1}</span>
-                                <span style="font-size:0.8rem; color:var(--accent-blue); font-weight:700;">Avança direto</span>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    html += `
-                        <div class="match-box ${isFinished ? 'winner-box' : ''}">
-                            <div class="match-header">
-                                <span>Partida #${idx + 1}</span>
-                                ${winner ? `<span class="champ-badge">VENCEDOR: ${winner}</span>` : ''}
-                                <button class="delete-match-btn no-print" onclick="deleteSingleMatch('${key}', ${idx})"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                            <div class="match-row">
-                                <span>${m.team1}</span>
-                                <input type="number" class="score-input" value="${m.score1 !== null ? m.score1 : ''}" onchange="updateScore('${key}', ${idx}, 1, this.value)">
-                            </div>
-                            <div class="match-row">
-                                <span>${m.team2}</span>
-                                <input type="number" class="score-input" value="${m.score2 !== null ? m.score2 : ''}" onchange="updateScore('${key}', ${idx}, 2, this.value)">
-                            </div>
-                            ${isTie ? `
-                                <div class="penalty-container">
-                                    <div class="penalty-title"><i class="fa-solid fa-futbol"></i> EMPATE! Disputa de Pênaltis</div>
-                                    <div class="match-row">
-                                        <span style="font-size:0.8rem;">${m.team1} (Pênaltis)</span>
-                                        <input type="number" class="score-input" style="border-color:#f59e0b;" value="${m.pen1 !== null ? m.pen1 : ''}" onchange="updatePenalty('${key}',${idx}, 1, this.value)">
-                                    </div>
-                                    <div class="match-row">
-                                        <span style="font-size:0.8rem;">${m.team2} (Pênaltis)</span>
-                                        <input type="number" class="score-input" style="border-color:#f59e0b;" value="${m.pen2 !== null ? m.pen2 : ''}" onchange="updatePenalty('${key}',${idx}, 2, this.value)">
-                                    </div>
-                                </div>
-                            ` : ''}
-                        </div>
-                    `;
-                }
+            // Agrupar por Rodada
+            const rounds = {};
+            matches.forEach(m => {
+                if (!rounds[m.round]) rounds[m.round] = [];
+                rounds[m.round].push(m);
             });
+
+            let html = "";
+            for (const rName in rounds) {
+                html += `<div class="round-title"><span><i class="fa-solid fa-trophy"></i> ${rName}</span></div>`;
+                rounds[rName].forEach(m => {
+                    if (m.isBye) {
+                        html += `
+                            <div class="match-box bye-box">
+                                <div class="match-header">
+                                    <span>${m.round}</span>
+                                    <span class="bye-badge">FOLGA / ISENTO</span>
+                                </div>
+                                <div class="match-row">
+                                    <span>${m.teamA}</span>
+                                    <span style="font-size:0.8rem; color:var(--accent-blue); font-weight:700;">AVANÇA / ISENTO</span>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        const isWinner = m.winner ? 'winner-box' : '';
+                        
+                        // Lógica de Pênaltis para Jogo Único ou Volta no Ida e Volta
+                        let showPenalties = false;
+                        if (m.format === 'eliminatoria_simples') {
+                            showPenalties = (m.scoreA !== null && m.scoreB !== null && m.scoreA === m.scoreB);
+                        } else if (m.format === 'ida_e_volta' && m.leg === 2) {
+                            const leg1 = matches.find(x => x.pairId === m.pairId && x.leg === 1);
+                            if (leg1 && leg1.scoreA !== null && leg1.scoreB !== null && m.scoreA !== null && m.scoreB !== null) {
+                                const totalTeamA = leg1.scoreB + m.scoreA; // teamA no jogo 2 é visitado no jogo 1
+                                const totalTeamB = leg1.scoreA + m.scoreB;
+                                if (totalTeamA === totalTeamB) showPenalties = true;
+                            }
+                        }
+
+                        const legTag = m.leg ? `<span class="leg-badge">${m.leg === 1 ? 'JOGO DE IDA' : 'JOGO DE VOLTA'}</span>` : '';
+
+                        html += `
+                            <div class="match-box ${isWinner}">
+                                <div class="match-header">
+                                    <span>${m.round} ${legTag}</span>
+                                    <button class="delete-match-btn no-print" onclick="deleteSingleMatch('${m.id}')" title="Excluir partida"><i class="fa-solid fa-xmark"></i></button>
+                                </div>
+                                <div class="match-row">
+                                    <span>${m.teamA}</span>
+                                    <input type="number" class="score-input" value="${m.scoreA !== null ? m.scoreA : ''}" onchange="updateScore('${m.id}', 'A', this.value)">
+                                </div>
+                                <div class="match-row">
+                                    <span>${m.teamB}</span>
+                                    <input type="number" class="score-input" value="${m.scoreB !== null ? m.scoreB : ''}" onchange="updateScore('${m.id}', 'B', this.value)">
+                                </div>
+
+                                ${showPenalties ? `
+                                    <div class="penalty-container">
+                                        <div class="penalty-title"><i class="fa-solid fa-bullseye"></i> Cobrança de Pênaltis (Agregado Empatado)</div>
+                                        <div class="match-row" style="font-size:0.8rem;">
+                                            <span>Pênaltis ${m.teamA}:</span>
+                                            <input type="number" class="score-input" style="width:50px; height:28px;" value="${m.penaltiesA !== null ? m.penaltiesA : ''}" onchange="updatePenalty('${m.id}', 'A', this.value)">
+                                        </div>
+                                        <div class="match-row" style="font-size:0.8rem;">
+                                            <span>Pênaltis ${m.teamB}:</span>
+                                            <input type="number" class="score-input" style="width:50px; height:28px;" value="${m.penaltiesB !== null ? m.penaltiesB : ''}" onchange="updatePenalty('${m.id}', 'B', this.value)">
+                                        </div>
+                                    </div>
+                                ` : ''}
+
+                                ${m.winner ? `<div style="margin-top:6px; font-size:0.75rem; font-weight:800; color:var(--primary);"><i class="fa-solid fa-crown"></i> ${m.format === 'ida_e_volta' ? 'Classificado' : 'Vencedor'}: ${m.winner}</div>` : ''}
+                            </div>
+                        `;
+                    }
+                });
+            }
 
             container.innerHTML = html;
             calculateModalityStandings(matches);
         }
 
-        function updateScore(key, idx, teamNum, val) {
-            const parsed = val === '' ? null : parseInt(val, 10);
-            if (teamNum === 1) appData.matches[key][idx].score1 = parsed;
-            if (teamNum === 2) appData.matches[key][idx].score2 = parsed;
-            
-            // Resetar pênaltis se o placar deixar de ser empate
-            const m = appData.matches[key][idx];
-            if (m.score1 !== m.score2) {
-                m.pen1 = null;
-                m.pen2 = null;
+        function updateScore(matchId, team, val) {
+            const m = DB.matches.find(x => x.id === matchId);
+            if (!m) return;
+
+            const score = val === "" ? null : parseInt(val);
+            if (team === 'A') m.scoreA = score;
+            else m.scoreB = score;
+
+            // Processar Vencedores / Classificação
+            if (m.format === 'todos_contra_todos') {
+                if (m.scoreA !== null && m.scoreB !== null) {
+                    if (m.scoreA > m.scoreB) m.winner = m.teamA;
+                    else if (m.scoreB > m.scoreA) m.winner = m.teamB;
+                    else m.winner = "EMPATE";
+                } else {
+                    m.winner = null;
+                }
+            } else if (m.format === 'eliminatoria_simples') {
+                if (m.scoreA !== null && m.scoreB !== null) {
+                    if (m.scoreA > m.scoreB) { m.winner = m.teamA; m.penaltiesA = null; m.penaltiesB = null; }
+                    else if (m.scoreB > m.scoreA) { m.winner = m.teamB; m.penaltiesA = null; m.penaltiesB = null; }
+                    else {
+                        if (m.penaltiesA !== null && m.penaltiesB !== null) {
+                            if (m.penaltiesA > m.penaltiesB) m.winner = m.teamA;
+                            else if (m.penaltiesB > m.penaltiesA) m.winner = m.teamB;
+                            else m.winner = null;
+                        } else m.winner = null;
+                    }
+                } else m.winner = null;
+            } else if (m.format === 'ida_e_volta') {
+                calculateTwoLegsWinner(m);
             }
 
-            saveAppData();
+            saveDB();
+            renderMatches();
+            checkAndAdvanceEliminationRound(m);
+        }
+
+        function calculateTwoLegsWinner(match) {
+            const categoryMatches = getCurrentMatches();
+            const pairMatches = categoryMatches.filter(x => x.pairId === match.pairId);
+            const leg1 = pairMatches.find(x => x.leg === 1);
+            const leg2 = pairMatches.find(x => x.leg === 2);
+
+            if (!leg1 || !leg2) return;
+
+            if (leg1.scoreA !== null && leg1.scoreB !== null && leg2.scoreA !== null && leg2.scoreB !== null) {
+                // leg1: teamA vs teamB
+                // leg2: teamB vs teamA
+                const aggTeamA = leg1.scoreA + leg2.scoreB;
+                const aggTeamB = leg1.scoreB + leg2.scoreA;
+
+                if (aggTeamA > aggTeamB) {
+                    leg1.winner = leg1.teamA;
+                    leg2.winner = leg1.teamA;
+                } else if (aggTeamB > aggTeamA) {
+                    leg1.winner = leg1.teamB;
+                    leg2.winner = leg1.teamB;
+                } else {
+                    // Empate no agregado -> Pênaltis no jogo 2
+                    if (leg2.penaltiesA !== null && leg2.penaltiesB !== null) {
+                        if (leg2.penaltiesA > leg2.penaltiesB) {
+                            leg1.winner = leg2.teamA;
+                            leg2.winner = leg2.teamA;
+                        } else if (leg2.penaltiesB > leg2.penaltiesA) {
+                            leg1.winner = leg2.teamB;
+                            leg2.winner = leg2.teamB;
+                        } else {
+                            leg1.winner = null; leg2.winner = null;
+                        }
+                    } else {
+                        leg1.winner = null; leg2.winner = null;
+                    }
+                }
+            } else {
+                leg1.winner = null; leg2.winner = null;
+            }
+        }
+
+        function updatePenalty(matchId, team, val) {
+            const m = DB.matches.find(x => x.id === matchId);
+            if (!m) return;
+
+            const pen = val === "" ? null : parseInt(val);
+            if (team === 'A') m.penaltiesA = pen;
+            else m.penaltiesB = pen;
+
+            if (m.format === 'ida_e_volta') {
+                calculateTwoLegsWinner(m);
+            } else {
+                if (m.penaltiesA !== null && m.penaltiesB !== null) {
+                    if (m.penaltiesA === m.penaltiesB) {
+                        alert("A disputa por pênaltis não pode terminar empatada!");
+                        m.winner = null;
+                    } else {
+                        m.winner = m.penaltiesA > m.penaltiesB ? m.teamA : m.teamB;
+                    }
+                }
+            }
+
+            saveDB();
+            renderMatches();
+            checkAndAdvanceEliminationRound(m);
+        }
+
+        // AVANÇA AUTOMATICAMENTE O VENCEDOR NA ELIMINATÓRIA / IDA E VOLTA
+        function checkAndAdvanceEliminationRound(completedMatch) {
+            if ((completedMatch.format !== 'eliminatoria_simples' && completedMatch.format !== 'ida_e_volta') || !completedMatch.winner) return;
+
+            const gender = completedMatch.gender;
+            const modality = completedMatch.modality;
+            const segment = completedMatch.segment;
+
+            const categoryMatches = DB.matches.filter(m => m.year === DB.activeYear && m.champ === DB.activeChamp && m.gender === gender && m.modality === modality && m.segment === segment);
+            
+            const currentRoundName = completedMatch.round;
+            const roundMatches = categoryMatches.filter(m => m.round === currentRoundName);
+
+            // Verificar se todos os confrontos da rodada já têm vencedores definidos
+            const allFinished = roundMatches.every(m => m.winner !== null);
+            if (!allFinished) return;
+
+            // Determinar próxima rodada
+            let nextRoundName = "";
+            if (currentRoundName === "Oitavas de Final") nextRoundName = "Quartas de Final";
+            else if (currentRoundName === "Quartas de Final") nextRoundName = "Semi-Final";
+            else if (currentRoundName === "Semi-Final") nextRoundName = "Final";
+            else return;
+
+            // Verificar se a próxima rodada já foi criada
+            const nextRoundExists = categoryMatches.some(m => m.round === nextRoundName);
+            if (nextRoundExists) return;
+
+            // Obter lista única de vencedores dos confrontos
+            const winnersSet = new Set();
+            roundMatches.forEach(m => { if(m.winner) winnersSet.add(m.winner); });
+            const winners = Array.from(winnersSet);
+
+            const isTwoLegs = completedMatch.format === 'ida_e_volta';
+            
+            for (let i = 0; i < winners.length; i += 2) {
+                if (i + 1 < winners.length) {
+                    const pairId = 'pair_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+                    if (isTwoLegs) {
+                        DB.matches.push({
+                            id: 'm_' + Date.now() + '_1_' + Math.random().toString(36).substr(2, 5),
+                            pairId: pairId, leg: 1, year: DB.activeYear, champ: DB.activeChamp, gender, modality, segment,
+                            format: 'ida_e_volta', round: nextRoundName, teamA: winners[i], teamB: winners[i + 1],
+                            scoreA: null, scoreB: null, penaltiesA: null, penaltiesB: null, isBye: false, winner: null
+                        });
+                        DB.matches.push({
+                            id: 'm_' + Date.now() + '_2_' + Math.random().toString(36).substr(2, 5),
+                            pairId: pairId, leg: 2, year: DB.activeYear, champ: DB.activeChamp, gender, modality, segment,
+                            format: 'ida_e_volta', round: nextRoundName, teamA: winners[i + 1], teamB: winners[i],
+                            scoreA: null, scoreB: null, penaltiesA: null, penaltiesB: null, isBye: false, winner: null
+                        });
+                    } else {
+                        DB.matches.push({
+                            id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                            year: DB.activeYear, champ: DB.activeChamp, gender, modality, segment,
+                            format: 'eliminatoria_simples', round: nextRoundName, teamA: winners[i], teamB: winners[i + 1],
+                            scoreA: null, scoreB: null, penaltiesA: null, penaltiesB: null, isBye: false, winner: null
+                        });
+                    }
+                }
+            }
+
+            saveDB();
             renderMatches();
         }
 
-        function updatePenalty(key, idx, teamNum, val) {
-            const parsed = val === '' ? null : parseInt(val, 10);
-            if (teamNum === 1) appData.matches[key][idx].pen1 = parsed;
-            if (teamNum === 2) appData.matches[key][idx].pen2 = parsed;
-            saveAppData();
-            renderMatches();
-        }
-
-        function deleteSingleMatch(key, idx) {
-            appData.matches[key].splice(idx, 1);
-            saveAppData();
-            renderMatches();
+        function deleteSingleMatch(id) {
+            if (confirm("Excluir esta partida?")) {
+                DB.matches = DB.matches.filter(m => m.id !== id);
+                saveDB();
+                renderMatches();
+            }
         }
 
         function resetCurrentMatches() {
-            const key = getCategoryKey();
-            if (confirm("Zerar todas as partidas e pontuações desta categoria?")) {
-                delete appData.matches[key];
-                delete appData.matchFormats[key];
-                saveAppData();
+            if (confirm("Zerar todas as partidas e chaveamentos desta categoria ativa?")) {
+                const gender = document.getElementById('gender-select').value;
+                const modality = document.getElementById('mod-select').value;
+                const segment = document.getElementById('mod-segment-select').value;
+
+                DB.matches = DB.matches.filter(m => !(m.year === DB.activeYear && m.champ === DB.activeChamp && m.gender === gender && m.modality === modality && m.segment === segment));
+                saveDB();
                 renderMatches();
             }
+        }
+
+        // CÁLCULO DA TABELA DE PONTOS DA MODALIDADE ATIVA
+        function calculateModalityStandings(matches) {
+            const standings = {};
+
+            matches.forEach(m => {
+                if (m.isBye) return;
+
+                if (!standings[m.teamA]) standings[m.teamA] = { team: m.teamA, points: 0, v: 0, e: 0, p: 0 };
+                if (!standings[m.teamB]) standings[m.teamB] = { team: m.teamB, points: 0, v: 0, e: 0, p: 0 };
+
+                if (m.scoreA !== null && m.scoreB !== null) {
+                    if (m.scoreA > m.scoreB) {
+                        standings[m.teamA].points += 3;
+                        standings[m.teamA].v += 1;
+                        standings[m.teamB].p += 1;
+                    } else if (m.scoreB > m.scoreA) {
+                        standings[m.teamB].points += 3;
+                        standings[m.teamB].v += 1;
+                        standings[m.teamA].p += 1;
+                    } else {
+                        standings[m.teamA].points += 1;
+                        standings[m.teamB].points += 1;
+                        standings[m.teamA].e += 1;
+                        standings[m.teamB].e += 1;
+                    }
+                }
+            });
+
+            const sorted = Object.values(standings).sort((a, b) => b.points - a.points || b.v - a.v);
+            renderModalityStandings(sorted);
+        }
+
+        function renderModalityStandings(list) {
+            const tbody = document.getElementById('modality-standings-body');
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">Nenhuma partida finalizada.</td></tr>`;
+                return;
+            }
+
+            const icons = ['🥇', '🥈', '🥉'];
+            tbody.innerHTML = list.map((item, idx) => `
+                <tr>
+                    <td><strong>${icons[idx] || (idx + 1) + 'º'}</strong></td>
+                    <td>${item.team}</td>
+                    <td><strong>${item.points} pts</strong></td>
+                </tr>
+            `).join('');
         }
 
         function printOnlyBracket() {
             document.body.classList.add('print-only-bracket');
             window.print();
-            document.body.classList.remove('print-only-bracket');
         }
 
-        // --- PONTUAÇÃO E CLASSIFICAÇÃO DA MODALIDADE ---
-        function calculateModalityStandings(matches) {
-            let standings = {};
-
-            matches.forEach(m => {
-                // REGRA BYE IGNORADA NA PONTUAÇÃO ESPORTIVA
-                if (!m.isBye && m.score1 !== null && m.score2 !== null) {
-                    if (!standings[m.team1]) standings[m.team1] = 0;
-                    if (!standings[m.team2]) standings[m.team2] = 0;
-
-                    if (m.score1 > m.score2) {
-                        standings[m.team1] += 3;
-                    } else if (m.score2 > m.score1) {
-                        standings[m.team2] += 3;
-                    } else {
-                        // Empate no tempo regulamentar pontua 1 pt para cada
-                        standings[m.team1] += 1;
-                        standings[m.team2] += 1;
-                    }
-                }
-            });
-
-            const sorted = Object.keys(standings)
-                .map(team => ({ team, pts: standings[team] }))
-                .sort((a, b) => b.pts - a.pts);
-
-            renderModalityStandings(sorted);
+        // TAREFAS SOLIDÁRIAS E CULTURAIS
+        function getProofs(type) {
+            return DB.proofs.filter(p => p.year === DB.activeYear && p.champ === DB.activeChamp && p.type === type);
         }
 
-        function renderModalityStandings(sorted) {
-            const tbody = document.getElementById('modality-standings-body');
-            if (sorted.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">Nenhuma partida finalizada.</td></tr>`;
-                return;
-            }
-            tbody.innerHTML = sorted.map((s, idx) => `
-                <tr>
-                    <td><strong>${idx + 1}º Lugar</strong></td>
-                    <td>${s.team}</td>
-                    <td><strong>${s.pts} pts</strong></td>
-                </tr>
-            `).join('');
-        }
-
-        // --- ARRECADAÇÃO & CULTURAL (GERENCIAMENTO DE PROVAS MANUAIS) ---
         function addProof(type) {
             const input = document.getElementById(`new-${type}-proof-name`);
-            const proofName = input.value.trim();
-            if (!proofName) return alert("Digite um nome para a prova.");
-
-            if (!appData.proofs[type].includes(proofName)) {
-                appData.proofs[type].push(proofName);
-                saveAppData();
-                input.value = '';
-                renderManualTab(type);
-            } else {
-                alert("Esta prova já está cadastrada.");
-            }
-        }
-
-        function removeProof(type, proofName) {
-            if (confirm(`Remover a prova "${proofName}" e suas pontuações?`)) {
-                appData.proofs[type] = appData.proofs[type].filter(p => p !== proofName);
-                saveAppData();
-                renderManualTab(type);
-            }
-        }
-
-        function updateScoreManual(type, teamId, proofName, value) {
-            if (!appData.scores[type]) appData.scores[type] = {};
-            if (!appData.scores[type][teamId]) appData.scores[type][teamId] = {};
-
-            appData.scores[type][teamId][proofName] = parseFloat(value) || 0;
-            saveAppData();
-
-            // Atualiza total da linha instantaneamente
-            const currentTeams = appData.teams.filter(t => t.year === appData.activeYear && t.champ === appData.activeChamp);
-            const team = currentTeams.find(t => t.id === teamId);
-            if (team) {
-                let sum = 0;
-                appData.proofs[type].forEach(p => {
-                    sum += (appData.scores[type][teamId] && appData.scores[type][teamId][p]) || 0;
+            const name = input.value.trim();
+            if (name) {
+                DB.proofs.push({
+                    id: 'prf_' + Date.now(),
+                    year: DB.activeYear,
+                    champ: DB.activeChamp,
+                    type: type,
+                    name: name,
+                    scores: {}
                 });
-                const totalCell = document.getElementById(`total-${type}-${teamId}`);
-                if (totalCell) totalCell.innerText = `${sum} pts`;
+                input.value = "";
+                saveDB();
+                renderProofs();
             }
         }
 
-        function renderManualTab(type) {
-            const thead = document.getElementById(`${type}-table-head`);
-            const tbody = document.getElementById(`${type}-table-body`);
-            const currentTeams = appData.teams.filter(t => t.year === appData.activeYear && t.champ === appData.activeChamp);
-            const proofs = appData.proofs[type] || [];
+        function updateProofScore(proofId, teamId, val) {
+            const prf = DB.proofs.find(p => p.id === proofId);
+            if (prf) {
+                prf.scores[teamId] = val === "" ? 0 : parseFloat(val);
+                saveDB();
+            }
+        }
 
-            // Montar Cabeçalho Dinâmico
-            let headHtml = `<tr><th>Equipe</th><th>Segmento</th>`;
-            proofs.forEach(p => {
-                headHtml += `
-                    <th>
-                        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-                            <span>${p}</span>
-                            <button class="delete-match-btn no-print" onclick="removeProof('${type}', '${p}')" title="Excluir Prova"><i class="fa-solid fa-xmark"></i></button>
-                        </div>
-                    </th>`;
-            });
-            headHtml += `<th>TOTAL OBTIDO</th></tr>`;
-            thead.innerHTML = headHtml;
+        function deleteProof(proofId) {
+            if (confirm("Excluir esta prova?")) {
+                DB.proofs = DB.proofs.filter(p => p.id !== proofId);
+                saveDB();
+                renderProofs();
+            }
+        }
 
-            // Montar Corpo da Tabela
-            if (currentTeams.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="${proofs.length + 3}" style="text-align:center;">Cadastre equipes neste campeonato para registrar pontos.</td></tr>`;
+        function renderProofs() {
+            renderProofTable('arrecadacao');
+            renderProofTable('cultural');
+        }
+
+        function renderProofTable(type) {
+            const proofs = getProofs(type);
+            const teams = getActiveTeams();
+            const head = document.getElementById(`${type}-table-head`);
+            const body = document.getElementById(`${type}-table-body`);
+
+            if (teams.length === 0) {
+                head.innerHTML = "";
+                body.innerHTML = `<tr><td style="text-align:center;">Cadastre equipes para exibir as pontuações.</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = currentTeams.map(t => {
-                let total = 0;
-                let rowHtml = `<tr><td><strong>${t.name}</strong></td><td>${t.segment}</td>`;
+            head.innerHTML = `
+                <tr>
+                    <th>Equipe</th>
+                    <th>Segmento</th>
+                    ${proofs.map(p => `
+                        <th>
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span>${p.name}</span>
+                                <button class="delete-match-btn no-print" onclick="deleteProof('${p.id}')"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </th>
+                    `).join('')}
+                    <th>TOTAL</th>
+                </tr>
+            `;
 
-                proofs.forEach(p => {
-                    const val = (appData.scores[type] && appData.scores[type][t.id] && appData.scores[type][t.id][p]) || 0;
-                    total += val;
-                    rowHtml += `
+            body.innerHTML = teams.map(t => {
+                let total = 0;
+                const cols = proofs.map(p => {
+                    const score = p.scores[t.id] || 0;
+                    total += score;
+                    return `
                         <td>
-                            <input type="number" class="form-control" style="width:110px;" value="${val}" onchange="updateScoreManual('${type}', '${t.id}', '${p}', this.value)">
+                            <input type="number" class="score-input" style="width:70px;" value="${score !== 0 ? score : ''}" onchange="updateProofScore('${p.id}', '${t.id}', this.value)">
                         </td>
                     `;
-                });
+                }).join('');
 
-                rowHtml += `<td><strong id="total-${type}-${t.id}" style="color:var(--primary);">${total} pts</strong></td></tr>`;
-                return rowHtml;
+                return `
+                    <tr>
+                        <td><strong>${t.name}</strong></td>
+                        <td>${t.segment}</td>
+                        ${cols}
+                        <td><strong>${total} pts</strong></td>
+                    </tr>
+                `;
             }).join('');
         }
 
-        // --- CRONOGRAMA DE JOGOS ---
+        // SIMULADOR DE CRONOGRAMA DE JOGOS
         function calculateSchedule() {
-            const startTime = document.getElementById('time-start').value || "08:00";
-            const duration = parseInt(document.getElementById('time-duration').value, 10) || 20;
-            const rest = parseInt(document.getElementById('time-rest').value, 10) || 5;
-            const courts = parseInt(document.getElementById('time-courts').value, 10) || 1;
+            const startTimeStr = document.getElementById('time-start').value || "08:00";
+            const duration = parseInt(document.getElementById('time-duration').value) || 20;
+            const rest = parseInt(document.getElementById('time-rest').value) || 5;
+            const courts = parseInt(document.getElementById('time-courts').value) || 1;
 
-            let allMatches = [];
-            Object.keys(appData.matches).forEach(key => {
-                if (key.startsWith(`${appData.activeYear}_${appData.activeChamp}`)) {
-                    const parts = key.split('_');
-                    const modName = `${parts[3]} (${parts[4]} - ${parts[2]})`;
-                    appData.matches[key].forEach(m => {
-                        if (!m.isBye) {
-                            allMatches.push({ ...m, modality: modName });
-                        }
-                    });
-                }
-            });
-
-            document.getElementById('summary-total-matches').innerText = `${allMatches.length} jogos`;
+            const allMatches = DB.matches.filter(m => m.year === DB.activeYear && m.champ === DB.activeChamp && !m.isBye);
+            
+            document.getElementById('summary-total-matches').textContent = `${allMatches.length} jogos`;
 
             if (allMatches.length === 0) {
-                document.getElementById('summary-total-time').innerText = `0h 0min`;
-                document.getElementById('summary-end-time').innerText = `--:--`;
-                document.getElementById('schedule-table-body').innerHTML = `<tr><td colspan="4" style="text-align:center;">Gere chaves de jogos para exibir o cronograma.</td></tr>`;
+                document.getElementById('summary-total-time').textContent = "0h 0min";
+                document.getElementById('summary-end-time').textContent = "--:--";
+                document.getElementById('schedule-table-body').innerHTML = `<tr><td colspan="4" style="text-align:center;">Gere chaves de jogos nas modalidades para listar o cronograma.</td></tr>`;
                 return;
             }
 
-            const matchSlotTime = duration + rest;
             const totalSlots = Math.ceil(allMatches.length / courts);
-            const totalMinutes = totalSlots * matchSlotTime;
-
+            const totalMinutes = totalSlots * (duration + rest);
             const hours = Math.floor(totalMinutes / 60);
             const mins = totalMinutes % 60;
-            document.getElementById('summary-total-time').innerText = `${hours}h ${mins}min`;
+            document.getElementById('summary-total-time').textContent = `${hours}h ${mins}min`;
 
-            let [startH, startM] = startTime.split(':').map(Number);
-            let endMinsTotal = startH * 60 + startM + totalMinutes;
-            let endH = Math.floor(endMinsTotal / 60) % 24;
-            let endM = endMinsTotal % 60;
-            document.getElementById('summary-end-time').innerText = `${String(endH).padStart(2, '0')}:${String(endM).padStart(2, '0')}`;
+            let [h, m] = startTimeStr.split(':').map(Number);
+            let currentTime = new Date();
+            currentTime.setHours(h, m, 0, 0);
 
-            let currentMins = startH * 60 + startM;
-            let tbodyHtml = '';
+            let tbodyHtml = "";
+            allMatches.forEach((match, index) => {
+                const courtNum = (index % courts) + 1;
+                const slotIndex = Math.floor(index / courts);
+                
+                let matchTime = new Date(currentTime.getTime() + slotIndex * (duration + rest) * 60000);
+                let timeFormatted = matchTime.toTimeString().substring(0, 5);
 
-            allMatches.forEach((m, idx) => {
-                let slotIdx = Math.floor(idx / courts);
-                let timeMins = currentMins + (slotIdx * matchSlotTime);
-                let h = Math.floor(timeMins / 60) % 24;
-                let min = timeMins % 60;
-                let timeStr = `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+                const legInfo = match.leg ? ` (Jogo ${match.leg})` : '';
 
                 tbodyHtml += `
                     <tr>
-                        <td><strong>Jogo #${idx + 1}</strong></td>
-                        <td><span class="bye-badge">${timeStr}</span></td>
-                        <td>${m.modality}</td>
-                        <td>${m.team1} x ${m.team2}</td>
+                        <td><strong>#${index + 1}</strong> (Quadra ${courtNum})</td>
+                        <td><strong>${timeFormatted}</strong></td>
+                        <td>${match.modality} (${match.gender} - ${match.segment})</td>
+                        <td>${match.teamA} vs ${match.teamB}${legInfo}</td>
                     </tr>
                 `;
             });
 
+            const endTime = new Date(currentTime.getTime() + totalMinutes * 60000);
+            document.getElementById('summary-end-time').textContent = endTime.toTimeString().substring(0, 5);
             document.getElementById('schedule-table-body').innerHTML = tbodyHtml;
         }
 
-        // --- CLASSIFICAÇÃO GERAL CONSOLIDADA ---
-        function switchGeralView(viewFilter, btn) {
-            document.querySelectorAll('#tab-geral .sub-nav .btn').forEach(b => {
+        // CLASSIFICAÇÃO GERAL CONSOLIDADA
+        function switchGeralView(segment, btn) {
+            currentGeralFilter = segment;
+            document.querySelectorAll('#tab-geral .sub-nav button').forEach(b => {
                 b.classList.remove('btn-primary');
                 b.classList.add('btn-light');
             });
-            btn.classList.remove('btn-light');
-            btn.classList.add('btn-primary');
-
-            renderGeralStandings(viewFilter);
+            if(btn) {
+                btn.classList.remove('btn-light');
+                btn.classList.add('btn-primary');
+            }
+            renderGeralClassification();
         }
 
-        function renderGeralStandings(filter = 'GERAL_CONSOLIDADO') {
-            const currentTeams = appData.teams.filter(t => {
-                if (t.year !== appData.activeYear || t.champ !== appData.activeChamp) return false;
-                if (filter !== 'GERAL_CONSOLIDADO' && t.segment !== filter) return false;
-                return true;
-            });
+        function renderGeralClassification() {
+            const teams = getActiveTeams();
+            const filter = currentGeralFilter;
 
-            let totals = {};
+            document.getElementById('geral-title').innerHTML = `<i class="fa-solid fa-trophy"></i> Classificação Geral — ${filter === 'GERAL_CONSOLIDADO' ? 'Consolidado Geral' : filter}`;
 
-            currentTeams.forEach(t => {
-                let sumArrecadacao = 0;
-                (appData.proofs.arrecadacao || []).forEach(p => {
-                    sumArrecadacao += (appData.scores.arrecadacao && appData.scores.arrecadacao[t.id] && appData.scores.arrecadacao[t.id][p]) || 0;
+            const filteredTeams = filter === 'GERAL_CONSOLIDADO' ? teams : teams.filter(t => t.segment === filter);
+
+            const totals = filteredTeams.map(t => {
+                let ptsEsporte = 0;
+                let ptsArrecadacao = 0;
+                let ptsCultural = 0;
+
+                // Esportes (Vitórias e Empates)
+                DB.matches.filter(m => m.year === DB.activeYear && m.champ === DB.activeChamp && !m.isBye).forEach(m => {
+                    if (m.scoreA !== null && m.scoreB !== null) {
+                        if (m.scoreA > m.scoreB && m.teamA === t.name) ptsEsporte += 3;
+                        else if (m.scoreB > m.scoreA && m.teamB === t.name) ptsEsporte += 3;
+                        else if (m.scoreA === m.scoreB && (m.teamA === t.name || m.teamB === t.name)) ptsEsporte += 1;
+                    }
                 });
 
-                let sumCultural = 0;
-                (appData.proofs.cultural || []).forEach(p => {
-                    sumCultural += (appData.scores.cultural && appData.scores.cultural[t.id] && appData.scores.cultural[t.id][p]) || 0;
+                // Arrecadação
+                DB.proofs.filter(p => p.year === DB.activeYear && p.champ === DB.activeChamp && p.type === 'arrecadacao').forEach(p => {
+                    ptsArrecadacao += (p.scores[t.id] || 0);
                 });
 
-                totals[t.id] = {
-                    team: t,
-                    esportivo: 0,
-                    arrecadacao: sumArrecadacao,
-                    cultural: sumCultural
+                // Cultural
+                DB.proofs.filter(p => p.year === DB.activeYear && p.champ === DB.activeChamp && p.type === 'cultural').forEach(p => {
+                    ptsCultural += (p.scores[t.id] || 0);
+                });
+
+                return {
+                    team: t.name,
+                    segment: t.segment,
+                    ptsEsporte,
+                    ptsArrecadacao,
+                    ptsCultural,
+                    total: ptsEsporte + ptsArrecadacao + ptsCultural
                 };
             });
 
-            // Somar pontos esportivos (ignorando jogos BYE)
-            Object.keys(appData.matches).forEach(key => {
-                if (key.startsWith(`${appData.activeYear}_${appData.activeChamp}`)) {
-                    appData.matches[key].forEach(m => {
-                        if (!m.isBye && m.score1 !== null && m.score2 !== null) {
-                            const t1 = currentTeams.find(t => t.name === m.team1);
-                            const t2 = currentTeams.find(t => t.name === m.team2);
-
-                            if (t1 && m.score1 > m.score2) totals[t1.id].esportivo += 3;
-                            if (t2 && m.score2 > m.score1) totals[t2.id].esportivo += 3;
-                            if (m.score1 === m.score2) {
-                                if (t1) totals[t1.id].esportivo += 1;
-                                if (t2) totals[t2.id].esportivo += 1;
-                            }
-                        }
-                    });
-                }
-            });
-
-            const sorted = Object.values(totals).map(item => ({
-                ...item,
-                total: item.esportivo + item.arrecadacao + item.cultural
-            })).sort((a, b) => b.total - a.total);
-
-            document.getElementById('geral-title').innerHTML = `<i class="fa-solid fa-trophy"></i> Classificação Geral: ${filter}`;
+            totals.sort((a, b) => b.total - a.total);
 
             const tbody = document.getElementById('geral-table-body');
-            if (sorted.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Nenhuma equipe cadastrada nesta visualização.</td></tr>`;
+            if (totals.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Nenhuma equipe cadastrada para este filtro.</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = sorted.map((item, idx) => `
+            const icons = ['🥇', '🥈', '🥉'];
+            tbody.innerHTML = totals.map((item, idx) => `
                 <tr>
-                    <td><strong>${idx + 1}º Lugar</strong></td>
-                    <td><strong>${item.team.name}</strong></td>
-                    <td>${item.team.segment}</td>
-                    <td>${item.esportivo} pts</td>
-                    <td>${item.arrecadacao} pts</td>
-                    <td>${item.cultural} pts</td>
+                    <td><strong>${icons[idx] || (idx + 1) + 'º'}</strong></td>
+                    <td><strong>${item.team}</strong></td>
+                    <td>${item.segment}</td>
+                    <td>${item.ptsEsporte} pts</td>
+                    <td>${item.ptsArrecadacao} pts</td>
+                    <td>${item.ptsCultural} pts</td>
                     <td><strong style="color:var(--primary); font-size:1.05rem;">${item.total} pts</strong></td>
                 </tr>
             `).join('');
         }
-
-        // --- BOLETIM OFICIAL ---
-        function renderBoletim() {
-            const container = document.getElementById('boletim-content');
-            let html = `
-                <div style="text-align:center; margin-bottom:20px;">
-                    <h2>BOLETIM INFORMATIVO OFICIAL</h2>
-                    <p><strong>${appData.config.title}</strong> — ${appData.activeYear} (${appData.activeChamp})</p>
-                </div>
-            `;
-
-            let hasMatches = false;
-            Object.keys(appData.matches).forEach(key => {
-                if (key.startsWith(`${appData.activeYear}_${appData.activeChamp}`)) {
-                    const parts = key.split('_');
-                    const title = `${parts[3]} (${parts[4]} - ${parts[2]})`;
-                    const matches = appData.matches[key];
-
-                    if (matches.length > 0) {
-                        hasMatches = true;
-                        html += `
-                            <div style="margin-bottom:20px;">
-                                <h4 style="color:var(--primary); border-bottom:1px solid var(--border); padding-bottom:4px;">${title}</h4>
-                                <table style="margin-top:8px;">
-                                    <thead><tr><th>Partida</th><th>Confronto</th><th>Placar</th></tr></thead>
-                                    <tbody>
-                                        ${matches.map((m, idx) => `
-                                            <tr>
-                                                <td>Jogo #${idx + 1} (${m.round})</td>
-                                                <td>${m.team1} vs${m.team2}</td>
-                                                <td><strong>${m.isBye ? 'ISENTO / BYE' : (m.score1 !== null ? m.score1 : '-') + ' x ' + (m.score2 !== null ? m.score2 : '-') + (m.pen1 !== null ? ` (${m.pen1}x${m.pen2} Pênaltis)` : '')}</strong></td>
-                                            </tr>
-                                        `).join('')}
-                                    </tbody>
-                                </table>
-                            </div>
-                        `;
-                    }
-                }
-            });
-
-            if (!hasMatches) {
-                html += `<p style="text-align:center; color:var(--text-muted);">Nenhum jogo cadastrado para emissão do boletim.</p>`;
-            }
-
-            container.innerHTML = html;
-        }
-
-        window.onload = initApp;
     </script>
 </body>
 </html>
